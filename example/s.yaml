@@ -1,0 +1,32 @@
+edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: component-test   #  项目名称
+# access: default # 密钥别名
+vars: # [全局变量，提供给各个服务使用]
+  domain: xxxx.yyy.com
+
+services:
+  gateway:
+    component: api-gateway
+    props: 
+      groupName: auto #组名
+      apis: 
+        - apiName: api1
+          requestConfig: 
+            requestPath: /add
+          serviceConfig:
+            servicePath: /api/add
+        - apiName: api2
+          regionId: cn-hongkong #不配置默认全局变量
+          requestConfig:
+            requestPath: /mul
+            requestProtocol: 'HTTP,HTTPS'
+            requestHttpMethod: POST
+            requestMode: MAPPING
+            bodyFormat: STREAM
+          serviceConfig:
+            servicePath: /newApi/mul
+            serviceProtocol: HTTP
+            serviceAddress: http://www.example.com
+            contentTypeCatagory: DEFAULT
+            contentTypeValue: 'application/json; charset=UTF-8'
+

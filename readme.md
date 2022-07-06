@@ -1,76 +1,104 @@
-# 插件开发说明
+<!--
+ * @Descripttion: 
+ * @Author: Wang Dejiang(aei)
+ * @Date: 2022-07-05 22:22:42
+ * @LastEditors: Wang Dejiang(aei)
+ * @LastEditTime: 2022-07-06 23:21:16
+-->
+<h1 align="center">阿里云API网关组件</h1>
+<p align="center" class="flex justify-center">
+  <a href="https://nodejs.org/en/" class="ml-1">
+    <img src="https://img.shields.io/badge/node-%3E%3D%2010.8.0-brightgreen" alt="node.js version">
+  </a>
+  <a href="https://github.com/devsapp/api-gateway/blob/master/LICENSE" class="ml-1">
+    <img src="https://img.shields.io/badge/License-MIT-green" alt="license">
+  </a>
+  <a href="https://github.com/devsapp/api-gateway/issues" class="ml-1">
+    <img src="https://img.shields.io/github/issues/devsapp/api-gateway" alt="issues">
+  </a>
+  </a>
+</p>
 
-<p align="center"><b> 中文 | <a href="./readme_en.md"> English </a>  </b></p>
+# 组件简介
+`api-gateway`组件针对于云厂商的api网关产品开发而来，避免重复复杂的操作，采用简单的统一配置文件（s.yaml），快速完成api网关的配置，部署。
 
-> Serverless Devs 组件开发需要严格遵守 [Serverless Package Model](../../spec/zh/0.0.2/serverless_package_model/readme.md) 中的 [组件模型规范](../../spec/zh/0.0.2/serverless_package_model/3.package_model.md#组件模型规范)。在[组件模型规范](../../spec/zh/0.0.2/serverless_package_model/3.package_model.md#组件模型规范)中有关于[组件模型元数据](../../spec/zh/0.0.2/serverless_package_model/3.package_model.md#组件模型元数据)和[组件模型代码规范](../../spec/zh/0.0.2/serverless_package_model/3.package_model.md#组件模型代码规范)的说明。
 
-> 🐵 温馨提示，在进行 Serverless Devs 的组件开发时，可能会遇到很多相对来说更为通用的能力，包括不限于：
-> - 获取用户的密钥信息
-> - 进行更规范的格式化输出
-> - 对用户的输入参数进行解析   
-> ......   
-> 这些内容都可以通过 Serverless Devs 所提供的 [Core包](https://github.com/Serverless-Devs/core) 进行提供，更多 [Core包](https://github.com/Serverless-Devs/core) 信息，可以参考 [Core包的开发文档](https://github.com/Serverless-Devs/core)
+# 快速开始
 
-Serverless Devs的组件开发案例已经被集成到Serverless Devs命令行工具中，通过对Serverless Devs的命令行工具，可以进行空白组件项目的初始化，开发者只需要执行`s init`即可看到：
+🙋 两步即可上手`api-gateway`组件的使用：
 
-```shell script
+❶ 完成极简或全面灵活的配置（一切通过s.yaml文件）
 
-🚀 Serverless Awesome: https://github.com/Serverless-Devs/package-awesome
+❷ 使用`s api-gateway deploy`快速部署你的第一个api网关组吧
 
-? Hello Serverless for Cloud Vendors (Use arrow keys or type to search)
-❯ Alibaba Cloud Serverless 
-  AWS Cloud Serverless 
-  Tencent Cloud Serverless 
-  Baidu Cloud Serverless 
-  Dev Template for Serverless Devs 
+# 基础配置
+
+对于一个`s.yaml`文件，我们如果需要配置两个api网关，最简单的方式可以是这样：
+
+``` yaml
+edition: 1.0.0   #版本
+name: my-project #项目名
+access: default # 密钥别名
+vars: # 全局变量
+  domain: xxxx.yyy.com
+
+services:
+  gateway:
+    component: api-gateway
+    props: 
+      groupName: auto #组名，当为auto时，默认随机生成一个组名
+      apis: 
+        - apiName: api1
+          requestConfig: #api网关前端配置
+            requestPath: /add
+          serviceConfig: #api网关后端配置
+            servicePath: /api/add
+        - apiName: api2
+          requestConfig:
+            requestPath: /mul
+          serviceConfig:
+            servicePath: /newApi/mul
 ```
+当然，更多灵活的配置我们也需要支持，对于如请求方法，域名，参数位置等，我们可以通过扩展`s.yaml`文件来进行设置。更多参数可见 [详细配置](#详细配置)
 
-此时，选择最后的`Dev Template for Serverless Devs`，并按回车：
+# 组件指令
 
-```shell script
-$ s init
+## deploy
 
-🚀 Serverless Awesome: https://github.com/Serverless-Devs/package-awesome
+使用`deploy`指令，我们可以根据`s.yaml`文件快速的新建并部署一个api网关组。
 
-? Hello Serverless for Cloud Vendors Dev Template for Serverless Devs
-? Please select an Serverless-Devs Application (Use arrow keys or type to search)
-❯ Application Scaffolding 
-  Component Scaffolding 
-```
+如果我们在`s.yaml`中指定了api网关组，则组件会将本地的网关配置和远程进行比较，进行修改或是新增api网关
 
-此时，选择`Component Scaffolding`，并按回车，即可完成一个完整的Serverless Devs的Component项目的初始化，可以通过命令查看文件树：
+### 参数解析
+| 参数全程 | 缩写 | 是否必填 |  含义  |
+| --- | --- | --- |--- |
+| --yes | -y |  否  | 是否直接采用本地配置对远端进行更改并部署|
 
-```shell script
-$ find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
-.
-|____LICENSE
-|____.signore
-|____example
-| |____s.yaml
-|____readme.md
-|____publish.yaml
-|____.gitignore
-|____package.json
-|____tsconfig.json
-|____src
-| |____common
-| | |____entity.ts
-| | |____logger.ts
-| |____index.ts
-```
 
-这其中：
 
-| 目录 | 含义 |
-| --- | --- | 
-| LICENSE | 项目默认的LICENSE，默认的LICENSE是遵循MIT开源协议的（推荐） | 
-| .signore | 项目发布时，可以选择的忽略文件，类似于npm发布是的`.npmignore`文件 | 
-| example | 该组件对应的测试应用 | 
-| publish.yaml | 项目所必须的文件，Serverless Devs Package的开发识别文档 |
-| .gitignore| 推送到Github的忽略文件 | 
-| package.json| Node.js的package.json，需要描述清楚组件的入口文件位置 |
-| tsconfig.json| Typescript的tsconfig.json，用来对TS项目进行描述等 |
-| src| 用户的代码目录 |
-| readme.md| 版本的描述，例如当前版本的更新内容等 |
+## help
 
-此时，开发者可以在src下完成业务代码的开发，由于默认的初始化项目是Typescript，所以开发完成业务代码还需要编译成Javascript（可以通过`npm run build`进行编译），在完成项目编译之后，还需要对项目进行`publish.yaml`文件的编写。完成之后，即可将项目发不到不同的源，以Github Registry为例，可以在Github创建一个`Public`的仓库，并将编译后的代码放到仓库，并发布一个版本。此时，就可以通过客户端获取到该应用。
+使用 help，我们可以快速的查看组件各指令的简介和参数配置
+
+
+# 详细配置
+
+
+# 开源许可
+
+Serverless Devs FC 组件遵循 [MIT License](./LICENSE) 开源许可。
+
+位于`node_modules`和外部目录中的所有文件都是本软件使用的外部维护库，具有自己的许可证；我们建议您阅读它们，因为它们的条款可能与[MIT License](./LICENSE)的条款不同。
+
+
+# 交流社区
+
+您如果有关于错误的反馈或者未来的期待，您可以在 [Serverless Devs repo Issues](https://github.com/serverless-devs/serverless-devs/issues) 或 [Fc repo Issues](https://github.com/devsapp/fc/issues) 中进行反馈和交流。如果您想要加入我们的讨论组或者了解 FC 组件的最新动态，您可以通过以下渠道进行：
+
+<p align="center">
+
+| <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407298906_20211028074819117230.png" width="200px" > | <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407044136_20211028074404326599.png" width="200px" > | <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407252200_20211028074732517533.png" width="200px" > |
+|--- | --- | --- |
+| <center>关注微信公众号：`serverless`</center> | <center>联系微信小助手：`xiaojiangwh`</center> | <center>加入钉钉交流群：`33947367`</center> | 
+
+</p>

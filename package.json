@@ -25,7 +25,11 @@
     "build": "esbuild src/index.ts --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --external:@serverless-devs/core --outfile=dist/index.js"
   },
   "dependencies": {
-    "@serverless-devs/core": "latest"
+    "@alicloud/cloudapi20160714": "^2.1.7",
+    "@alicloud/openapi-client": "^0.4.1",
+    "@alicloud/tea-util": "^1.4.3",
+    "@serverless-devs/core": "latest",
+    "commander": "^9.3.0"
   },
   "devDependencies": {
     "@types/node": "^14.0.23",

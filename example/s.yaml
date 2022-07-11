@@ -1,20 +1,25 @@
 edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
 name: component-test   #  项目名称
-# access: default # 密钥别名
+access: default # 密钥别名
 vars: # [全局变量，提供给各个服务使用]
-  domain: xxxx.yyy.com
+  region: cn-hangzhou
 
+Description: ''
 services:
-  gateway:
-    component: api-gateway
-    props: 
+  ag:
+    component: ../dist
+    props:
+      region: ${vars.region}
+      instanceId: api-shared-vpc-002 #实例
+      domain: https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run #统一配置的后端域名
       groupName: auto #组名
+      basePath: auto
       apis: 
         - apiName: api1
           requestConfig: 
-            requestPath: /add
+            requestPath: /subtract
           serviceConfig:
-            servicePath: /api/add
+            servicePath: /api/subtract
         - apiName: api2
           regionId: cn-hongkong #不配置默认全局变量
           requestConfig:

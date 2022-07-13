@@ -6,4 +6,8 @@ export default class CreateApiGroups {
     private AccessKeySecret;
     constructor(inputs: InputProps);
     deploy(): Promise<void | $CloudAPI20160714.CreateApiGroupResponseBody>;
+    /**
+     * @description 创建api网关组
+     */
+    createApiGroup(): Promise<$CloudAPI20160714.CreateApiGroupResponseBody>;
 }

@@ -64,30 +64,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:51:19
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-12 00:58:47
+ * @LastEditTime: 2022-07-14 00:18:09
  */
 var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
 // import * as $OpenApi from '@alicloud/openapi-client';
 var $Util = __importStar(require("@alicloud/tea-util"));
 var ClientInit_1 = require("../ClientInit");
-var tools_1 = require("../tools");
-var CreateApiGroups = /** @class */ (function () {
-    function CreateApiGroups(inputs) {
-        var _a;
-        _a = (0, tools_1.getAccess)(inputs), this.AccessKeyID = _a[0], this.AccessKeySecret = _a[1];
-        this.props = (0, tools_1.handleAutoFormat)(inputs.props);
+var SCreateApiGroup = /** @class */ (function () {
+    function SCreateApiGroup(AccessKeyID, AccessKeySecret, props) {
+        this.AccessKeyID = AccessKeyID;
+        this.AccessKeySecret = AccessKeySecret;
+        this.props = props;
     }
-    CreateApiGroups.prototype.deploy = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.createApiGroup()];
-            });
-        });
-    };
     /**
      * @description 创建api网关组
      */
-    CreateApiGroups.prototype.createApiGroup = function () {
+    SCreateApiGroup.prototype.createApiGroup = function () {
         return __awaiter(this, void 0, void 0, function () {
             var client, createApiGroupRequest, runtime, res, error_1;
             return __generator(this, function (_a) {
@@ -108,17 +100,24 @@ var CreateApiGroups = /** @class */ (function () {
                     case 2: return [4 /*yield*/, (_a.sent()).body];
                     case 3:
                         res = _a.sent();
+                        if (!res.tagStatus) {
+                            return [2 /*return*/, Promise.resolve({
+                                    error: 'cant create apiGroup'
+                                })];
+                        }
                         return [2 /*return*/, res];
                     case 4:
                         error_1 = _a.sent();
                         console.error(error_1);
-                        return [3 /*break*/, 5];
+                        return [2 /*return*/, Promise.resolve({
+                                error: error_1
+                            })];
                     case 5: return [2 /*return*/];
                 }
             });
         });
     };
-    return CreateApiGroups;
+    return SCreateApiGroup;
 }());
-exports.default = CreateApiGroups;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ3JlYXRlQXBpR3JvdXAuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudC9hcGlHcm91cHMvQ3JlYXRlQXBpR3JvdXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOzs7Ozs7R0FNRztBQUNILDRFQUFnRTtBQUNoRSx3REFBd0Q7QUFDeEQsd0RBQTRDO0FBRTVDLDRDQUEyQztBQUMzQyxrQ0FBdUQ7QUFDdkQ7SUFJSSx5QkFBWSxNQUFrQjs7UUFDMUIsS0FBMkMsSUFBQSxpQkFBUyxFQUFDLE1BQU0sQ0FBQyxFQUEzRCxJQUFJLENBQUMsV0FBVyxRQUFBLEVBQUUsSUFBSSxDQUFDLGVBQWUsUUFBQSxDQUFxQjtRQUM1RCxJQUFJLENBQUMsS0FBSyxHQUFHLElBQUEsd0JBQWdCLEVBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFBO0lBQy9DLENBQUM7SUFDSyxnQ0FBTSxHQUFaOzs7Z0JBQ0ksc0JBQU8sSUFBSSxDQUFDLGNBQWMsRUFBRSxFQUFBOzs7S0FDL0I7SUFDRDs7T0FFRztJQUNHLHdDQUFjLEdBQXBCOzs7Ozs7d0JBQ1EsTUFBTSxHQUFHLHVCQUFVLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLGVBQWUsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxDQUFDO3dCQUM1RixxQkFBcUIsR0FBRyxJQUFJLGlCQUFpQixDQUFDLHFCQUFxQixDQUFDOzRCQUNwRSxTQUFTLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxTQUFTOzRCQUMvQixRQUFRLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxRQUFROzRCQUM3QixXQUFXLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxXQUFXLElBQUksRUFBRTs0QkFDekMsVUFBVSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsVUFBVTt5QkFDcEMsQ0FBQyxDQUFDO3dCQUNDLE9BQU8sR0FBRyxJQUFJLEtBQUssQ0FBQyxjQUFjLENBQUMsRUFBRyxDQUFDLENBQUM7Ozs7d0JBRXJCLHFCQUFNLE1BQU0sQ0FBQyx5QkFBeUIsQ0FBQyxxQkFBcUIsRUFBRSxPQUFPLENBQUMsRUFBQTs0QkFBN0UscUJBQU0sQ0FBQyxTQUFzRSxDQUFDLENBQUMsSUFBSSxFQUFBOzt3QkFBekYsR0FBRyxHQUFHLFNBQW1GO3dCQUMvRixzQkFBTyxHQUFHLEVBQUE7Ozt3QkFFVixPQUFPLENBQUMsS0FBSyxDQUFDLE9BQUssQ0FBQyxDQUFBOzs7Ozs7S0FFM0I7SUFDTCxzQkFBQztBQUFELENBQUMsQUE5QkQsSUE4QkMifQ==
+exports.default = SCreateApiGroup;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaUdyb3VwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnQvYXBpR3JvdXBzL1NDcmVhdGVBcGlHcm91cC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7OztHQU1HO0FBQ0gsNEVBQWdFO0FBQ2hFLHdEQUF3RDtBQUN4RCx3REFBNEM7QUFDNUMsNENBQTJDO0FBQzNDO0lBSUkseUJBQVksV0FBbUIsRUFBRSxlQUFzQixFQUFFLEtBQUs7UUFDMUQsSUFBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUE7UUFDOUIsSUFBSSxDQUFDLGVBQWUsR0FBRyxlQUFlLENBQUE7UUFDdEMsSUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUE7SUFDdEIsQ0FBQztJQUNEOztPQUVHO0lBQ0csd0NBQWMsR0FBcEI7Ozs7Ozt3QkFDUSxNQUFNLEdBQUcsdUJBQVUsQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxJQUFJLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLENBQUM7d0JBQzVGLHFCQUFxQixHQUFHLElBQUksaUJBQWlCLENBQUMscUJBQXFCLENBQUM7NEJBQ3BFLFNBQVMsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFNBQVM7NEJBQy9CLFFBQVEsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVE7NEJBQzdCLFdBQVcsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFdBQVcsSUFBSSxFQUFFOzRCQUN6QyxVQUFVLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxVQUFVO3lCQUNwQyxDQUFDLENBQUM7d0JBQ0MsT0FBTyxHQUFHLElBQUksS0FBSyxDQUFDLGNBQWMsQ0FBQyxFQUFHLENBQUMsQ0FBQzs7Ozt3QkFFckIscUJBQU0sTUFBTSxDQUFDLHlCQUF5QixDQUFDLHFCQUFxQixFQUFFLE9BQU8sQ0FBQyxFQUFBOzRCQUE3RSxxQkFBTSxDQUFDLFNBQXNFLENBQUMsQ0FBQyxJQUFJLEVBQUE7O3dCQUF6RixHQUFHLEdBQUcsU0FBbUY7d0JBQy9GLElBQUcsQ0FBQyxHQUFHLENBQUMsU0FBUyxFQUFFOzRCQUNmLHNCQUFPLE9BQU8sQ0FBQyxPQUFPLENBQUM7b0NBQ25CLEtBQUssRUFBRSxzQkFBc0I7aUNBQ2hDLENBQUMsRUFBQTt5QkFDTDt3QkFDRCxzQkFBTyxHQUFHLEVBQUE7Ozt3QkFFVixPQUFPLENBQUMsS0FBSyxDQUFDLE9BQUssQ0FBQyxDQUFBO3dCQUNwQixzQkFBTyxPQUFPLENBQUMsT0FBTyxDQUFDO2dDQUNuQixLQUFLLFNBQUE7NkJBQ1IsQ0FBQyxFQUFBOzs7OztLQUVUO0lBQ0wsc0JBQUM7QUFBRCxDQUFDLEFBcENELElBb0NDIn0=

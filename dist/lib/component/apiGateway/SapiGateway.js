@@ -35,55 +35,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SApiGateway = void 0;
+var SCreateApi_1 = require("./SCreateApi");
 /*
  * @Descripttion:
  * @Author: Wang Dejiang(aei)
- * @Date: 2022-07-05 22:22:42
+ * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-13 22:34:41
+ * @LastEditTime: 2022-07-14 01:25:43
+ * @description: api网关相关操作
  */
-var logger_1 = __importDefault(require("./common/logger"));
-var SApiGroup_1 = require("./lib/component/apiGroups/SApiGroup");
-var utils_1 = require("./lib/utils");
-var ComponentDemo = /** @class */ (function () {
-    function ComponentDemo() {
+var SApiGateway = /** @class */ (function () {
+    function SApiGateway(config) {
+        this.config = config;
     }
-    /**
-     * demo 实例
-     * @param inputs
-     * @returns
-     */
-    ComponentDemo.prototype.test = function (inputs) {
-        return __awaiter(this, void 0, void 0, function () {
+    SApiGateway.prototype.createApis = function () {
+        var _this = this;
+        var _a = this.config, access = _a.access, domain = _a.domain, region = _a.region, groupId = _a.groupId, apis = _a.apis;
+        apis === null || apis === void 0 ? void 0 : apis.forEach(function (item) { return __awaiter(_this, void 0, void 0, function () {
+            var createapi;
             return __generator(this, function (_a) {
-                logger_1.default.debug("input: ".concat(JSON.stringify(inputs.props)));
-                logger_1.default.info('command test');
-                return [2 /*return*/, { hello: 'world' }];
-            });
-        });
-    };
-    ComponentDemo.prototype.deploy = function (inputs) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, AccessKeyID, AccessKeySecret, props, createApiGroup, res;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+                switch (_a.label) {
                     case 0:
-                        _a = (0, utils_1.parseInput)(inputs), AccessKeyID = _a.AccessKeyID, AccessKeySecret = _a.AccessKeySecret, props = _a.props;
-                        createApiGroup = new SApiGroup_1.SApiGroup(AccessKeyID, AccessKeySecret, props);
-                        return [4 /*yield*/, createApiGroup.deploy()];
+                        createapi = new SCreateApi_1.SCreateApi({
+                            api: item,
+                            access: access,
+                            domain: domain,
+                            region: region,
+                            groupId: groupId,
+                        });
+                        return [4 /*yield*/, createapi.createApiByConfig()];
                     case 1:
-                        res = _b.sent();
-                        console.log('创建成功', res);
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
-        });
+        }); });
     };
-    return ComponentDemo;
+    return SApiGateway;
 }());
-exports.default = ComponentDemo;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7Ozs7O0dBTUc7QUFDSCwyREFBb0M7QUFFcEMsaUVBQStEO0FBQy9ELHFDQUF3QztBQUV4QztJQUFBO0lBaUJBLENBQUM7SUFoQkM7Ozs7T0FJRztJQUNVLDRCQUFJLEdBQWpCLFVBQWtCLE1BQWtCOzs7Z0JBQ2xDLGdCQUFNLENBQUMsS0FBSyxDQUFDLGlCQUFVLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFFLENBQUMsQ0FBQTtnQkFDdEQsZ0JBQU0sQ0FBQyxJQUFJLENBQUMsY0FBYyxDQUFDLENBQUE7Z0JBQzNCLHNCQUFPLEVBQUUsS0FBSyxFQUFFLE9BQU8sRUFBRSxFQUFBOzs7S0FDMUI7SUFDWSw4QkFBTSxHQUFuQixVQUFvQixNQUFrQjs7Ozs7O3dCQUM5QixLQUEwQyxJQUFBLGtCQUFVLEVBQUMsTUFBTSxDQUFDLEVBQTFELFdBQVcsaUJBQUEsRUFBRSxlQUFlLHFCQUFBLEVBQUUsS0FBSyxXQUFBLENBQXVCO3dCQUM1RCxjQUFjLEdBQUcsSUFBSSxxQkFBUyxDQUFDLFdBQVcsRUFBRSxlQUFlLEVBQUUsS0FBSyxDQUFDLENBQUE7d0JBQzdELHFCQUFNLGNBQWMsQ0FBQyxNQUFNLEVBQUUsRUFBQTs7d0JBQW5DLEdBQUcsR0FBRyxTQUE2Qjt3QkFDekMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsR0FBRyxDQUFDLENBQUE7Ozs7O0tBQ3pCO0lBQ0gsb0JBQUM7QUFBRCxDQUFDLEFBakJELElBaUJDIn0=
+exports.SApiGateway = SApiGateway;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2FwaUdhdGV3YXkuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudC9hcGlHYXRld2F5L1NhcGlHYXRld2F5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLDJDQUF5QztBQUV6Qzs7Ozs7OztHQU9HO0FBQ0g7SUFFRSxxQkFBWSxNQUFrQjtRQUM1QixJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQTtJQUN0QixDQUFDO0lBQ0QsZ0NBQVUsR0FBVjtRQUFBLGlCQVlDO1FBWE8sSUFBQSxLQUE0QyxJQUFJLENBQUMsTUFBTSxFQUFyRCxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxPQUFPLGFBQUEsRUFBRSxJQUFJLFVBQWdCLENBQUE7UUFDN0QsSUFBSSxhQUFKLElBQUksdUJBQUosSUFBSSxDQUFFLE9BQU8sQ0FBQyxVQUFNLElBQUk7Ozs7O3dCQUNoQixTQUFTLEdBQUcsSUFBSSx1QkFBVSxDQUFDOzRCQUMvQixHQUFHLEVBQUUsSUFBSTs0QkFDVCxNQUFNLFFBQUE7NEJBQ04sTUFBTSxRQUFBOzRCQUNOLE1BQU0sUUFBQTs0QkFDTixPQUFPLFNBQUE7eUJBQ1IsQ0FBQyxDQUFBO3dCQUNGLHFCQUFNLFNBQVMsQ0FBQyxpQkFBaUIsRUFBRSxFQUFBOzt3QkFBbkMsU0FBbUMsQ0FBQTs7OzthQUNwQyxDQUFDLENBQUE7SUFDSixDQUFDO0lBQ0gsa0JBQUM7QUFBRCxDQUFDLEFBbEJELElBa0JDO0FBbEJZLGtDQUFXIn0=

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-12 00:33:32
+ * @LastEditTime: 2022-07-14 01:30:14
  */
 import { InputProps } from '../../common/entity'
 import { constant } from './constant'
@@ -42,7 +42,7 @@ export function deepClone(initalObj, finalObj?) {
       if (typeof initalObj[i] === 'object') {
         //判断构造函数是不是Array即initalObj[i]是不是数组，注意判断数组不能用typeof，因为typeof [1,2,3] === 'object'
         obj[i] = initalObj[i].constructor === Array ? [] : {}
-        arguments.callee(initalObj[i], obj[i]) //arguments.callee为自身这个function
+        deepClone(initalObj[i], obj[i]) 
       } else {
         obj[i] = initalObj[i]
       }

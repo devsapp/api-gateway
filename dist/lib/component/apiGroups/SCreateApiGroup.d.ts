@@ -1,4 +1,3 @@
-import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
 export default class SCreateApiGroup {
     private props;
     private AccessKeyID;
@@ -7,7 +6,5 @@ export default class SCreateApiGroup {
     /**
      * @description 创建api网关组
      */
-    createApiGroup(): Promise<$CloudAPI20160714.CreateApiGroupResponseBody | {
-        error: any;
-    }>;
+    createApiGroup(): Promise<any>;
 }

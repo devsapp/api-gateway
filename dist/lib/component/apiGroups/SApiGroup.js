@@ -53,7 +53,7 @@ var SApiGroup = /** @class */ (function () {
     */
     SApiGroup.prototype.deploy = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var sCreateApiGroup, res, _a, groupId, subDomain, sApiGateway;
+            var sCreateApiGroup, res, _a, groupId, subDomain, sApiGateway, apis;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -61,13 +61,19 @@ var SApiGroup = /** @class */ (function () {
                         return [4 /*yield*/, sCreateApiGroup.createApiGroup()];
                     case 1:
                         res = _b.sent();
-                        if (res.error) {
-                            return [2 /*return*/, res.error];
+                        if (!res.responseStatus) {
+                            console.log('创建api组失败:', res.error);
+                            return [2 /*return*/];
                         }
                         _a = res, groupId = _a.groupId, subDomain = _a.subDomain;
                         this.groupId = groupId;
                         this.subDomain = subDomain;
-                        console.log('props', this.props);
+                        console.log('创建api组成功: ', {
+                            groupName: this.props.groupName,
+                            groupId: groupId,
+                            subDomain: subDomain,
+                            basePath: this.props.basePath
+                        });
                         sApiGateway = new SapiGateway_1.SApiGateway({
                             access: {
                                 AccessKeyID: this.AccessKeyID,
@@ -78,7 +84,10 @@ var SApiGroup = /** @class */ (function () {
                             domain: this.props.domain,
                             apis: this.props.apis
                         });
-                        sApiGateway.createApis();
+                        return [4 /*yield*/, sApiGateway.createApis()];
+                    case 2:
+                        apis = _b.sent();
+                        console.log('apis', apis);
                         return [2 /*return*/];
                 }
             });
@@ -87,4 +96,4 @@ var SApiGroup = /** @class */ (function () {
     return SApiGroup;
 }());
 exports.SApiGroup = SApiGroup;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0FwaUdyb3VwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnQvYXBpR3JvdXBzL1NBcGlHcm91cC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxzRUFBZ0Q7QUFDaEQseURBQXdEO0FBQ3hEO0lBTUksbUJBQVksV0FBa0IsRUFBRSxlQUFzQixFQUFFLEtBQUs7UUFDekQsSUFBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUE7UUFDOUIsSUFBSSxDQUFDLGVBQWUsR0FBRyxlQUFlLENBQUE7UUFDdEMsSUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUE7SUFDdEIsQ0FBQztJQUNEOztNQUVFO0lBQ0ksMEJBQU0sR0FBWjs7Ozs7O3dCQUVVLGVBQWUsR0FBSSxJQUFJLHlCQUFlLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxJQUFJLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQTt3QkFDcEYscUJBQU0sZUFBZSxDQUFDLGNBQWMsRUFBRSxFQUFBOzt3QkFBNUMsR0FBRyxHQUFHLFNBQXNDO3dCQUNsRCxJQUFHLEdBQUcsQ0FBQyxLQUFLLEVBQUU7NEJBQ1Ysc0JBQU8sR0FBRyxDQUFDLEtBQUssRUFBQTt5QkFDbkI7d0JBQ0ssS0FBdUIsR0FBa0MsRUFBeEQsT0FBTyxhQUFBLEVBQUUsU0FBUyxlQUFBLENBQXNDO3dCQUMvRCxJQUFJLENBQUMsT0FBTyxHQUFHLE9BQU8sQ0FBQTt3QkFDdEIsSUFBSSxDQUFDLFNBQVMsR0FBRSxTQUFTLENBQUE7d0JBQ3pCLE9BQU8sQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQTt3QkFDMUIsV0FBVyxHQUFHLElBQUkseUJBQVcsQ0FBQzs0QkFDaEMsTUFBTSxFQUFFO2dDQUNKLFdBQVcsRUFBRSxJQUFJLENBQUMsV0FBVztnQ0FDN0IsZUFBZSxFQUFFLElBQUksQ0FBQyxlQUFlOzZCQUN4Qzs0QkFDRCxNQUFNLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNOzRCQUN6QixPQUFPLEVBQUUsSUFBSSxDQUFDLE9BQU87NEJBQ3JCLE1BQU0sRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU07NEJBQ3pCLElBQUksRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLElBQUk7eUJBQ3hCLENBQUMsQ0FBQTt3QkFDRixXQUFXLENBQUMsVUFBVSxFQUFFLENBQUE7Ozs7O0tBQzNCO0lBQ0wsZ0JBQUM7QUFBRCxDQUFDLEFBckNELElBcUNDO0FBckNZLDhCQUFTIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0FwaUdyb3VwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnQvYXBpR3JvdXBzL1NBcGlHcm91cC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxzRUFBZ0Q7QUFDaEQseURBQXdEO0FBQ3hEO0lBTUksbUJBQVksV0FBa0IsRUFBRSxlQUFzQixFQUFFLEtBQUs7UUFDekQsSUFBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUE7UUFDOUIsSUFBSSxDQUFDLGVBQWUsR0FBRyxlQUFlLENBQUE7UUFDdEMsSUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUE7SUFDdEIsQ0FBQztJQUNEOztNQUVFO0lBQ0ksMEJBQU0sR0FBWjs7Ozs7O3dCQUVVLGVBQWUsR0FBSSxJQUFJLHlCQUFlLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxJQUFJLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQTt3QkFDcEYscUJBQU0sZUFBZSxDQUFDLGNBQWMsRUFBRSxFQUFBOzt3QkFBNUMsR0FBRyxHQUFHLFNBQXNDO3dCQUNsRCxJQUFHLENBQUMsR0FBRyxDQUFDLGNBQWMsRUFBRTs0QkFDcEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxXQUFXLEVBQUUsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFBOzRCQUNuQyxzQkFBTTt5QkFDVDt3QkFDSyxLQUF1QixHQUFrQyxFQUF4RCxPQUFPLGFBQUEsRUFBRSxTQUFTLGVBQUEsQ0FBc0M7d0JBQy9ELElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFBO3dCQUN0QixJQUFJLENBQUMsU0FBUyxHQUFHLFNBQVMsQ0FBQTt3QkFDMUIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxZQUFZLEVBQUU7NEJBQ3RCLFNBQVMsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFNBQVM7NEJBQy9CLE9BQU8sU0FBQTs0QkFDUCxTQUFTLFdBQUE7NEJBQ1QsUUFBUSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsUUFBUTt5QkFDaEMsQ0FBQyxDQUFBO3dCQUNJLFdBQVcsR0FBRyxJQUFJLHlCQUFXLENBQUM7NEJBQ2hDLE1BQU0sRUFBRTtnQ0FDSixXQUFXLEVBQUUsSUFBSSxDQUFDLFdBQVc7Z0NBQzdCLGVBQWUsRUFBRSxJQUFJLENBQUMsZUFBZTs2QkFDeEM7NEJBQ0QsTUFBTSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTTs0QkFDekIsT0FBTyxFQUFFLElBQUksQ0FBQyxPQUFPOzRCQUNyQixNQUFNLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNOzRCQUN6QixJQUFJLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxJQUFJO3lCQUN4QixDQUFDLENBQUE7d0JBQ1cscUJBQU0sV0FBVyxDQUFDLFVBQVUsRUFBRSxFQUFBOzt3QkFBckMsSUFBSSxHQUFHLFNBQThCO3dCQUMzQyxPQUFPLENBQUMsR0FBRyxDQUFDLE1BQU0sRUFBRSxJQUFJLENBQUMsQ0FBQTs7Ozs7S0FDNUI7SUFDTCxnQkFBQztBQUFELENBQUMsQUE1Q0QsSUE0Q0M7QUE1Q1ksOEJBQVMifQ==

@@ -65,51 +65,37 @@ exports.SCreateApi = void 0;
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:10:37
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 01:43:24
+ * @LastEditTime: 2022-07-15 00:23:41
  */
 var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
 // 依赖的模块可通过下载工程中的模块依赖文件或右上角的获取 SDK 依赖信息查看
-var tea_util_1 = __importStar(require("@alicloud/tea-util")), $Util = tea_util_1;
+var $Util = __importStar(require("@alicloud/tea-util"));
 var ClientInit_1 = require("../ClientInit");
-var api_1 = require("../../../config/api");
-var tools_1 = require("../tools");
+var api_1 = require("../../config/api");
+var tools_1 = require("../../tools/tools");
 var SCreateApi = /** @class */ (function () {
     function SCreateApi(config) {
         this.config = config;
     }
     SCreateApi.prototype.createApiByConfig = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, defaultApiConfig, createApiRequest, runtime, error_1;
+            var client, defaultApiConfig, currentApiConfig, createApiRequest, runtime;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         client = ClientInit_1.ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
-                        defaultApiConfig = (0, tools_1.deepClone)(api_1.defaultApi);
-                        defaultApiConfig.groupId = this.config.groupId;
-                        //TODO：写一个深度的assign
-                        defaultApiConfig.apiName = this.config.api.apiName;
-                        defaultApiConfig.regionId = this.config.api.region || this.config.region;
-                        defaultApiConfig.requestConfig = JSON.stringify(Object.assign({}, defaultApiConfig.requestConfig, this.config.api.requestConfig));
-                        defaultApiConfig.serviceConfig = JSON.stringify(Object.assign({}, defaultApiConfig.serviceConfig, this.config.api.serviceConfig));
-                        console.log('apiConfig', defaultApiConfig);
-                        createApiRequest = new $CloudAPI20160714.CreateApiRequest(defaultApiConfig);
+                        defaultApiConfig = {
+                            groupId: this.config.groupId,
+                            regionId: this.config.region,
+                            serviceConfig: {
+                                serviceAddress: this.config.domain
+                            }
+                        };
+                        currentApiConfig = (0, tools_1.merge)({}, api_1.defaultApi, defaultApiConfig, this.config.api);
+                        createApiRequest = new $CloudAPI20160714.CreateApiRequest((0, tools_1.formatRequest)(currentApiConfig));
                         runtime = new $Util.RuntimeOptions({});
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        // 复制代码运行请自行打印 API 的返回值
-                        return [4 /*yield*/, client.createApiWithOptions(createApiRequest, runtime)];
-                    case 2:
-                        // 复制代码运行请自行打印 API 的返回值
-                        _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _a.sent();
-                        console.error(error_1);
-                        // 如有需要，请打印 error
-                        tea_util_1.default.assertAsString(error_1.message);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [4 /*yield*/, (0, tools_1.handleClientRequst)(client, 'createApiWithOptions', createApiRequest, runtime)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -117,4 +103,4 @@ var SCreateApi = /** @class */ (function () {
     return SCreateApi;
 }());
 exports.SCreateApi = SCreateApi;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L2FwaUdhdGV3YXkvU0NyZWF0ZUFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOzs7Ozs7R0FNRztBQUNILDRFQUFnRTtBQUNoRSx5Q0FBeUM7QUFDekMsaUZBQWtEO0FBQ2xELDRDQUEyQztBQUMzQywyQ0FBaUQ7QUFDakQsa0NBQXFDO0FBQ3JDO0lBRUksb0JBQVksTUFBd0I7UUFDaEMsSUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUE7SUFDeEIsQ0FBQztJQUNLLHNDQUFpQixHQUF2Qjs7Ozs7O3dCQUNRLE1BQU0sR0FBRyx1QkFBVSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLENBQUM7d0JBQ3ZILGdCQUFnQixHQUFHLElBQUEsaUJBQVMsRUFBQyxnQkFBVSxDQUFDLENBQUE7d0JBQzlDLGdCQUFnQixDQUFDLE9BQU8sR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQTt3QkFDOUMsbUJBQW1CO3dCQUNuQixnQkFBZ0IsQ0FBQyxPQUFPLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsT0FBTyxDQUFBO3dCQUNsRCxnQkFBZ0IsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsTUFBTSxJQUFJLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFBO3dCQUN4RSxnQkFBZ0IsQ0FBQyxhQUFhLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLEVBQUUsRUFBRSxnQkFBZ0IsQ0FBQyxhQUFhLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsYUFBYSxDQUFDLENBQUMsQ0FBQTt3QkFDakksZ0JBQWdCLENBQUMsYUFBYSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxFQUFFLEVBQUUsZ0JBQWdCLENBQUMsYUFBYSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUE7d0JBQ2pJLE9BQU8sQ0FBQyxHQUFHLENBQUMsV0FBVyxFQUFFLGdCQUFnQixDQUFDLENBQUE7d0JBQ3RDLGdCQUFnQixHQUFHLElBQUksaUJBQWlCLENBQUMsZ0JBQWdCLENBQUMsZ0JBQWdCLENBQUMsQ0FBQzt3QkFDNUUsT0FBTyxHQUFHLElBQUksS0FBSyxDQUFDLGNBQWMsQ0FBQyxFQUFFLENBQUMsQ0FBQzs7Ozt3QkFFekMsdUJBQXVCO3dCQUN2QixxQkFBTSxNQUFNLENBQUMsb0JBQW9CLENBQUMsZ0JBQWdCLEVBQUUsT0FBTyxDQUFDLEVBQUE7O3dCQUQ1RCx1QkFBdUI7d0JBQ3ZCLFNBQTRELENBQUM7Ozs7d0JBRTNELE9BQU8sQ0FBQyxLQUFLLENBQUMsT0FBSyxDQUFDLENBQUE7d0JBQ3RCLGlCQUFpQjt3QkFDakIsa0JBQUksQ0FBQyxjQUFjLENBQUMsT0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDOzs7Ozs7S0FFeEM7SUFDTCxpQkFBQztBQUFELENBQUMsQUExQkQsSUEwQkM7QUExQlksZ0NBQVUifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L2FwaUdhdGV3YXkvU0NyZWF0ZUFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOzs7Ozs7R0FNRztBQUNILDRFQUFnRTtBQUNoRSx5Q0FBeUM7QUFDekMsd0RBQTRDO0FBQzVDLDRDQUEyQztBQUMzQyx3Q0FBOEM7QUFDOUMsMkNBQTZFO0FBQzdFO0lBRUksb0JBQVksTUFBd0I7UUFDaEMsSUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUE7SUFDeEIsQ0FBQztJQUNLLHNDQUFpQixHQUF2Qjs7Ozs7O3dCQUNRLE1BQU0sR0FBRyx1QkFBVSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLENBQUM7d0JBQ3ZILGdCQUFnQixHQUFHOzRCQUN2QixPQUFPLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxPQUFPOzRCQUM1QixRQUFRLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNOzRCQUM1QixhQUFhLEVBQUU7Z0NBQ2IsY0FBYyxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTTs2QkFDbkM7eUJBQ0YsQ0FBQTt3QkFDSyxnQkFBZ0IsR0FBRyxJQUFBLGFBQUssRUFBQyxFQUFFLEVBQUUsZ0JBQVUsRUFBRSxnQkFBZ0IsRUFBRSxJQUFJLENBQUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxDQUFBO3dCQUM3RSxnQkFBZ0IsR0FBRyxJQUFJLGlCQUFpQixDQUFDLGdCQUFnQixDQUFDLElBQUEscUJBQWEsRUFBQyxnQkFBZ0IsQ0FBQyxDQUFDLENBQUM7d0JBQzNGLE9BQU8sR0FBRyxJQUFJLEtBQUssQ0FBQyxjQUFjLENBQUMsRUFBRSxDQUFDLENBQUM7d0JBQ3BDLHFCQUFNLElBQUEsMEJBQWtCLEVBQUMsTUFBTSxFQUFFLHNCQUFzQixFQUFFLGdCQUFnQixFQUFFLE9BQU8sQ0FBQyxFQUFBOzRCQUExRixzQkFBTyxTQUFtRixFQUFBOzs7O0tBQzdGO0lBQ0wsaUJBQUM7QUFBRCxDQUFDLEFBbkJELElBbUJDO0FBbkJZLGdDQUFVIn0=

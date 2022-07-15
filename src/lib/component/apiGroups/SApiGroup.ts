@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 01:26:07
+ * @LastEditTime: 2022-07-15 00:40:56
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -13,7 +13,7 @@ export class SApiGroup {
     private AccessKeySecret
     private props
     private groupId
-    private subDomain  //二級域名
+    private subDomain  
     constructor(AccessKeyID:string, AccessKeySecret:string, props) {
         this.AccessKeyID = AccessKeyID
         this.AccessKeySecret = AccessKeySecret
@@ -26,13 +26,19 @@ export class SApiGroup {
         // TODO 根据是否有远程的apiGroup来决定是否创建
         const sCreateApiGroup =  new SCreateApiGroup(this.AccessKeyID, this.AccessKeySecret, this.props)
         const res = await sCreateApiGroup.createApiGroup()
-        if(res.error) {
-            return res.error
+        if(!res.responseStatus) {
+            console.log('创建api组失败:', res.error)
+            return
         }
         const {groupId, subDomain} = res as  CreateApiGroupResponseBody
         this.groupId = groupId
-        this.subDomain =subDomain
-        console.log('props', this.props)
+        this.subDomain = subDomain
+        console.log('创建api组成功: ', {
+            groupName: this.props.groupName,
+            groupId,
+            subDomain,
+            basePath: this.props.basePath
+        })
         const sApiGateway = new SApiGateway({
             access: {
                 AccessKeyID: this.AccessKeyID, 
@@ -43,6 +49,7 @@ export class SApiGroup {
             domain: this.props.domain,
             apis: this.props.apis
         })
-        sApiGateway.createApis()
+        const apis = await sApiGateway.createApis()
+        console.log('apis', apis)
     }
 }

@@ -64,11 +64,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:51:19
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 00:18:09
+ * @LastEditTime: 2022-07-15 00:37:32
  */
 var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
 // import * as $OpenApi from '@alicloud/openapi-client';
 var $Util = __importStar(require("@alicloud/tea-util"));
+var tools_1 = require("../../tools/tools");
 var ClientInit_1 = require("../ClientInit");
 var SCreateApiGroup = /** @class */ (function () {
     function SCreateApiGroup(AccessKeyID, AccessKeySecret, props) {
@@ -81,7 +82,7 @@ var SCreateApiGroup = /** @class */ (function () {
      */
     SCreateApiGroup.prototype.createApiGroup = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, createApiGroupRequest, runtime, res, error_1;
+            var client, createApiGroupRequest, runtime;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -93,26 +94,8 @@ var SCreateApiGroup = /** @class */ (function () {
                             instanceId: this.props.instanceId
                         });
                         runtime = new $Util.RuntimeOptions({});
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, client.createApiGroupWithOptions(createApiGroupRequest, runtime)];
-                    case 2: return [4 /*yield*/, (_a.sent()).body];
-                    case 3:
-                        res = _a.sent();
-                        if (!res.tagStatus) {
-                            return [2 /*return*/, Promise.resolve({
-                                    error: 'cant create apiGroup'
-                                })];
-                        }
-                        return [2 /*return*/, res];
-                    case 4:
-                        error_1 = _a.sent();
-                        console.error(error_1);
-                        return [2 /*return*/, Promise.resolve({
-                                error: error_1
-                            })];
-                    case 5: return [2 /*return*/];
+                        return [4 /*yield*/, (0, tools_1.handleClientRequst)(client, 'createApiGroupWithOptions', createApiGroupRequest, runtime)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -120,4 +103,4 @@ var SCreateApiGroup = /** @class */ (function () {
     return SCreateApiGroup;
 }());
 exports.default = SCreateApiGroup;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaUdyb3VwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnQvYXBpR3JvdXBzL1NDcmVhdGVBcGlHcm91cC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7OztHQU1HO0FBQ0gsNEVBQWdFO0FBQ2hFLHdEQUF3RDtBQUN4RCx3REFBNEM7QUFDNUMsNENBQTJDO0FBQzNDO0lBSUkseUJBQVksV0FBbUIsRUFBRSxlQUFzQixFQUFFLEtBQUs7UUFDMUQsSUFBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUE7UUFDOUIsSUFBSSxDQUFDLGVBQWUsR0FBRyxlQUFlLENBQUE7UUFDdEMsSUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUE7SUFDdEIsQ0FBQztJQUNEOztPQUVHO0lBQ0csd0NBQWMsR0FBcEI7Ozs7Ozt3QkFDUSxNQUFNLEdBQUcsdUJBQVUsQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxJQUFJLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLENBQUM7d0JBQzVGLHFCQUFxQixHQUFHLElBQUksaUJBQWlCLENBQUMscUJBQXFCLENBQUM7NEJBQ3BFLFNBQVMsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFNBQVM7NEJBQy9CLFFBQVEsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVE7NEJBQzdCLFdBQVcsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLFdBQVcsSUFBSSxFQUFFOzRCQUN6QyxVQUFVLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxVQUFVO3lCQUNwQyxDQUFDLENBQUM7d0JBQ0MsT0FBTyxHQUFHLElBQUksS0FBSyxDQUFDLGNBQWMsQ0FBQyxFQUFHLENBQUMsQ0FBQzs7Ozt3QkFFckIscUJBQU0sTUFBTSxDQUFDLHlCQUF5QixDQUFDLHFCQUFxQixFQUFFLE9BQU8sQ0FBQyxFQUFBOzRCQUE3RSxxQkFBTSxDQUFDLFNBQXNFLENBQUMsQ0FBQyxJQUFJLEVBQUE7O3dCQUF6RixHQUFHLEdBQUcsU0FBbUY7d0JBQy9GLElBQUcsQ0FBQyxHQUFHLENBQUMsU0FBUyxFQUFFOzRCQUNmLHNCQUFPLE9BQU8sQ0FBQyxPQUFPLENBQUM7b0NBQ25CLEtBQUssRUFBRSxzQkFBc0I7aUNBQ2hDLENBQUMsRUFBQTt5QkFDTDt3QkFDRCxzQkFBTyxHQUFHLEVBQUE7Ozt3QkFFVixPQUFPLENBQUMsS0FBSyxDQUFDLE9BQUssQ0FBQyxDQUFBO3dCQUNwQixzQkFBTyxPQUFPLENBQUMsT0FBTyxDQUFDO2dDQUNuQixLQUFLLFNBQUE7NkJBQ1IsQ0FBQyxFQUFBOzs7OztLQUVUO0lBQ0wsc0JBQUM7QUFBRCxDQUFDLEFBcENELElBb0NDIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaUdyb3VwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vc3JjL2xpYi9jb21wb25lbnQvYXBpR3JvdXBzL1NDcmVhdGVBcGlHcm91cC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7OztHQU1HO0FBQ0gsNEVBQWdFO0FBQ2hFLHdEQUF3RDtBQUN4RCx3REFBNEM7QUFDNUMsMkNBQXVEO0FBQ3ZELDRDQUEyQztBQUMzQztJQUlJLHlCQUFZLFdBQW1CLEVBQUUsZUFBc0IsRUFBRSxLQUFLO1FBQzFELElBQUksQ0FBQyxXQUFXLEdBQUcsV0FBVyxDQUFBO1FBQzlCLElBQUksQ0FBQyxlQUFlLEdBQUcsZUFBZSxDQUFBO1FBQ3RDLElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFBO0lBQ3RCLENBQUM7SUFDRDs7T0FFRztJQUNHLHdDQUFjLEdBQXBCOzs7Ozs7d0JBQ1EsTUFBTSxHQUFHLHVCQUFVLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLGVBQWUsRUFBRSxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxDQUFDO3dCQUM1RixxQkFBcUIsR0FBRyxJQUFJLGlCQUFpQixDQUFDLHFCQUFxQixDQUFDOzRCQUNwRSxTQUFTLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxTQUFTOzRCQUMvQixRQUFRLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxRQUFROzRCQUM3QixXQUFXLEVBQUUsSUFBSSxDQUFDLEtBQUssQ0FBQyxXQUFXLElBQUksRUFBRTs0QkFDekMsVUFBVSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsVUFBVTt5QkFDcEMsQ0FBQyxDQUFDO3dCQUNDLE9BQU8sR0FBRyxJQUFJLEtBQUssQ0FBQyxjQUFjLENBQUMsRUFBRyxDQUFDLENBQUM7d0JBQ3JDLHFCQUFNLElBQUEsMEJBQWtCLEVBQUMsTUFBTSxFQUFFLDJCQUEyQixFQUFFLHFCQUFxQixFQUFFLE9BQU8sQ0FBQyxFQUFBOzRCQUFwRyxzQkFBTyxTQUE2RixFQUFBOzs7O0tBQ3ZHO0lBQ0wsc0JBQUM7QUFBRCxDQUFDLEFBdkJELElBdUJDIn0=

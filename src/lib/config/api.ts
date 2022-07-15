@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 23:56:18
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 01:24:28
+ * @LastEditTime: 2022-07-14 22:48:20
  */
 export const defaultApi = {
   visibility: 'PRIVATE',
@@ -13,7 +13,7 @@ export const defaultApi = {
   requestConfig: {
     requestProtocol: 'HTTP,HTTPS',
     requestHttpMethod: 'ANY',
-    requestPath: '/subtract',
+    // requestPath: '/subtract',
     bodyFormat: '',
     postBodyDescription: '',
     requestMode: 'PASSTHROUGH',
@@ -23,10 +23,10 @@ export const defaultApi = {
   serviceConfig: {
     serviceProtocol: 'HTTP',
     serviceHttpMethod: 'ANY',
-    serviceAddress:
-      'https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run',
+    // serviceAddress:
+    //   'https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run',
     serviceTimeout: '10000',
-    servicePath: '/api/add',
+    // servicePath: '/api/add',
     mock: 'FALSE',
     mockResult: '',
     ossConfig: { Action: 'GetObject' },
@@ -53,6 +53,6 @@ export const defaultApi = {
   allowSignatureMethod: 'HmacSHA256',
   appCodeAuthType: '',
   webSocketApiType: 'COMMON',
-  regionId: 'cn-shenzhen',
+  // regionId: 'cn-shenzhen',
   other: {},
 }

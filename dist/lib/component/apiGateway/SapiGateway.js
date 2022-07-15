@@ -43,7 +43,7 @@ var SCreateApi_1 = require("./SCreateApi");
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 01:25:43
+ * @LastEditTime: 2022-07-15 00:50:41
  * @description: api网关相关操作
  */
 var SApiGateway = /** @class */ (function () {
@@ -51,29 +51,55 @@ var SApiGateway = /** @class */ (function () {
         this.config = config;
     }
     SApiGateway.prototype.createApis = function () {
-        var _this = this;
-        var _a = this.config, access = _a.access, domain = _a.domain, region = _a.region, groupId = _a.groupId, apis = _a.apis;
-        apis === null || apis === void 0 ? void 0 : apis.forEach(function (item) { return __awaiter(_this, void 0, void 0, function () {
-            var createapi;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, access, domain, region, groupId, apis, successApis, promiseArr;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        createapi = new SCreateApi_1.SCreateApi({
-                            api: item,
-                            access: access,
-                            domain: domain,
-                            region: region,
-                            groupId: groupId,
+                        _a = this.config, access = _a.access, domain = _a.domain, region = _a.region, groupId = _a.groupId, apis = _a.apis;
+                        successApis = [];
+                        promiseArr = apis === null || apis === void 0 ? void 0 : apis.map(function (item) {
+                            return __awaiter(this, void 0, void 0, function () {
+                                var createapi, res, config;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            createapi = new SCreateApi_1.SCreateApi({
+                                                api: item,
+                                                access: access,
+                                                domain: domain,
+                                                region: region,
+                                                groupId: groupId,
+                                            });
+                                            return [4 /*yield*/, createapi.createApiByConfig()];
+                                        case 1:
+                                            res = _a.sent();
+                                            if (!res.responseStatus) {
+                                                console.log('创建api失败:', res.error);
+                                            }
+                                            else {
+                                                config = {
+                                                    apiName: item.apiName,
+                                                    path: "/".concat(item.requestConfig.requestPath),
+                                                    apiId: res.apiId
+                                                };
+                                                console.log('创建api成功:', config);
+                                                successApis.push(config);
+                                            }
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
                         });
-                        return [4 /*yield*/, createapi.createApiByConfig()];
+                        return [4 /*yield*/, Promise.all(promiseArr)];
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                        _b.sent();
+                        return [2 /*return*/, successApis];
                 }
             });
-        }); });
+        });
     };
     return SApiGateway;
 }());
 exports.SApiGateway = SApiGateway;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2FwaUdhdGV3YXkuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudC9hcGlHYXRld2F5L1NhcGlHYXRld2F5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLDJDQUF5QztBQUV6Qzs7Ozs7OztHQU9HO0FBQ0g7SUFFRSxxQkFBWSxNQUFrQjtRQUM1QixJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQTtJQUN0QixDQUFDO0lBQ0QsZ0NBQVUsR0FBVjtRQUFBLGlCQVlDO1FBWE8sSUFBQSxLQUE0QyxJQUFJLENBQUMsTUFBTSxFQUFyRCxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxPQUFPLGFBQUEsRUFBRSxJQUFJLFVBQWdCLENBQUE7UUFDN0QsSUFBSSxhQUFKLElBQUksdUJBQUosSUFBSSxDQUFFLE9BQU8sQ0FBQyxVQUFNLElBQUk7Ozs7O3dCQUNoQixTQUFTLEdBQUcsSUFBSSx1QkFBVSxDQUFDOzRCQUMvQixHQUFHLEVBQUUsSUFBSTs0QkFDVCxNQUFNLFFBQUE7NEJBQ04sTUFBTSxRQUFBOzRCQUNOLE1BQU0sUUFBQTs0QkFDTixPQUFPLFNBQUE7eUJBQ1IsQ0FBQyxDQUFBO3dCQUNGLHFCQUFNLFNBQVMsQ0FBQyxpQkFBaUIsRUFBRSxFQUFBOzt3QkFBbkMsU0FBbUMsQ0FBQTs7OzthQUNwQyxDQUFDLENBQUE7SUFDSixDQUFDO0lBQ0gsa0JBQUM7QUFBRCxDQUFDLEFBbEJELElBa0JDO0FBbEJZLGtDQUFXIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU2FwaUdhdGV3YXkuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvbGliL2NvbXBvbmVudC9hcGlHYXRld2F5L1NhcGlHYXRld2F5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLDJDQUF5QztBQUV6Qzs7Ozs7OztHQU9HO0FBQ0g7SUFFRSxxQkFBWSxNQUFrQjtRQUM1QixJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQTtJQUN0QixDQUFDO0lBQ0ssZ0NBQVUsR0FBaEI7Ozs7Ozt3QkFDUSxLQUE0QyxJQUFJLENBQUMsTUFBTSxFQUFyRCxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxNQUFNLFlBQUEsRUFBRSxPQUFPLGFBQUEsRUFBRSxJQUFJLFVBQUEsQ0FBZ0I7d0JBQ3ZELFdBQVcsR0FBRyxFQUFFLENBQUE7d0JBQ2xCLFVBQVUsR0FBSSxJQUFJLGFBQUosSUFBSSx1QkFBSixJQUFJLENBQUUsR0FBRyxDQUFDLFVBQWUsSUFBSTs7Ozs7OzRDQUN2QyxTQUFTLEdBQUcsSUFBSSx1QkFBVSxDQUFDO2dEQUMvQixHQUFHLEVBQUUsSUFBSTtnREFDVCxNQUFNLFFBQUE7Z0RBQ04sTUFBTSxRQUFBO2dEQUNOLE1BQU0sUUFBQTtnREFDTixPQUFPLFNBQUE7NkNBQ1IsQ0FBQyxDQUFBOzRDQUNVLHFCQUFNLFNBQVMsQ0FBQyxpQkFBaUIsRUFBRSxFQUFBOzs0Q0FBekMsR0FBRyxHQUFHLFNBQW1DOzRDQUMvQyxJQUFHLENBQUMsR0FBRyxDQUFDLGNBQWMsRUFBRTtnREFDdEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxVQUFVLEVBQUUsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFBOzZDQUNuQztpREFBSztnREFDRSxNQUFNLEdBQUc7b0RBQ2IsT0FBTyxFQUFFLElBQUksQ0FBQyxPQUFPO29EQUNyQixJQUFJLEVBQUUsV0FBSSxJQUFJLENBQUMsYUFBYSxDQUFDLFdBQVcsQ0FBRTtvREFDMUMsS0FBSyxFQUFFLEdBQUcsQ0FBQyxLQUFLO2lEQUNqQixDQUFBO2dEQUNELE9BQU8sQ0FBQyxHQUFHLENBQUMsVUFBVSxFQUFFLE1BQU0sQ0FBQyxDQUFBO2dEQUMvQixXQUFXLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxDQUFBOzZDQUN6Qjs7Ozs7eUJBQ0YsQ0FBQyxDQUFBO3dCQUNGLHFCQUFNLE9BQU8sQ0FBQyxHQUFHLENBQUMsVUFBVSxDQUFDLEVBQUE7O3dCQUE3QixTQUE2QixDQUFBO3dCQUM3QixzQkFBTyxXQUFXLEVBQUE7Ozs7S0FDbkI7SUFDSCxrQkFBQztBQUFELENBQUMsQUFoQ0QsSUFnQ0M7QUFoQ1ksa0NBQVcifQ==

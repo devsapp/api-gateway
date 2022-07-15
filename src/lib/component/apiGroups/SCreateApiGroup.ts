@@ -3,11 +3,12 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:51:19
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-14 00:18:09
+ * @LastEditTime: 2022-07-15 00:37:32
  */
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
 // import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
+import { handleClientRequst } from '../../tools/tools';
 import { ClientInit } from '../ClientInit';
 export default class SCreateApiGroup {
     private props
@@ -30,19 +31,6 @@ export default class SCreateApiGroup {
             instanceId: this.props.instanceId
         });
         let runtime = new $Util.RuntimeOptions({ });
-        try {
-            const res = await (await client.createApiGroupWithOptions(createApiGroupRequest, runtime)).body;
-            if(!res.tagStatus) {
-                return Promise.resolve({
-                    error: 'cant create apiGroup'
-                })
-            }
-            return res
-        } catch (error) {
-            console.error(error)
-            return Promise.resolve({
-                error
-            })
-        }    
+        return await handleClientRequst(client, 'createApiGroupWithOptions', createApiGroupRequest, runtime)  
     }
 }

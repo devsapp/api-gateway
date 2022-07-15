@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-13 22:34:41
+ * @LastEditTime: 2022-07-15 00:11:10
  */
 import logger from './common/logger'
 import { InputProps } from './common/entity'
@@ -24,7 +24,6 @@ export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props } = parseInput(inputs)
     const createApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
-    const res = await createApiGroup.deploy()
-    console.log('创建成功', res)
+    await createApiGroup.deploy()
   }
 }

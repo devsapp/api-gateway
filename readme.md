@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-13 21:52:00
+ * @LastEditTime: 2022-07-16 21:52:22
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -20,14 +20,14 @@
 </p>
 
 # 组件简介
-`api-gateway`组件针对于云厂商的api网关产品开发而来，避免重复复杂的操作，采用简单的统一配置文件（s.yaml），快速完成api网关的配置，部署。
+`api-gateway`组件针对于云厂商的api网关产品开发而来：避免重复复杂的操作，采用简单的统一配置文件（s.yaml），快速完成api网关的配置和部署。
 
 
 # 快速开始
 
 🙋 两步即可上手`api-gateway`组件的使用：
 
-❶ 完成极简或全面灵活的配置（一切通过s.yaml文件）
+❶ 完成极简或全面的配置（一切通过s.yaml文件）
 
 ❷ 使用`s api-gateway deploy`快速部署你的第一个api网关组吧
 
@@ -104,11 +104,10 @@ gateway:
             servicePath: /newApi/mul
 ```
 
-那么他的以下配置将是默认的：
+那么它的以下配置将是默认的：
 
 - api网关组
 
-  
 
 - api网关
 

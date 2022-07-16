@@ -3,13 +3,11 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 18:16:44
+ * @LastEditTime: 2022-07-16 20:58:53
  */
 import { InputProps } from './common/entity'
 import { SApiGroup } from './lib/component/apiGroups/SApiGroup'
-import { parseInput } from './lib/utils'
-import { ApiStageName } from './lib/declaration/interface'
-import { SDeployApi } from './lib/component/apiGateway/SDeployApi'
+import { parseInput } from './lib/utils' 
 
 export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
@@ -31,6 +29,6 @@ export default class ComponentDemo {
   //     },
   //     region: props.region
   //     }).batchDeployApis()
-  //   console.log(deployApisRes)
+  //   Slogger.info(deployApisRes)
   // }
 }

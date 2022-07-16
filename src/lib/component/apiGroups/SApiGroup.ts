@@ -3,13 +3,14 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 18:18:22
+ * @LastEditTime: 2022-07-16 21:48:42
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
 import { SApiGateway } from '../apiGateway/SapiGateway';
 import { SDeployApi } from '../apiGateway/SDeployApi';
 import { ApiStageName } from '../../declaration/interface';
+import { Slogger } from '../../tools/tools';
 export class SApiGroup {
     private AccessKeyID
     private AccessKeySecret
@@ -29,13 +30,13 @@ export class SApiGroup {
         const sCreateApiGroup =  new SCreateApiGroup(this.AccessKeyID, this.AccessKeySecret, this.props)
         const res = await sCreateApiGroup.createApiGroup()
         if(!res.responseStatus) {
-            console.log('创建api组失败:', res.error)
+            Slogger.info('创建api组失败:', res.error)
             return
         }
         const {groupId, subDomain} = res
         this.groupId = groupId
         this.subDomain = subDomain
-        console.log('创建api组成功: ', {
+        Slogger.info('创建api组成功: ', {
             groupName: this.props.groupName,
             groupId,
             subDomain,
@@ -52,7 +53,7 @@ export class SApiGroup {
             apis: this.props.apis
         })
         const apis = await sApiGateway.createApis()
-        // console.log('apis', apis)
+        // Slogger.info('apis', apis)
         const deployApis: {
             groupId: string
             apiUid: string
@@ -63,7 +64,7 @@ export class SApiGroup {
             }
         })
         if(apis.length) {
-            console.log('正在发布中...')
+            Slogger.info('正在发布中...')
             const deployApisRes = await new SDeployApi({
                 stageName: ApiStageName.RELEASE,
                 apis: deployApis,
@@ -74,7 +75,7 @@ export class SApiGroup {
                 region: this.props.region
             }).batchDeployApis()
             if(deployApisRes.responseStatus) {
-                console.log(`发布成功，使用 ${this.subDomain+this.props.basePath}/path 作为api网关访问地址`)
+                Slogger.info('发布成功。', `使用 http://${this.subDomain+this.props.basePath} 拼接api请求path作为api网关访问地址`)
             }
         }
     }

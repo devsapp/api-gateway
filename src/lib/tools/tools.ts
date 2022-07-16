@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 17:41:25
+ * @LastEditTime: 2022-07-16 21:45:29
  */
 import { InputProps } from '../../common/entity'
 import { constant } from '../component/constant'
@@ -110,8 +110,9 @@ export function formatRequest(target: object) {
   return obj
 }
 import CloudAPI20160714 from '@alicloud/cloudapi20160714'
-import * as $Util from '@alicloud/tea-util';
+import * as $Util from '@alicloud/tea-util'
 import { SClientResponseBody } from '../declaration/interface'
+import { Logger } from '@serverless-devs/core'
 export async function handleClientRequst(
   client: CloudAPI20160714,
   fnName: string,
@@ -119,12 +120,78 @@ export async function handleClientRequst(
   runtime: $Util.RuntimeOptions
 ): Promise<SClientResponseBody> {
   try {
-    return Object.assign({responseStatus: true},(await client[fnName](body, runtime)).body) 
+    return Object.assign(
+      { responseStatus: true },
+      (await client[fnName](body, runtime)).body
+    )
   } catch (error) {
     // console.error(error)
     return {
       responseStatus: false,
       error,
     }
+  }
+}
+
+
+/**
+ * @description  封装core包的打印方法，去除不必要参数，支持读入多个log以及对象log
+ */
+export class Slogger {
+  static logger = new Logger('S-CORE')
+  static formatLog(logs: any[]) {
+    const arr: any[] = deepClone(logs, [])
+    for (let i = 0; i < arr.length; i++) {
+      if (typeof arr[i] === 'string') continue
+      if (typeof arr[i] === 'object') {
+        arr.splice(i, 1)
+        let len = 0
+        for (const key in logs[i]) {
+          arr.splice(i + len, 0, `${key}: ${logs[i][key]}`)
+          len++
+        }
+        i += len - 1
+      }
+    }
+    return arr
+  }
+  static info(...logs) {
+    logs = this.formatLog(logs)
+    logs.forEach(log => {
+      this.logger.info(log)
+    })
+  }
+
+  static warn(...logs) {
+    logs = this.formatLog(logs)
+    logs.forEach(log => {
+      this.logger.warn(log)
+    })
+  }
+  static error(...logs) {
+    logs = this.formatLog(logs)
+    logs.forEach(log => {
+      this.logger.error(log)
+    })
+  }
+  static debug(...logs) {
+    logs = this.formatLog(logs)
+    logs.forEach(log => {
+      this.logger.debug(log)
+    })
+  }
+  static log(...logs) {
+    logs = this.formatLog(logs)
+    logs.forEach(log => {
+      this.logger.log(log)
+    })
+  }
+  static task(
+    tasks: {
+      title: string
+      task: Function
+    }[]
+  ) {
+    this.logger.task('tast', tasks)
   }
 }

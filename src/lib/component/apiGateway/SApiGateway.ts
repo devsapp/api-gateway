@@ -1,3 +1,4 @@
+import { SApisGroup } from '../../declaration/interface'
 import { SCreateApi } from './SCreateApi'
 
 /*
@@ -5,7 +6,7 @@ import { SCreateApi } from './SCreateApi'
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:50:41
+ * @LastEditTime: 2022-07-16 18:21:04
  * @description: api网关相关操作
  */
 export class SApiGateway {
@@ -28,9 +29,9 @@ export class SApiGateway {
       if(!res.responseStatus) {
         console.log('创建api失败:', res.error)
       }else {
-        const config = {
+        const config = { 
           apiName: item.apiName,
-          path: `/${item.requestConfig.requestPath}`,
+          path: `${item.requestConfig.requestPath}`,
           apiId: res.apiId
         }
         console.log('创建api成功:', config)

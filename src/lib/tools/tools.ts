@@ -3,11 +3,11 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:35:02
+ * @LastEditTime: 2022-07-16 17:41:25
  */
 import { InputProps } from '../../common/entity'
 import { constant } from '../component/constant'
-//处理
+//处理auto字段
 export function handleAutoFormat(o: any) {
   const map = new Map()
   Object.keys(constant.autoMapTable).forEach(item => {
@@ -110,12 +110,14 @@ export function formatRequest(target: object) {
   return obj
 }
 import CloudAPI20160714 from '@alicloud/cloudapi20160714'
+import * as $Util from '@alicloud/tea-util';
+import { SClientResponseBody } from '../declaration/interface'
 export async function handleClientRequst(
   client: CloudAPI20160714,
   fnName: string,
   body,
-  runtime
-) {
+  runtime: $Util.RuntimeOptions
+): Promise<SClientResponseBody> {
   try {
     return Object.assign({responseStatus: true},(await client[fnName](body, runtime)).body) 
   } catch (error) {

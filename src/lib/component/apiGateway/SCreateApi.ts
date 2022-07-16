@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:10:37
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:23:41
+ * @LastEditTime: 2022-07-16 17:07:46
  */
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
 // 依赖的模块可通过下载工程中的模块依赖文件或右上角的获取 SDK 依赖信息查看
@@ -11,12 +11,13 @@ import * as $Util from '@alicloud/tea-util';
 import { ClientInit } from '../ClientInit';
 import { defaultApi } from '../../config/api';
 import { formatRequest, handleClientRequst, merge } from '../../tools/tools';
+import { SClientResponseBody, SSingleApiConfig } from '../../declaration/interface';
 export class SCreateApi {
     config: SSingleApiConfig
     constructor(config: SSingleApiConfig) {
         this.config = config
     }
-    async createApiByConfig() {
+    async createApiByConfig():Promise<SClientResponseBody> {
         let client = ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
         const defaultApiConfig = {
           groupId: this.config.groupId,

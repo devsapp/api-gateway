@@ -6,5 +6,5 @@ export default class SCreateApiGroup {
     /**
      * @description 创建api网关组
      */
-    createApiGroup(): Promise<any>;
+    createApiGroup(): Promise<import("../../declaration/interface").SClientResponseBody>;
 }

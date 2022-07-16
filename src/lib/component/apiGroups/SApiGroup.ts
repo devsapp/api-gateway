@@ -3,11 +3,13 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:40:56
+ * @LastEditTime: 2022-07-16 18:18:22
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
 import { SApiGateway } from '../apiGateway/SapiGateway';
+import { SDeployApi } from '../apiGateway/SDeployApi';
+import { ApiStageName } from '../../declaration/interface';
 export class SApiGroup {
     private AccessKeyID
     private AccessKeySecret
@@ -30,7 +32,7 @@ export class SApiGroup {
             console.log('创建api组失败:', res.error)
             return
         }
-        const {groupId, subDomain} = res as  CreateApiGroupResponseBody
+        const {groupId, subDomain} = res
         this.groupId = groupId
         this.subDomain = subDomain
         console.log('创建api组成功: ', {
@@ -50,6 +52,30 @@ export class SApiGroup {
             apis: this.props.apis
         })
         const apis = await sApiGateway.createApis()
-        console.log('apis', apis)
+        // console.log('apis', apis)
+        const deployApis: {
+            groupId: string
+            apiUid: string
+        }[] = apis.map((item) => {
+            return {
+                groupId: this.groupId, 
+                apiUid: item.apiId
+            }
+        })
+        if(apis.length) {
+            console.log('正在发布中...')
+            const deployApisRes = await new SDeployApi({
+                stageName: ApiStageName.RELEASE,
+                apis: deployApis,
+                access:{
+                    AccessKeyID: this.AccessKeyID, 
+                    AccessKeySecret: this.AccessKeySecret  
+                },
+                region: this.props.region
+            }).batchDeployApis()
+            if(deployApisRes.responseStatus) {
+                console.log(`发布成功，使用 ${this.subDomain+this.props.basePath}/path 作为api网关访问地址`)
+            }
+        }
     }
 }

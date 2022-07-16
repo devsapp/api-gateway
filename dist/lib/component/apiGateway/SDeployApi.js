@@ -59,48 +59,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SCreateApi = void 0;
-/*
- * @Descripttion:
- * @Author: Wang Dejiang(aei)
- * @Date: 2022-07-13 22:10:37
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 17:07:46
- */
-var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
-// 依赖的模块可通过下载工程中的模块依赖文件或右上角的获取 SDK 依赖信息查看
-var $Util = __importStar(require("@alicloud/tea-util"));
+exports.SDeployApi = void 0;
 var ClientInit_1 = require("../ClientInit");
-var api_1 = require("../../config/api");
+var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
+var $Util = __importStar(require("@alicloud/tea-util"));
 var tools_1 = require("../../tools/tools");
-var SCreateApi = /** @class */ (function () {
-    function SCreateApi(config) {
-        this.config = config;
+var SDeployApi = /** @class */ (function () {
+    function SDeployApi(apisconfig) {
+        this.apisconfig = apisconfig;
     }
-    SCreateApi.prototype.createApiByConfig = function () {
+    SDeployApi.prototype.batchDeployApis = function () {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var client, defaultApiConfig, currentApiConfig, createApiRequest, runtime;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var client, apis, batchDeployApisRequest, runtime;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        client = ClientInit_1.ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
-                        defaultApiConfig = {
-                            groupId: this.config.groupId,
-                            regionId: this.config.region,
-                            serviceConfig: {
-                                serviceAddress: this.config.domain
-                            }
-                        };
-                        currentApiConfig = (0, tools_1.merge)({}, api_1.defaultApi, defaultApiConfig, this.config.api);
-                        createApiRequest = new $CloudAPI20160714.CreateApiRequest((0, tools_1.formatRequest)(currentApiConfig));
+                        client = ClientInit_1.ClientInit.createClient(this.apisconfig.access.AccessKeyID, this.apisconfig.access.AccessKeySecret, this.apisconfig.region);
+                        apis = ((_a = this.apisconfig.apis) === null || _a === void 0 ? void 0 : _a.map(function (item) {
+                            return new $CloudAPI20160714.BatchDeployApisRequestApi(item);
+                        })) || [];
+                        batchDeployApisRequest = new $CloudAPI20160714.BatchDeployApisRequest({
+                            api: apis,
+                            stageName: 'RELEASE',
+                            description: '批量发布api',
+                        });
                         runtime = new $Util.RuntimeOptions({});
-                        return [4 /*yield*/, (0, tools_1.handleClientRequst)(client, 'createApiWithOptions', createApiRequest, runtime)];
-                    case 1: return [2 /*return*/, _a.sent()];
+                        return [4 /*yield*/, (0, tools_1.handleClientRequst)(client, 'batchDeployApisWithOptions', batchDeployApisRequest, runtime)];
+                    case 1: return [2 /*return*/, _b.sent()];
                 }
             });
         });
     };
-    return SCreateApi;
+    return SDeployApi;
 }());
-exports.SCreateApi = SCreateApi;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0NyZWF0ZUFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L2FwaUdhdGV3YXkvU0NyZWF0ZUFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOzs7Ozs7R0FNRztBQUNILDRFQUFnRTtBQUNoRSx5Q0FBeUM7QUFDekMsd0RBQTRDO0FBQzVDLDRDQUEyQztBQUMzQyx3Q0FBOEM7QUFDOUMsMkNBQTZFO0FBRTdFO0lBRUksb0JBQVksTUFBd0I7UUFDaEMsSUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUE7SUFDeEIsQ0FBQztJQUNLLHNDQUFpQixHQUF2Qjs7Ozs7O3dCQUNRLE1BQU0sR0FBRyx1QkFBVSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLENBQUM7d0JBQ3ZILGdCQUFnQixHQUFHOzRCQUN2QixPQUFPLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxPQUFPOzRCQUM1QixRQUFRLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNOzRCQUM1QixhQUFhLEVBQUU7Z0NBQ2IsY0FBYyxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTTs2QkFDbkM7eUJBQ0YsQ0FBQTt3QkFDSyxnQkFBZ0IsR0FBRyxJQUFBLGFBQUssRUFBQyxFQUFFLEVBQUUsZ0JBQVUsRUFBRSxnQkFBZ0IsRUFBRSxJQUFJLENBQUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxDQUFBO3dCQUM3RSxnQkFBZ0IsR0FBRyxJQUFJLGlCQUFpQixDQUFDLGdCQUFnQixDQUFDLElBQUEscUJBQWEsRUFBQyxnQkFBZ0IsQ0FBQyxDQUFDLENBQUM7d0JBQzNGLE9BQU8sR0FBRyxJQUFJLEtBQUssQ0FBQyxjQUFjLENBQUMsRUFBRSxDQUFDLENBQUM7d0JBQ3BDLHFCQUFNLElBQUEsMEJBQWtCLEVBQUMsTUFBTSxFQUFFLHNCQUFzQixFQUFFLGdCQUFnQixFQUFFLE9BQU8sQ0FBQyxFQUFBOzRCQUExRixzQkFBTyxTQUFtRixFQUFBOzs7O0tBQzdGO0lBQ0wsaUJBQUM7QUFBRCxDQUFDLEFBbkJELElBbUJDO0FBbkJZLGdDQUFVIn0=
+exports.SDeployApi = SDeployApi;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU0RlcGxveUFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L2FwaUdhdGV3YXkvU0RlcGxveUFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQVFBLDRDQUEwQztBQUMxQyw0RUFBK0Q7QUFDL0Qsd0RBQTJDO0FBQzNDLDJDQUFzRDtBQUV0RDtJQUVFLG9CQUFZLFVBQWlDO1FBQzNDLElBQUksQ0FBQyxVQUFVLEdBQUcsVUFBVSxDQUFBO0lBQzlCLENBQUM7SUFDSyxvQ0FBZSxHQUFyQjs7Ozs7Ozt3QkFDTSxNQUFNLEdBQUcsdUJBQVUsQ0FBQyxZQUFZLENBQ2xDLElBQUksQ0FBQyxVQUFVLENBQUMsTUFBTSxDQUFDLFdBQVcsRUFDbEMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxNQUFNLENBQUMsZUFBZSxFQUN0QyxJQUFJLENBQUMsVUFBVSxDQUFDLE1BQU0sQ0FDdkIsQ0FBQTt3QkFDSyxJQUFJLEdBQUcsQ0FBQSxNQUFBLElBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSwwQ0FBRSxHQUFHLENBQUMsVUFBQSxJQUFJOzRCQUN6QyxPQUFPLElBQUksaUJBQWlCLENBQUMseUJBQXlCLENBQUMsSUFBSSxDQUFDLENBQUE7d0JBQzlELENBQUMsQ0FBQyxLQUFJLEVBQUUsQ0FBQTt3QkFDSixzQkFBc0IsR0FBRyxJQUFJLGlCQUFpQixDQUFDLHNCQUFzQixDQUFDOzRCQUN4RSxHQUFHLEVBQUUsSUFBSTs0QkFDVCxTQUFTLEVBQUUsU0FBUzs0QkFDcEIsV0FBVyxFQUFFLFNBQVM7eUJBQ3ZCLENBQUMsQ0FBQTt3QkFDRSxPQUFPLEdBQUcsSUFBSSxLQUFLLENBQUMsY0FBYyxDQUFDLEVBQUUsQ0FBQyxDQUFBO3dCQUNuQyxxQkFBTSxJQUFBLDBCQUFrQixFQUM3QixNQUFNLEVBQ04sNEJBQTRCLEVBQzVCLHNCQUFzQixFQUN0QixPQUFPLENBQ1IsRUFBQTs0QkFMRCxzQkFBTyxTQUtOLEVBQUE7Ozs7S0FDRjtJQUNILGlCQUFDO0FBQUQsQ0FBQyxBQTNCRCxJQTJCQztBQTNCWSxnQ0FBVSJ9

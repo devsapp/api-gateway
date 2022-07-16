@@ -35,37 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
- * @Descripttion:
- * @Author: Wang Dejiang(aei)
- * @Date: 2022-07-05 22:22:42
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:11:10
- */
-var logger_1 = __importDefault(require("./common/logger"));
 var SApiGroup_1 = require("./lib/component/apiGroups/SApiGroup");
 var utils_1 = require("./lib/utils");
 var ComponentDemo = /** @class */ (function () {
     function ComponentDemo() {
     }
-    /**
-     * demo 实例
-     * @param inputs
-     * @returns
-     */
-    ComponentDemo.prototype.test = function (inputs) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                logger_1.default.debug("input: ".concat(JSON.stringify(inputs.props)));
-                logger_1.default.info('command test');
-                return [2 /*return*/, { hello: 'world' }];
-            });
-        });
-    };
     ComponentDemo.prototype.deploy = function (inputs) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, AccessKeyID, AccessKeySecret, props, createApiGroup;
@@ -85,4 +60,4 @@ var ComponentDemo = /** @class */ (function () {
     return ComponentDemo;
 }());
 exports.default = ComponentDemo;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7Ozs7O0dBTUc7QUFDSCwyREFBb0M7QUFFcEMsaUVBQStEO0FBQy9ELHFDQUF3QztBQUV4QztJQUFBO0lBZ0JBLENBQUM7SUFmQzs7OztPQUlHO0lBQ1UsNEJBQUksR0FBakIsVUFBa0IsTUFBa0I7OztnQkFDbEMsZ0JBQU0sQ0FBQyxLQUFLLENBQUMsaUJBQVUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLENBQUUsQ0FBQyxDQUFBO2dCQUN0RCxnQkFBTSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsQ0FBQTtnQkFDM0Isc0JBQU8sRUFBRSxLQUFLLEVBQUUsT0FBTyxFQUFFLEVBQUE7OztLQUMxQjtJQUNZLDhCQUFNLEdBQW5CLFVBQW9CLE1BQWtCOzs7Ozs7d0JBQzlCLEtBQTBDLElBQUEsa0JBQVUsRUFBQyxNQUFNLENBQUMsRUFBMUQsV0FBVyxpQkFBQSxFQUFFLGVBQWUscUJBQUEsRUFBRSxLQUFLLFdBQUEsQ0FBdUI7d0JBQzVELGNBQWMsR0FBRyxJQUFJLHFCQUFTLENBQUMsV0FBVyxFQUFFLGVBQWUsRUFBRSxLQUFLLENBQUMsQ0FBQTt3QkFDekUscUJBQU0sY0FBYyxDQUFDLE1BQU0sRUFBRSxFQUFBOzt3QkFBN0IsU0FBNkIsQ0FBQTs7Ozs7S0FDOUI7SUFDSCxvQkFBQztBQUFELENBQUMsQUFoQkQsSUFnQkMifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxpRUFBK0Q7QUFDL0QscUNBQXdDO0FBSXhDO0lBQUE7SUFzQkEsQ0FBQztJQXJCYyw4QkFBTSxHQUFuQixVQUFvQixNQUFrQjs7Ozs7O3dCQUM5QixLQUEwQyxJQUFBLGtCQUFVLEVBQUMsTUFBTSxDQUFDLEVBQTFELFdBQVcsaUJBQUEsRUFBRSxlQUFlLHFCQUFBLEVBQUUsS0FBSyxXQUFBLENBQXVCO3dCQUM1RCxjQUFjLEdBQUcsSUFBSSxxQkFBUyxDQUFDLFdBQVcsRUFBRSxlQUFlLEVBQUUsS0FBSyxDQUFDLENBQUE7d0JBQ3pFLHFCQUFNLGNBQWMsQ0FBQyxNQUFNLEVBQUUsRUFBQTs7d0JBQTdCLFNBQTZCLENBQUE7Ozs7O0tBQzlCO0lBaUJILG9CQUFDO0FBQUQsQ0FBQyxBQXRCRCxJQXNCQyJ9

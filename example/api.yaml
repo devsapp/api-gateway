@@ -1,0 +1,60 @@
+apiConfig:
+  groupId: c93795f011ac4c6ca1ad1c1415a1a366 #api组id
+  apiName: myApi1 #api名字
+  visibility: PUBLIC #api是否公开
+  description: 这是一段对api的描述文字 #api描述
+  requestConfig: #前端信息
+    requestProtocol: HTTP #API 支持的协议类型
+    requestHttpMethod: GET #HTTP Method
+    requestPath: /mcl #API path
+    requestMode: MAPPING #请求的模式,这里是入参映射
+  backendEnable: false
+  serviceConfig: #后端信息
+    serviceProtocol: FunctionCompute #后端协议类型
+    serviceAddress: https://mclfunction-test-vsqdkvpcai.cn-hangzhou.fcapp.run #调用后端服务地址
+    serviceTimeout: "10000"
+    serviceVpcEnable: "FALSE"
+    servicePath: / #后端服务地址
+    serviceHttpMethod: GET #后端协议method
+    ContentTypeCatagory: CLIENT
+    functionComputeConfig:
+      fcBaseUrl: ""
+      fcType: "FCEvent"
+      functionName: "mclFunction"
+      path: ""
+      qualifier: "LATEST"
+      roleArn: "acs:ram::1582182718458392:role/aliyunserviceroleforapigateway"
+      serviceName: test1
+      fcRegionId: cn-hangzhou
+      selectServiceName: test1
+      selectFunctionName: mclFunction
+  requestParameters: #前端入参信息
+    - ApiParameterName: a
+      location: Query
+      parameterType: String
+      required: OPTIONAL
+      isHide: false
+    - ApiParameterName: b
+      location: Query
+      parameterType: String
+      required: OPTIONAL
+      isHide: false
+  serviceParameters: #后端参数传值
+    - serviceParameterName: a
+      type: String
+      location: Query
+      parameterCatalog: REQUEST
+    - serviceParameterName: b
+      type: String
+      location: Query
+      parameterCatalog: REQUEST
+  serviceParametersMap:
+    - serviceParameterName: a
+      requestParameterName: a
+    - serviceParameterName: b
+      requestParameterName: b
+  resultType: "JSON",
+  resultSample: "",
+  failResultSample: "",
+  errorCodeSamples: "[]",
+  openIdConnectConfig: "",

@@ -65,7 +65,7 @@ exports.SCreateApi = void 0;
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:10:37
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 17:07:46
+ * @LastEditTime: 2022-07-17 14:26:21
  */
 var $CloudAPI20160714 = __importStar(require("@alicloud/cloudapi20160714"));
 // 依赖的模块可通过下载工程中的模块依赖文件或右上角的获取 SDK 依赖信息查看

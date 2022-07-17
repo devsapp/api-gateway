@@ -1,4 +1,4 @@
-import { SClientResponseBody, SSingleApiConfig } from '../../declaration/interface';
+import { SClientResponseBody, SSingleApiConfig } from '../../declaration';
 export declare class SCreateApi {
     config: SSingleApiConfig;
     constructor(config: SSingleApiConfig);

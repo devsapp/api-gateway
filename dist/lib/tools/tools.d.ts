@@ -1,6 +1,4 @@
-import { InputProps } from '../../common/entity';
 export declare function handleAutoFormat(o: any): any;
-export declare function getAccess(inputs: InputProps): string[];
 export declare function deepClone(initalObj: any, finalObj?: any): any;
 export declare function merge(initalObj: any, ...sources: any[]): any;
 export declare function generateRandomStr(): string;
@@ -12,7 +10,7 @@ export declare function generateRandomStr(): string;
 export declare function formatRequest(target: object): any;
 import CloudAPI20160714 from '@alicloud/cloudapi20160714';
 import * as $Util from '@alicloud/tea-util';
-import { SClientResponseBody } from '../declaration/interface';
+import { SClientResponseBody } from '../declaration';
 import { Logger } from '@serverless-devs/core';
 export declare function handleClientRequst(client: CloudAPI20160714, fnName: string, body: any, runtime: $Util.RuntimeOptions): Promise<SClientResponseBody>;
 /**

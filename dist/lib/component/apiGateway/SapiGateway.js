@@ -44,7 +44,7 @@ var SCreateApi_1 = require("./SCreateApi");
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 21:19:53
+ * @LastEditTime: 2022-07-17 14:26:23
  * @description: api网关相关操作
  */
 var SApiGateway = /** @class */ (function () {

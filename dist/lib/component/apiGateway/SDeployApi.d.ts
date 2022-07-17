@@ -1,6 +1,6 @@
-import { BatchDeployApisConfig } from '../../declaration/interface';
+import { BatchDeployApisConfig } from '../../declaration';
 export declare class SDeployApi {
     private apisconfig;
     constructor(apisconfig: BatchDeployApisConfig);
-    batchDeployApis(): Promise<import("../../declaration/interface").SClientResponseBody>;
+    batchDeployApis(): Promise<import("../../declaration").SClientResponseBody>;
 }

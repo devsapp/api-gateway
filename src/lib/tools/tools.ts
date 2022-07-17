@@ -3,9 +3,8 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 21:45:29
+ * @LastEditTime: 2022-07-17 15:48:07
  */
-import { InputProps } from '../../common/entity'
 import { constant } from '../component/constant'
 //处理auto字段
 export function handleAutoFormat(o: any) {
@@ -29,13 +28,6 @@ export function handleAutoFormat(o: any) {
     }
     return obj
   })(o)
-}
-
-export function getAccess(inputs: InputProps) {
-  const {
-    credentials: { AccessKeyID, AccessKeySecret },
-  } = inputs
-  return [AccessKeyID, AccessKeySecret]
 }
 
 export function deepClone(initalObj, finalObj?) {
@@ -111,7 +103,7 @@ export function formatRequest(target: object) {
 }
 import CloudAPI20160714 from '@alicloud/cloudapi20160714'
 import * as $Util from '@alicloud/tea-util'
-import { SClientResponseBody } from '../declaration/interface'
+import { SClientResponseBody } from '../declaration'
 import { Logger } from '@serverless-devs/core'
 export async function handleClientRequst(
   client: CloudAPI20160714,

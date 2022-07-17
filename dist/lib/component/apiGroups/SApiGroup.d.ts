@@ -9,5 +9,5 @@ export declare class SApiGroup {
     /**
      * @description 一键部署
     */
-    deploy(): Promise<void | CreateApiGroupResponseBody>;
+    deploy(args?: string[]): Promise<void | CreateApiGroupResponseBody>;
 }

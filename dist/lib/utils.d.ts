@@ -6,4 +6,5 @@ export declare function parseInput(inputs: InputProps): {
     AccessKeyID: string;
     AccessKeySecret: string;
     props: any;
+    argsObj: string[];
 };

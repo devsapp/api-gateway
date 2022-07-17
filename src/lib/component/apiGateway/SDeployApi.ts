@@ -3,9 +3,9 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-15 21:52:28
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 18:19:42
+ * @LastEditTime: 2022-07-17 14:26:21
  */
-import { BatchDeployApisConfig } from '../../declaration/interface'
+import { BatchDeployApisConfig } from '../../declaration'
 import { ClientInit } from '../ClientInit'
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714'
 import * as $Util from '@alicloud/tea-util'

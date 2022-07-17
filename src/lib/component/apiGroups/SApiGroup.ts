@@ -3,13 +3,13 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 21:48:42
+ * @LastEditTime: 2022-07-17 15:52:44
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
 import { SApiGateway } from '../apiGateway/SapiGateway';
 import { SDeployApi } from '../apiGateway/SDeployApi';
-import { ApiStageName } from '../../declaration/interface';
+import { ApiStageName } from '../../declaration';
 import { Slogger } from '../../tools/tools';
 export class SApiGroup {
     private AccessKeyID
@@ -25,7 +25,7 @@ export class SApiGroup {
     /**
      * @description 一键部署
     */
-    async deploy(): Promise<void | CreateApiGroupResponseBody> {
+    async deploy(args?: string[]): Promise<void | CreateApiGroupResponseBody> {
         // TODO 根据是否有远程的apiGroup来决定是否创建
         const sCreateApiGroup =  new SCreateApiGroup(this.AccessKeyID, this.AccessKeySecret, this.props)
         const res = await sCreateApiGroup.createApiGroup()

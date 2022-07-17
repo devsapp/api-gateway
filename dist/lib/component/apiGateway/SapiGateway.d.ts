@@ -1,4 +1,4 @@
-import { SApisGroup } from '../../declaration/interface';
+import { SApisGroup } from '../../declaration';
 export declare class SApiGateway {
     private config;
     constructor(config: SApisGroup);

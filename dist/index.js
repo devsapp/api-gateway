@@ -37,27 +37,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var SApiGroup_1 = require("./lib/component/apiGroups/SApiGroup");
+var help_1 = require("./lib/help");
 var utils_1 = require("./lib/utils");
 var ComponentDemo = /** @class */ (function () {
     function ComponentDemo() {
     }
+    // TODO 尝试使用装饰器来增加参数功能 例如 --help 跳转对应的说明文档
     ComponentDemo.prototype.deploy = function (inputs) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, AccessKeyID, AccessKeySecret, props, createApiGroup;
+            var _a, AccessKeyID, AccessKeySecret, props, argsObj, createApiGroup_1, createApiGroup;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = (0, utils_1.parseInput)(inputs), AccessKeyID = _a.AccessKeyID, AccessKeySecret = _a.AccessKeySecret, props = _a.props;
+                        _a = (0, utils_1.parseInput)(inputs), AccessKeyID = _a.AccessKeyID, AccessKeySecret = _a.AccessKeySecret, props = _a.props, argsObj = _a.argsObj;
+                        if (!argsObj.length) return [3 /*break*/, 4];
+                        if (!(argsObj.includes('--help') || argsObj.includes('-h'))) return [3 /*break*/, 1];
+                        this.help('deploy');
+                        return [3 /*break*/, 3];
+                    case 1:
+                        createApiGroup_1 = new SApiGroup_1.SApiGroup(AccessKeyID, AccessKeySecret, props);
+                        return [4 /*yield*/, createApiGroup_1.deploy(argsObj)];
+                    case 2:
+                        _b.sent();
+                        _b.label = 3;
+                    case 3: return [2 /*return*/];
+                    case 4:
                         createApiGroup = new SApiGroup_1.SApiGroup(AccessKeyID, AccessKeySecret, props);
                         return [4 /*yield*/, createApiGroup.deploy()];
-                    case 1:
+                    case 5:
                         _b.sent();
                         return [2 /*return*/];
                 }
             });
         });
     };
+    ComponentDemo.prototype.help = function (methodName) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                (0, help_1.showHelpDoc)(methodName);
+                return [2 /*return*/];
+            });
+        });
+    };
     return ComponentDemo;
 }());
 exports.default = ComponentDemo;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxpRUFBK0Q7QUFDL0QscUNBQXdDO0FBRXhDO0lBQUE7SUFzQkEsQ0FBQztJQXJCYyw4QkFBTSxHQUFuQixVQUFvQixNQUFrQjs7Ozs7O3dCQUM5QixLQUEwQyxJQUFBLGtCQUFVLEVBQUMsTUFBTSxDQUFDLEVBQTFELFdBQVcsaUJBQUEsRUFBRSxlQUFlLHFCQUFBLEVBQUUsS0FBSyxXQUFBLENBQXVCO3dCQUM1RCxjQUFjLEdBQUcsSUFBSSxxQkFBUyxDQUFDLFdBQVcsRUFBRSxlQUFlLEVBQUUsS0FBSyxDQUFDLENBQUE7d0JBQ3pFLHFCQUFNLGNBQWMsQ0FBQyxNQUFNLEVBQUUsRUFBQTs7d0JBQTdCLFNBQTZCLENBQUE7Ozs7O0tBQzlCO0lBaUJILG9CQUFDO0FBQUQsQ0FBQyxBQXRCRCxJQXNCQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxpRUFBK0Q7QUFDL0QsbUNBQXdDO0FBQ3hDLHFDQUF3QztBQUV4QztJQUFBO0lBcUNBLENBQUM7SUFwQ0MsMENBQTBDO0lBQzdCLDhCQUFNLEdBQW5CLFVBQW9CLE1BQWtCOzs7Ozs7d0JBQzlCLEtBQW1ELElBQUEsa0JBQVUsRUFBQyxNQUFNLENBQUMsRUFBbkUsV0FBVyxpQkFBQSxFQUFFLGVBQWUscUJBQUEsRUFBRSxLQUFLLFdBQUEsRUFBRSxPQUFPLGFBQUEsQ0FBdUI7NkJBQ3hFLE9BQU8sQ0FBQyxNQUFNLEVBQWQsd0JBQWM7NkJBQ1osQ0FBQSxPQUFPLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxJQUFJLE9BQU8sQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLENBQUEsRUFBcEQsd0JBQW9EO3dCQUNuRCxJQUFJLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFBOzs7d0JBR2YsbUJBQWlCLElBQUkscUJBQVMsQ0FBQyxXQUFXLEVBQUUsZUFBZSxFQUFFLEtBQUssQ0FBQyxDQUFBO3dCQUN6RSxxQkFBTSxnQkFBYyxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsRUFBQTs7d0JBQXBDLFNBQW9DLENBQUE7OzRCQUV0QyxzQkFBTTs7d0JBRUYsY0FBYyxHQUFHLElBQUkscUJBQVMsQ0FBQyxXQUFXLEVBQUUsZUFBZSxFQUFFLEtBQUssQ0FBQyxDQUFBO3dCQUN6RSxxQkFBTSxjQUFjLENBQUMsTUFBTSxFQUFFLEVBQUE7O3dCQUE3QixTQUE2QixDQUFBOzs7OztLQUM5QjtJQUNZLDRCQUFJLEdBQWpCLFVBQWtCLFVBQWtCOzs7Z0JBQ2xDLElBQUEsa0JBQVcsRUFBQyxVQUFVLENBQUMsQ0FBQTs7OztLQUN4QjtJQWtCSCxvQkFBQztBQUFELENBQUMsQUFyQ0QsSUFxQ0MifQ==

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 21:52:22
+ * @LastEditTime: 2022-07-17 20:32:14
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -43,7 +43,7 @@ vars: # 全局变量
   domain: xxxx.yyy.com
 
 services:
-  gateway:
+  api-gateway:
     component: api-gateway
     props: 
       groupName: auto #组名，当为auto时，默认随机生成一个组名

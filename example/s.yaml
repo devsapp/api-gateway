@@ -7,7 +7,7 @@ vars: # [全局变量，提供给各个服务使用]
 Description: ''
 services:
   ag:
-    component: ../dist
+    component: api-gateway
     props:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例

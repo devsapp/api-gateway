@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 20:32:14
+ * @LastEditTime: 2022-07-18 22:16:58
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -36,12 +36,11 @@
 对于一个`s.yaml`文件，我们如果需要配置两个api网关，最简单的方式可以是这样：
 
 ``` yaml
-edition: 1.0.0   #版本
-name: my-project #项目名
+edition: 1.0.0 #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: component-test   #  项目名称
 access: default # 密钥别名
-vars: # 全局变量
-  domain: xxxx.yyy.com
-
+vars: # [全局变量，提供给各个服务使用]
+  region: cn-hangzhou
 services:
   api-gateway:
     component: api-gateway
@@ -53,11 +52,13 @@ services:
             requestPath: /add
           serviceConfig: #api网关后端配置
             servicePath: /api/add
+            serviceAddress: http://www.example.com
         - apiName: api2
           requestConfig:
             requestPath: /mul
           serviceConfig:
             servicePath: /newApi/mul
+            serviceAddress: http://www.example2.com
 ```
 当然，更多灵活的配置我们也需要支持，对于如请求方法，域名，参数位置等，我们可以通过扩展`s.yaml`文件来进行设置。更多参数可见 [详细配置](#详细配置)
 
@@ -97,11 +98,13 @@ gateway:
             requestPath: /add
           serviceConfig: #api网关后端配置
             servicePath: /api/add
+            serviceAddress: http://www.example.com
         - apiName: api2
           requestConfig:
             requestPath: /mul
           serviceConfig:
             servicePath: /newApi/mul
+            serviceAddress: http://www.example2.com
 ```
 
 那么它的以下配置将是默认的：

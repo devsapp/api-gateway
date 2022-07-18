@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 15:52:44
+ * @LastEditTime: 2022-07-18 22:17:07
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -49,7 +49,6 @@ export class SApiGroup {
             },
             region: this.props.region,
             groupId: this.groupId,
-            domain: this.props.domain,
             apis: this.props.apis
         })
         const apis = await sApiGateway.createApis()

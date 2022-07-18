@@ -11,7 +11,6 @@ services:
     props:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
-      domain: https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run #统一配置的后端域名
       groupName: auto #组名
       basePath: auto
       apis: 
@@ -20,6 +19,7 @@ services:
             requestPath: /subtract
           serviceConfig:
             servicePath: /api/subtract
+            serviceAddress: https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run
         - apiName: api2
           regionId: cn-hongkong #不配置默认全局变量
           requestConfig:

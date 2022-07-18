@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:50:15
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 17:16:11
+ * @LastEditTime: 2022-07-18 22:14:59
  */
 
 
@@ -13,14 +13,12 @@ export interface SAccess {
 }
 export interface SApisGroup {
     access: SAccess
-    domain: string
     region: string
     groupId: string
     apis: SApi[]
 }
 export interface SSingleApiConfig {
     access: SAccess
-    domain: string
     region: string
     groupId: string
     api: SApi

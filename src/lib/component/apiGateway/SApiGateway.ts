@@ -7,7 +7,7 @@ import { SCreateApi } from './SCreateApi'
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-18 22:18:15
+ * @LastEditTime: 2022-07-20 00:22:13
  * @description: api网关相关操作
  */
 export class SApiGateway {

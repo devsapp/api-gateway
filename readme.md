@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-18 22:16:58
+ * @LastEditTime: 2022-07-23 17:00:51
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -73,13 +73,12 @@ services:
 ### 参数解析
 | 参数全程 | 缩写 | 是否必填 |  含义  |
 | --- | --- | --- |--- |
-| --yes | -y |  否  | 是否直接采用本地配置对远端进行更改并部署|
+| --force | -f |  否  | 是否直接采用本地配置对api网关进行部署 (此时如果远程已经有该api组将自动删除并重新安装)|
+| --edit | -e |  否  | 是否根据本地配置对api网关进行修改 (此时远程应已有相应的api组配置)|
+| --help | -h | 否 | 查看deploy指令帮助文档|
 
-
-
-## help
-
-使用 help，我们可以快速的查看组件各指令的简介和参数配置
+## delete
+使用`delete`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
 
 # 详细配置
 
@@ -130,6 +129,320 @@ gateway:
 
 以及其他未被列出的配置，有些是非必填项或是暂时不需要关注到的，这里也没有涉及。
 
+如果我们需要进一步对配置文件编辑，这里有一份配置清单：
+```json
+{
+    "region": {
+      "Description": "网关分组部署的地域",
+      "Required": true,
+      "Example": "cn-hangzhou",
+      "Default": "cn-hangzhou",
+      "Type": [
+        "String"
+      ]
+    },
+    "customerDomain": {
+      "Description": "用户自定义域名",
+      "Required": false,
+      "Example": "",
+      "Default": "",
+      "Type": [
+        "String"
+      ]
+    },
+    "groupName": {
+      "Description": "分组名，详细查看apigateway关于分组的介绍",
+      "Required": true,
+      "Example": "",
+      "Default": "",
+      "Type": [
+        "String"
+      ]
+    },
+    "stageName": {
+      "Description": "环境配置，可以分为REEASE(线上环境)，TEST(测试环境)等",
+      "Required": false,
+      "Example": "RELEASE |TEST",
+      "Default": "RELEASE",
+      "Type": [
+        "String"
+      ]
+    },
+    "instanceId": {
+      "Description": "api网关组实例",
+      "Required": false,
+      "Default": "api-shared-vpc-002",
+      "Type": [
+        "String"
+      ]
+    },
+    "basePath": {
+      "Description": "api网管组的公共path",
+      "Required": false,
+      "Type": [
+        "String"
+      ]
+    },
+    "apis": {
+      "Description": "api 列表",
+      "Required": true,
+      "Type": [
+        {
+          "List<Struct>": {
+            "apiName": {
+              "Description": "api名字",
+              "Required": true,
+              "Example": "",
+              "Default": "",
+              "Type": [
+                "String"
+              ]
+            },
+            "regionId": {
+              "Description": "api部署的地域，如果不填写，则保持跟顶部定义的regionId一致",
+              "Required": false,
+              "Example": "",
+              "Default": "",
+              "Type": [
+                "String"
+              ]
+            },
+            "requestConfig": {
+              "Description": "请求配置",
+              "Required": true,
+              "Example": "",
+              "Default": "",
+              "Type": [
+                {
+                  "Struct": {
+                    "requestPath": {
+                      "Description": "api请求的路径",
+                      "Required": true,
+                      "Example": "/",
+                      "Default": "/",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "requestHttpMethod": {
+                      "Description": "api请求的方法",
+                      "Required": false,
+                      "Example": "GET|POST|ANY",
+                      "Default": "ANY",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "requestMode": {
+                      "Description": "入参请求模式",
+                      "Required": false,
+                      "Example": "PASSTHROUGH|MAPPING",
+                      "Default": "PASSTHROUGH",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "bodyModel": {
+                      "Description": "请求体",
+                      "Required": false,
+                      "Example": "",
+                      "Default": "",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "bodyFormat": {
+                      "Description": "",
+                      "Required": true,
+                      "Example": "",
+                      "Default": "",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "postBodyDescription": {
+                      "Description": "",
+                      "Required": true,
+                      "Example": "",
+                      "Default": "",
+                      "Type": [
+                        "String"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "serviceConfig": {
+              "Description": "后端服务配置",
+              "Required": true,
+              "Example": "",
+              "Default": "",
+              "Type": [
+                {
+                  "Struct[函数计算配置模式]": {
+                    "serviceProtocol": {
+                      "Description": "后端服务类型",
+                      "Required": true,
+                      "Example": "HTTP|HTTPS|FunctionCompute|OSS",
+                      "Default": "FunctionCompute",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "servicePath": {
+                      "Description": "后端服务路径",
+                      "Required": true,
+                      "Example": "",
+                      "Default": "/",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "functionComputeConfig": {
+                      "Description": "函数计算配置项",
+                      "Required": true,
+                      "Example": "",
+                      "Default": "",
+                      "Type": [
+                        {
+                          "Struct[http函数类型配置]": {
+                            "fcRegionId": {
+                              "Description": "函数计算的region",
+                              "Required": true,
+                              "Example": "cn-hongkong|cn-hangzhou",
+                              "Default": "cn-hongkong",
+                              "Type": [
+                                "String"
+                              ]
+                            },
+                            "fcBaseUrl": {
+                              "Description": "fc 触发器基础地址",
+                              "Required": true,
+                              "Example": "",
+                              "Default": "",
+                              "Type": [
+                                "String"
+                              ]
+                            },
+                            "path": {
+                              "Description": "函数计算访问路径",
+                              "Required": true,
+                              "Example": "",
+                              "Default": "",
+                              "Type": [
+                                "String"
+                              ]
+                            },
+                            "fcType": {
+                              "Description": "函数计算类型",
+                              "Required": true,
+                              "Example": "HttpTrigger",
+                              "Default": "HttpTrigger",
+                              "Type": [
+                                "String"
+                              ]
+                            },
+                            "onlyBusinessPath": {
+                              "Description": "是否只传递路径",
+                              "Required": false,
+                              "Example": "",
+                              "Default": "true",
+                              "Type": [
+                                "Boolean"
+                              ]
+                            },
+                            "contentTypeCategory": {
+                              "Description": "ContentType是否透传",
+                              "Required": false,
+                              "Example": "CLIENT",
+                              "Default": "CLIENT",
+                              "Type": [
+                                "String"
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "resultType": {
+                      "Description": "返回类型",
+                      "Required": false,
+                      "Example": "JSON",
+                      "Default": "JSON",
+                      "Type": [
+                        "String"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Struct[普通HTTP(s)模式]": {
+                    "serviceAddress": {
+                      "Description": "后端服务地址",
+                      "Required": true,
+                      "Example": "",
+                      "Default": "",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "aoneAppName": {
+                      "Description": "后端应用命名",
+                      "Required": true,
+                      "Example": "cloudapi-openapi",
+                      "Default": "cloudapi-openapi",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "servicePath": {
+                      "Description": "后端服务路径",
+                      "Required": true,
+                      "Example": "/index.html",
+                      "Default": "/",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "serviceHttpMethod": {
+                      "Description": "后端服务的方法",
+                      "Required": true,
+                      "Example": "GET",
+                      "Default": "GET",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "serviceProtocol": {
+                      "Description": "后端服务协议",
+                      "Required": true,
+                      "Example": "HTTP",
+                      "Default": "HTTP",
+                      "Type": [
+                        "String"
+                      ]
+                    },
+                    "resultType": {
+                      "Description": "返回类型",
+                      "Required": true,
+                      "Example": "JSON",
+                      "Default": "JSON",
+                      "Type": [
+                        "String"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+
+```
 
 # 开源许可
 

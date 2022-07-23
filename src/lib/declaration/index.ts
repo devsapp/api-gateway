@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:50:15
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-18 22:14:59
+ * @LastEditTime: 2022-07-22 00:22:04
  */
 
 
@@ -45,4 +45,18 @@ export interface BatchDeployApisConfig {
 export interface SClientResponseBody {
     responseStatus: boolean
     [prop: string]: any
+    error?:any
+}
+
+export interface SApiGroupDescription {
+    access: SAccess
+    region: string
+    groupId?: string
+    groupName: string
+}
+
+export interface SApisDescription {
+    access: SAccess
+    region: string
+    groupId: string
 }

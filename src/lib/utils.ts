@@ -3,10 +3,10 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-06 22:01:52
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 15:52:27
+ * @LastEditTime: 2022-07-23 17:07:23
  */
 
-import { InputProps } from '../common/entity'
+import { InputProps } from './declaration/entity'
 import { handleAutoFormat } from './tools/tools'
 
 

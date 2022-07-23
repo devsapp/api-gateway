@@ -3,10 +3,9 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:51:19
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-15 00:37:32
+ * @LastEditTime: 2022-07-22 01:22:29
  */
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
-// import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
 import { handleClientRequst } from '../../tools/tools';
 import { ClientInit } from '../ClientInit';

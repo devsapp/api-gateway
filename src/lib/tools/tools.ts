@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-22 01:55:53
+ * @LastEditTime: 2022-07-23 21:20:17
  */
 import { constant } from '../component/constant'
 //处理auto字段
@@ -132,10 +132,9 @@ export async function handleClientRequst(
 export class Slogger {
   static logger = new Logger('S-CORE')
   static formatLog(logs: any[]) {
-    
     logs.forEach((element,index) => {
       if(element instanceof Error) {
-        logs[index] = element.stack
+        logs[index] = element.stack || element.message
       }
     });
     const arr: any[] = deepClone(logs, [])

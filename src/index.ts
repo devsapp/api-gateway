@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 17:07:24
+ * @LastEditTime: 2022-07-23 21:19:48
  */
 import { InputProps } from './lib/declaration/entity'
 import { SApiGroup } from './lib/component/apiGroups/SApiGroup'
@@ -16,12 +16,14 @@ import { parseInput } from './lib/utils'
 export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props, argsObj } = parseInput(inputs)
+    const screateApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
     if(argsObj.length) {
       if(argsObj.includes('--help') || argsObj.includes('-h')) {
           this.help('deploy')
       }
-      else {
-        const screateApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
+      else if(argsObj.includes('--force') || argsObj.includes('-f')){
+        await this.delete(inputs)
+        
         await screateApiGroup.deploy(argsObj)
       }
       return
@@ -41,13 +43,17 @@ export default class ComponentDemo {
         return
       }
     }
-    const screateApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
     await screateApiGroup.deploy()
   }
   public async delete(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props } = parseInput(inputs)
     const sdeleteApiGroup = new SDeleteApiGroup( AccessKeyID, AccessKeySecret, props)
-    await sdeleteApiGroup.deleteApiGroup()
+    const res = await sdeleteApiGroup.deleteApiGroup()
+    if(!res.responseStatus) {
+      Slogger.error('api组删除失败', res.error)
+    }else {
+      Slogger.info('api组删除成功')
+    }
   }
   private help(methodName: string) {
     showHelpDoc(methodName)

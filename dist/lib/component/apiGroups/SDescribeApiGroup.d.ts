@@ -1,7 +1,8 @@
-import { SApiGroupDescription } from '../../declaration';
+import { SApiGroupDescription, SClientResponseBody } from '../../declaration';
 export declare class SDescribeApiGroup {
     config: SApiGroupDescription;
     constructor(config: SApiGroupDescription);
-    describeApiGroups(): Promise<import("../../declaration").SClientResponseBody>;
+    describeApiGroups(): Promise<SClientResponseBody>;
+    describeApiGroup(): Promise<SClientResponseBody>;
     setGroupId(str: any): void;
 }

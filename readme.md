@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 17:00:51
+ * @LastEditTime: 2022-07-23 20:59:00
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -79,6 +79,8 @@ services:
 
 ## delete
 使用`delete`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
+
+**请注意：**若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
 
 # 详细配置
 

@@ -1,4 +1,4 @@
-import { SApisDescription } from "../../declaration";
+import { SApisDescription } from '../../declaration';
 export declare class SDescribeApis {
     private config;
     constructor(config: SApisDescription);

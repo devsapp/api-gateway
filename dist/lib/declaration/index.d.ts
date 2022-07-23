@@ -46,3 +46,24 @@ export interface SApisDescription {
     region: string;
     groupId: string;
 }
+export interface AbolishApisConif {
+    access: SAccess;
+    region: string;
+    apis: {
+        groupId: string;
+        apiUid: string;
+        stages: {
+            description?: string;
+            stageId: string;
+            stageName: string;
+        }[];
+    }[];
+}
+export interface SDeleteApiConfig {
+    access: SAccess;
+    region: string;
+    apis: {
+        groupId: string;
+        apiId: string;
+    }[];
+}

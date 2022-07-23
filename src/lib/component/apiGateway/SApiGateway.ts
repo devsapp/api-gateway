@@ -7,7 +7,7 @@ import { SCreateApi } from './SCreateApi'
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:06:25
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 14:26:23
+ * @LastEditTime: 2022-07-20 00:22:13
  * @description: api网关相关操作
  */
 export class SApiGateway {
@@ -16,13 +16,12 @@ export class SApiGateway {
     this.config = config
   }
   async createApis() {
-    const { access, domain, region, groupId, apis } = this.config
+    const { access, region, groupId, apis } = this.config
     const successApis = []
     let promiseArr =  apis?.map(async function(item) {
       const createapi = new SCreateApi({
         api: item,
         access,
-        domain,
         region,
         groupId,
       })

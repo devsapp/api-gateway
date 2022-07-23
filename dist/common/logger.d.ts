@@ -1,5 +1,3 @@
 import { Logger } from '@serverless-devs/core';
-
-const logger = new Logger('START_COMPONENT');
-
+declare const logger: Logger;
 export default logger;

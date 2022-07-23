@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:50:15
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-16 17:16:11
+ * @LastEditTime: 2022-07-23 20:37:37
  */
 
 
@@ -13,14 +13,12 @@ export interface SAccess {
 }
 export interface SApisGroup {
     access: SAccess
-    domain: string
     region: string
     groupId: string
     apis: SApi[]
 }
 export interface SSingleApiConfig {
     access: SAccess
-    domain: string
     region: string
     groupId: string
     api: SApi
@@ -47,4 +45,41 @@ export interface BatchDeployApisConfig {
 export interface SClientResponseBody {
     responseStatus: boolean
     [prop: string]: any
+    error?:any
+}
+
+export interface SApiGroupDescription {
+    access: SAccess
+    region: string
+    groupId?: string
+    groupName: string
+}
+
+export interface SApisDescription {
+    access: SAccess
+    region: string
+    groupId: string
+}
+
+export interface AbolishApisConif {
+    access: SAccess
+    region: string
+    apis: {
+        groupId: string
+        apiUid: string
+        stages: {
+          description?: string
+          stageId: string
+          stageName: string
+        }[]
+    }[]
+  }
+
+  export interface SDeleteApiConfig {
+    access: SAccess
+    region: string
+    apis: {
+        groupId: string
+        apiId: string
+    }[]  //直接采用数组，兼容删除多个api
 }

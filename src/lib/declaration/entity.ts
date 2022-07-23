@@ -1,3 +1,10 @@
+/*
+ * @Descripttion: 
+ * @Author: Wang Dejiang(aei)
+ * @Date: 2022-07-05 22:22:42
+ * @LastEditors: Wang Dejiang(aei)
+ * @LastEditTime: 2022-07-23 20:17:29
+ */
 export interface ICredentials {
   AccountID?: string;
   AccessKeyID?: string;
@@ -29,3 +36,4 @@ export interface InputProps {
     configPath: string // 配置路径
   }
 }
+

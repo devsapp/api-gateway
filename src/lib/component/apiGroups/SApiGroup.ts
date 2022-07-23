@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 15:52:44
+ * @LastEditTime: 2022-07-22 01:44:17
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -40,7 +40,7 @@ export class SApiGroup {
             groupName: this.props.groupName,
             groupId,
             subDomain,
-            basePath: this.props.basePath
+            basePath: this.props.basePath || '/'
         })
         const sApiGateway = new SApiGateway({
             access: {
@@ -49,7 +49,6 @@ export class SApiGroup {
             },
             region: this.props.region,
             groupId: this.groupId,
-            domain: this.props.domain,
             apis: this.props.apis
         })
         const apis = await sApiGateway.createApis()
@@ -75,7 +74,7 @@ export class SApiGroup {
                 region: this.props.region
             }).batchDeployApis()
             if(deployApisRes.responseStatus) {
-                Slogger.info('发布成功。', `使用 http://${this.subDomain+this.props.basePath} 拼接api请求path作为api网关访问地址`)
+                Slogger.info('发布成功。', `使用 http://${this.subDomain+(this.props.basePath || '')} 拼接api请求path作为api网关访问地址`)
             }
         }
     }

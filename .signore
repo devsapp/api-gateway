@@ -1,4 +1,10 @@
-node_modules
+<!--
+ * @Descripttion: 
+ * @Author: Wang Dejiang(aei)
+ * @Date: 2022-07-05 22:22:42
+ * @LastEditors: Wang Dejiang(aei)
+ * @LastEditTime: 2022-07-18 13:50:14
+-->
 .s
 LICENSE
 package-lock.json
@@ -17,6 +23,7 @@ package-lock.json
 .env
 
 README.md
+./src
 ./examples
 ./test
 ./Makefile

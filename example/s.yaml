@@ -7,12 +7,12 @@ vars: # [全局变量，提供给各个服务使用]
 Description: ''
 services:
   ag:
-    component: api-gateway
+    component: ../dist #api-gateway
     props:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
-      groupName: auto #组名
-      basePath: auto
+      groupName: gtest2 #组名
+      # basePath: auto
       apis: 
         - apiName: api1
           requestConfig: 

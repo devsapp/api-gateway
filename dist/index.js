@@ -42,6 +42,7 @@ var SDescribeApiGroup_1 = require("./lib/component/apiGroups/SDescribeApiGroup")
 var help_1 = require("./lib/help");
 var tools_1 = require("./lib/tools/tools");
 var utils_1 = require("./lib/utils");
+var SModifyApiGroup_1 = require("./lib/component/apiGroups/SModifyApiGroup");
 var ComponentDemo = /** @class */ (function () {
     function ComponentDemo() {
     }
@@ -54,10 +55,10 @@ var ComponentDemo = /** @class */ (function () {
                     case 0:
                         _c = (0, utils_1.parseInput)(inputs), AccessKeyID = _c.AccessKeyID, AccessKeySecret = _c.AccessKeySecret, props = _c.props, argsObj = _c.argsObj;
                         screateApiGroup = new SApiGroup_1.SApiGroup(AccessKeyID, AccessKeySecret, props);
-                        if (!argsObj.length) return [3 /*break*/, 5];
+                        if (!argsObj.length) return [3 /*break*/, 7];
                         if (!(argsObj.includes('--help') || argsObj.includes('-h'))) return [3 /*break*/, 1];
                         this.help('deploy');
-                        return [3 /*break*/, 4];
+                        return [3 /*break*/, 6];
                     case 1:
                         if (!(argsObj.includes('--force') || argsObj.includes('-f'))) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.delete(inputs)];
@@ -66,28 +67,37 @@ var ComponentDemo = /** @class */ (function () {
                         return [4 /*yield*/, screateApiGroup.deploy(argsObj)];
                     case 3:
                         _d.sent();
-                        _d.label = 4;
-                    case 4: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 4:
+                        if (!(argsObj.includes('--edit') || argsObj.includes('-e'))) return [3 /*break*/, 6];
+                        if (props.groupName === 'auto') {
+                            tools_1.Slogger.error('不允许更新名称auto的api组 Updates to api groups with the name auto are not allowed');
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, this.modify(inputs)];
                     case 5:
-                        if (!(props.groupName !== 'auto')) return [3 /*break*/, 7];
+                        _d.sent();
+                        _d.label = 6;
+                    case 6: return [2 /*return*/];
+                    case 7:
+                        if (!(props.groupName !== 'auto')) return [3 /*break*/, 9];
                         sDescribeApiGroup = new SDescribeApiGroup_1.SDescribeApiGroup({
                             access: {
                                 AccessKeyID: AccessKeyID,
-                                AccessKeySecret: AccessKeySecret
+                                AccessKeySecret: AccessKeySecret,
                             },
                             region: props.region,
-                            groupName: props.groupName
+                            groupName: props.groupName,
                         });
                         return [4 /*yield*/, sDescribeApiGroup.describeApiGroups()];
-                    case 6:
-                        if (((_b = (_a = (_d.sent()).apiGroupAttributes) === null || _a === void 0 ? void 0 : _a.apiGroupAttribute[0]) === null || _b === void 0 ? void 0 : _b.groupName)
-                            === props.groupName) {
+                    case 8:
+                        if (((_b = (_a = (_d.sent()).apiGroupAttributes) === null || _a === void 0 ? void 0 : _a.apiGroupAttribute[0]) === null || _b === void 0 ? void 0 : _b.groupName) === props.groupName) {
                             tools_1.Slogger.error('已存在该api组', props.groupName);
                             return [2 /*return*/];
                         }
-                        _d.label = 7;
-                    case 7: return [4 /*yield*/, screateApiGroup.deploy()];
-                    case 8:
+                        _d.label = 9;
+                    case 9: return [4 /*yield*/, screateApiGroup.deploy()];
+                    case 10:
                         _d.sent();
                         return [2 /*return*/];
                 }
@@ -116,10 +126,35 @@ var ComponentDemo = /** @class */ (function () {
             });
         });
     };
+    ComponentDemo.prototype.modify = function (inputs) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, AccessKeyID, AccessKeySecret, props, smodifyApiGroup, res;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = (0, utils_1.parseInput)(inputs), AccessKeyID = _a.AccessKeyID, AccessKeySecret = _a.AccessKeySecret, props = _a.props;
+                        smodifyApiGroup = new SModifyApiGroup_1.SModifyApiGroup(AccessKeyID, AccessKeySecret, props);
+                        return [4 /*yield*/, smodifyApiGroup.modifyApiGroupAndApis()];
+                    case 1:
+                        res = _b.sent();
+                        if (!res.responseStatus) {
+                            tools_1.Slogger.error('api组修改失败', res.error);
+                        }
+                        else {
+                            tools_1.Slogger.info('api组修改成功');
+                            if (res.error) {
+                                tools_1.Slogger.info(res.error);
+                            }
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     ComponentDemo.prototype.help = function (methodName) {
         (0, help_1.showHelpDoc)(methodName);
     };
     return ComponentDemo;
 }());
 exports.default = ComponentDemo;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxpRUFBK0Q7QUFDL0QsNkVBQTJFO0FBQzNFLGlGQUErRTtBQUMvRSxtQ0FBd0M7QUFDeEMsMkNBQTJDO0FBQzNDLHFDQUF3QztBQUV4QztJQUFBO0lBNkNBLENBQUM7SUE1Q2MsOEJBQU0sR0FBbkIsVUFBb0IsTUFBa0I7Ozs7Ozs7d0JBQzlCLEtBQW1ELElBQUEsa0JBQVUsRUFBQyxNQUFNLENBQUMsRUFBbkUsV0FBVyxpQkFBQSxFQUFFLGVBQWUscUJBQUEsRUFBRSxLQUFLLFdBQUEsRUFBRSxPQUFPLGFBQUEsQ0FBdUI7d0JBQ3JFLGVBQWUsR0FBRyxJQUFJLHFCQUFTLENBQUMsV0FBVyxFQUFFLGVBQWUsRUFBRSxLQUFLLENBQUMsQ0FBQTs2QkFDdkUsT0FBTyxDQUFDLE1BQU0sRUFBZCx3QkFBYzs2QkFDWixDQUFBLE9BQU8sQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDLElBQUksT0FBTyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsQ0FBQSxFQUFwRCx3QkFBb0Q7d0JBQ25ELElBQUksQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLENBQUE7Ozs2QkFFZixDQUFBLE9BQU8sQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLElBQUksT0FBTyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsQ0FBQSxFQUFyRCx3QkFBcUQ7d0JBQzNELHFCQUFNLElBQUksQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLEVBQUE7O3dCQUF6QixTQUF5QixDQUFBO3dCQUV6QixxQkFBTSxlQUFlLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxFQUFBOzt3QkFBckMsU0FBcUMsQ0FBQTs7NEJBRXZDLHNCQUFNOzs2QkFFTCxDQUFBLEtBQUssQ0FBQyxTQUFTLEtBQUssTUFBTSxDQUFBLEVBQTFCLHdCQUEwQjt3QkFDckIsaUJBQWlCLEdBQUcsSUFBSSxxQ0FBaUIsQ0FBQzs0QkFDOUMsTUFBTSxFQUFFO2dDQUNOLFdBQVcsYUFBQTtnQ0FDWCxlQUFlLGlCQUFBOzZCQUNoQjs0QkFDRCxNQUFNLEVBQUUsS0FBSyxDQUFDLE1BQU07NEJBQ3BCLFNBQVMsRUFBRSxLQUFLLENBQUMsU0FBUzt5QkFDM0IsQ0FBQyxDQUFBO3dCQUNFLHFCQUFNLGlCQUFpQixDQUFDLGlCQUFpQixFQUFFLEVBQUE7O3dCQUEvQyxJQUFHLENBQUEsTUFBQSxNQUFBLENBQUMsU0FBMkMsQ0FBQyxDQUFDLGtCQUFrQiwwQ0FBRSxpQkFBaUIsQ0FBQyxDQUFDLENBQUMsMENBQUUsU0FBUztnQ0FDaEcsS0FBSyxDQUFDLFNBQVMsRUFBRTs0QkFDbkIsZUFBTyxDQUFDLEtBQUssQ0FBQyxVQUFVLEVBQUUsS0FBSyxDQUFDLFNBQVMsQ0FBQyxDQUFBOzRCQUMxQyxzQkFBTTt5QkFDUDs7NEJBRUgscUJBQU0sZUFBZSxDQUFDLE1BQU0sRUFBRSxFQUFBOzt3QkFBOUIsU0FBOEIsQ0FBQTs7Ozs7S0FDL0I7SUFDWSw4QkFBTSxHQUFuQixVQUFvQixNQUFrQjs7Ozs7O3dCQUM5QixLQUEwQyxJQUFBLGtCQUFVLEVBQUMsTUFBTSxDQUFDLEVBQTFELFdBQVcsaUJBQUEsRUFBRSxlQUFlLHFCQUFBLEVBQUUsS0FBSyxXQUFBLENBQXVCO3dCQUM1RCxlQUFlLEdBQUcsSUFBSSxpQ0FBZSxDQUFFLFdBQVcsRUFBRSxlQUFlLEVBQUUsS0FBSyxDQUFDLENBQUE7d0JBQ3JFLHFCQUFNLGVBQWUsQ0FBQyxjQUFjLEVBQUUsRUFBQTs7d0JBQTVDLEdBQUcsR0FBRyxTQUFzQzt3QkFDbEQsSUFBRyxDQUFDLEdBQUcsQ0FBQyxjQUFjLEVBQUU7NEJBQ3RCLGVBQU8sQ0FBQyxLQUFLLENBQUMsVUFBVSxFQUFFLEdBQUcsQ0FBQyxLQUFLLENBQUMsQ0FBQTt5QkFDckM7NkJBQUs7NEJBQ0osZUFBTyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQTt5QkFDekI7Ozs7O0tBQ0Y7SUFDTyw0QkFBSSxHQUFaLFVBQWEsVUFBa0I7UUFDN0IsSUFBQSxrQkFBVyxFQUFDLFVBQVUsQ0FBQyxDQUFBO0lBQ3pCLENBQUM7SUFDSCxvQkFBQztBQUFELENBQUMsQUE3Q0QsSUE2Q0MifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFRQSxpRUFBK0Q7QUFDL0QsNkVBQTJFO0FBQzNFLGlGQUErRTtBQUMvRSxtQ0FBd0M7QUFDeEMsMkNBQTJDO0FBQzNDLHFDQUF3QztBQUN4Qyw2RUFBMkU7QUFFM0U7SUFBQTtJQTBFQSxDQUFDO0lBekVjLDhCQUFNLEdBQW5CLFVBQW9CLE1BQWtCOzs7Ozs7O3dCQUM5QixLQUFtRCxJQUFBLGtCQUFVLEVBQUMsTUFBTSxDQUFDLEVBQW5FLFdBQVcsaUJBQUEsRUFBRSxlQUFlLHFCQUFBLEVBQUUsS0FBSyxXQUFBLEVBQUUsT0FBTyxhQUFBLENBQXVCO3dCQUNyRSxlQUFlLEdBQUcsSUFBSSxxQkFBUyxDQUFDLFdBQVcsRUFBRSxlQUFlLEVBQUUsS0FBSyxDQUFDLENBQUE7NkJBQ3RFLE9BQU8sQ0FBQyxNQUFNLEVBQWQsd0JBQWM7NkJBQ1osQ0FBQSxPQUFPLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxJQUFJLE9BQU8sQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLENBQUEsRUFBcEQsd0JBQW9EO3dCQUN0RCxJQUFJLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFBOzs7NkJBQ1YsQ0FBQSxPQUFPLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLE9BQU8sQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLENBQUEsRUFBckQsd0JBQXFEO3dCQUM5RCxxQkFBTSxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxFQUFBOzt3QkFBekIsU0FBeUIsQ0FBQTt3QkFDekIscUJBQU0sZUFBZSxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsRUFBQTs7d0JBQXJDLFNBQXFDLENBQUE7Ozs2QkFDNUIsQ0FBQSxPQUFPLENBQUMsUUFBUSxDQUFDLFFBQVEs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

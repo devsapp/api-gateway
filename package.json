@@ -1,6 +1,6 @@
 {
   "name": "api-gateway",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "This is a component demo for Serverless Devs Tool ",
   "autoInstall": false,
   "homepage": "https://www.serverless-devs.com",

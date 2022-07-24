@@ -12,7 +12,7 @@ services:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
       groupName: gtest2 #组名
-      # basePath: auto
+      basePath: /test
       apis: 
         - apiName: api1
           requestConfig: 

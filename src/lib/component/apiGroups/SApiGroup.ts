@@ -7,7 +7,7 @@
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
-import { SApiGateway } from '../apiGateway/SapiGateway';
+import { SApiGateway } from '../apiGateway/SApiGateway';
 import { SDeployApi } from '../apiGateway/SDeployApi';
 import { ApiStageName } from '../../declaration';
 import { Slogger } from '../../tools/tools';

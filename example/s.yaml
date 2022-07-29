@@ -11,12 +11,12 @@ services:
     props:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
-      groupName: gtest2 #组名
+      groupName: test2 #组名
       basePath: /test
       apis: 
         - apiName: api1
           requestConfig: 
-            requestPath: /subtract
+            requestPath: /add
           serviceConfig:
             servicePath: /api/subtract
             serviceAddress: https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run
@@ -25,7 +25,7 @@ services:
           requestConfig:
             requestPath: /mul
             requestProtocol: 'HTTP,HTTPS'
-            requestHttpMethod: POST
+            requestHttpMethod: GET
             requestMode: MAPPING
             bodyFormat: STREAM
           serviceConfig:

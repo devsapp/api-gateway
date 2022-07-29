@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-24 14:26:49
+ * @LastEditTime: 2022-07-28 21:35:55
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -44,8 +44,11 @@ vars: # [全局变量，提供给各个服务使用]
 services:
   api-gateway:
     component: api-gateway
+    
     props: 
       groupName: auto #组名，当为auto时，默认随机生成一个组名
+      instanceId: yourInstanceId
+      region: ${vars.region} #使用全局的地区设置
       apis: 
         - apiName: api1
           requestConfig: #api网关前端配置
@@ -73,14 +76,14 @@ services:
 ### 参数解析
 | 参数全程 | 缩写 | 是否必填 |  含义  |
 | --- | --- | --- |--- |
-| --force | -f |  否  | 是否直接采用本地配置对api网关进行部署 (此时如果远程已经有该api组将自动删除并重新安装)|
-| --edit | -e |  否  | 是否根据本地配置对api网关进行修改 (此时远程应已有相应的api组配置，修改后将重新部署到线上)|
 | --help | -h | 否 | 查看deploy指令帮助文档|
+| --use-local |  | 否 | 使用本地 (此时远程应已有相应的api组配置，修改后将重新部署到线上)|
+| --use-remote |  | 否 | 使用远程|
 
-## delete
-使用`delete`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
+## remove
+使用`remove`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
 
-**请注意：**若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
+**请注意：** 若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
 
 # 详细配置
 

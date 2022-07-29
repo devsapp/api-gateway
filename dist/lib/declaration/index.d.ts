@@ -67,3 +67,8 @@ export interface SDeleteApiConfig {
         apiId: string;
     }[];
 }
+export interface SModifyApiConfig {
+    access: SAccess;
+    region: string;
+    groupId: string;
+}

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:50:15
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 20:37:37
+ * @LastEditTime: 2022-07-27 00:29:39
  */
 
 
@@ -75,11 +75,17 @@ export interface AbolishApisConif {
     }[]
   }
 
-  export interface SDeleteApiConfig {
+export interface SDeleteApiConfig {
     access: SAccess
     region: string
     apis: {
         groupId: string
         apiId: string
     }[]  //直接采用数组，兼容删除多个api
+}
+
+export interface SModifyApiConfig {
+    access: SAccess
+    region: string
+    groupId: string  
 }

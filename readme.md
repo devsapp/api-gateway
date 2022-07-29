@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 20:59:00
+ * @LastEditTime: 2022-07-28 21:35:55
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -44,8 +44,11 @@ vars: # [全局变量，提供给各个服务使用]
 services:
   api-gateway:
     component: api-gateway
+    
     props: 
       groupName: auto #组名，当为auto时，默认随机生成一个组名
+      instanceId: yourInstanceId
+      region: ${vars.region} #使用全局的地区设置
       apis: 
         - apiName: api1
           requestConfig: #api网关前端配置
@@ -73,14 +76,14 @@ services:
 ### 参数解析
 | 参数全程 | 缩写 | 是否必填 |  含义  |
 | --- | --- | --- |--- |
-| --force | -f |  否  | 是否直接采用本地配置对api网关进行部署 (此时如果远程已经有该api组将自动删除并重新安装)|
-| --edit | -e |  否  | 是否根据本地配置对api网关进行修改 (此时远程应已有相应的api组配置)|
 | --help | -h | 否 | 查看deploy指令帮助文档|
+| --use-local |  | 否 | 使用本地 (此时远程应已有相应的api组配置，修改后将重新部署到线上)|
+| --use-remote |  | 否 | 使用远程|
 
-## delete
-使用`delete`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
+## remove
+使用`remove`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
 
-**请注意：**若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
+**请注意：** 若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
 
 # 详细配置
 
@@ -143,8 +146,8 @@ gateway:
         "String"
       ]
     },
-    "customerDomain": {
-      "Description": "用户自定义域名",
+    "defaultDomain": {
+      "Description": "用户默认域名,只可在api组修改时添加该属性",
       "Required": false,
       "Example": "",
       "Default": "",
@@ -155,17 +158,7 @@ gateway:
     "groupName": {
       "Description": "分组名，详细查看apigateway关于分组的介绍",
       "Required": true,
-      "Example": "",
       "Default": "",
-      "Type": [
-        "String"
-      ]
-    },
-    "stageName": {
-      "Description": "环境配置，可以分为REEASE(线上环境)，TEST(测试环境)等",
-      "Required": false,
-      "Example": "RELEASE |TEST",
-      "Default": "RELEASE",
       "Type": [
         "String"
       ]
@@ -174,12 +167,13 @@ gateway:
       "Description": "api网关组实例",
       "Required": false,
       "Default": "api-shared-vpc-002",
+      "Example": "/test",
       "Type": [
         "String"
       ]
     },
     "basePath": {
-      "Description": "api网管组的公共path",
+      "Description": "api网关组的公共path",
       "Required": false,
       "Type": [
         "String"
@@ -445,6 +439,11 @@ gateway:
   }
 
 ```
+
+其中支持`auto`的字段为:
+
+- `groupName` api组名称
+- `basePath` api组基础路由
 
 # 开源许可
 

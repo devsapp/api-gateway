@@ -121,7 +121,7 @@ gateway:
   ```yaml
   visibility: PRIVATE #该api不公开，当该组API在云市场上架时，私有类型的API不会上架。
   authType: ANONYMOUS #允许匿名调用
-  resultType: JSOn #后端服务返回应答的格式
+  resultType: JSON #后端服务返回应答的格式
   resultSample: "200",
   forceNonceCheck: false #不检查X-Ca-Nonce
   disableInternet: false #不限制调用

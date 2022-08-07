@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-24 13:39:22
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-27 00:29:52
+ * @LastEditTime: 2022-08-07 20:08:07
  */
 import { SModifyApiConfig } from "../../declaration"
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
@@ -20,6 +20,9 @@ export class SModifyApi {
     async modifyApis() {
         
     }
+    /**
+     * @description 修改api时需要对比是否需要更新
+     */
     async modifyApi(apiId, apiConfig) {
         let client = ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
         let config = {

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:50:15
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-27 00:29:39
+ * @LastEditTime: 2022-08-07 15:20:11
  */
 
 
@@ -88,4 +88,11 @@ export interface SModifyApiConfig {
     access: SAccess
     region: string
     groupId: string  
+}
+
+export interface SSetDomainConfig {
+    access: SAccess
+    region: string
+    groupId: string
+    DomainName: string
 }

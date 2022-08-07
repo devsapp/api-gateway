@@ -9,7 +9,7 @@ import { handleClientRequst } from '../../tools/tools'
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:51:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 19:55:46
+ * @LastEditTime: 2022-08-06 17:52:06
  */
 export class SDescribeApiGroup {
   config: SApiGroupDescription

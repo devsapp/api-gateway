@@ -2,21 +2,15 @@ import { ApiStageName, SAccess, SClientResponseBody } from '../../declaration'
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714'
 import * as $Util from '@alicloud/tea-util'
 import { ClientInit } from '../ClientInit'
-import { handleClientRequst, Slogger } from '../../tools/tools'
+import { blockProcess, handleClientRequst, Slogger } from '../../tools/tools'
 import { SDescribeApiGroup } from './SDescribeApiGroup'
 import { SDescribeApis } from '../apiGateway/SDescribeApis'
 import { SAbolishApi } from '../apiGateway/SAbolishApi'
 import { SDeployApi } from '../apiGateway/SDeployApi'
 import { SModifyApi } from '../apiGateway/SModifyApi'
 import { SCreateApi } from '../apiGateway/SCreateApi'
-
-/*
- * @Descripttion:
- * @Author: Wang Dejiang(aei)
- * @Date: 2022-07-24 13:39:48
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-27 00:17:01
- */
+import sStore from '../store'
+import { SSetDomain } from './SSetDomain'
 export class SModifyApiGroup {
   access: SAccess
   props
@@ -36,6 +30,20 @@ export class SModifyApiGroup {
     if(!modifyApiGroupRes.responseStatus) return {
         responseStatus: false,
         error: modifyApiGroupRes.error
+    }
+    if(this.props.custom_domain) {
+      const sSetDomain = new SSetDomain({
+          access: this.access,
+          region: this.props.region,
+          groupId: this.groupId,
+          DomainName: this.props.custom_domain
+      })
+      const sSetDomainRes = await sSetDomain.setDomain()
+      if(!sSetDomainRes.responseStatus) {
+          Slogger.info('绑定域名失败:', sSetDomainRes.error)
+          return
+      }
+      sStore.setCustom(`http://${this.props.custom_domain}`)
     }
     //查询api组id
     Slogger.info('查询线上api组中...')
@@ -100,6 +108,7 @@ export class SModifyApiGroup {
       groupId: this.groupId,
     })
     //如果远程中能匹配到，执行修改，否则执行新建发布
+    await blockProcess()
     Slogger.info('修改api...')
     let newApis = []
     for(let i = 0; i < this.props.apis.length; i++) {
@@ -140,7 +149,10 @@ export class SModifyApiGroup {
         region: this.props.region
     }).batchDeployApis()
     if(deployApisRes.responseStatus) {
-        Slogger.info('发布成功。', `使用 http(s)://${this.subDomain+(this.props.basePath || '')} 拼接api请求path作为api网关访问地址`)
+        Slogger.info('发布成功。');
+        // Slogger.info('发布成功。', `使用 http://${this.subDomain+(this.props.basePath || '')} 拼接api请求path作为api网关访问地址`)
+        sStore.setDomain(`http://${this.subDomain+(this.props.basePath || '')}`)
+        console.log('>>', sStore.getDomain())
     }
     return {
         responseStatus: true

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-29 22:54:43
+ * @LastEditTime: 2022-08-07 23:26:11
  */
 import { InputProps } from './lib/declaration/entity'
 import { SApiGroup } from './lib/component/apiGroups/SApiGroup'
@@ -14,12 +14,23 @@ import { Slogger } from './lib/tools/tools'
 import { parseInput } from './lib/utils'
 import { SModifyApiGroup } from './lib/component/apiGroups/SModifyApiGroup'
 import { inquirer } from '@serverless-devs/core'
+import sStore from './lib/component/store'
 
 export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props, argsObj } = parseInput(inputs)
     const screateApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
     let hasRemote: boolean = false
+    const apis = props.apis.map(item => ({
+      apiName: item.apiName,
+      requestPath: item.requestConfig.requestPath,
+      servicePath: item.serviceConfig.servicePath
+    }))
+    const re = {
+      region: props.region,
+      apiGroup: props.groupName,
+      apis
+    }
     if (props.groupName !== 'auto') {
       const sDescribeApiGroup = new SDescribeApiGroup({
         access: {
@@ -46,10 +57,9 @@ export default class ComponentDemo {
         case '--use-local':
           if (props.groupName === 'auto' || !hasRemote) {
             await screateApiGroup.deploy()
-            return
-          }
-          await this.modify(inputs)
-          break
+            return this.enrich(re)
+          } 
+          return await this.modify(inputs)
         case '--use-remote':
           if (props.groupName === 'auto' || !hasRemote)
             await screateApiGroup.deploy()
@@ -57,7 +67,7 @@ export default class ComponentDemo {
           break
         default:
           Slogger.warn('There is no such command')
-      }
+      } 
       return
     }
     if (hasRemote) {
@@ -77,8 +87,7 @@ export default class ComponentDemo {
       ])
       switch (ans.option) {
         case 'use a local configuration':
-          this.modify(inputs)
-          break
+          return await this.modify(inputs)
         case 'use a remote configuration':
           Slogger.info('已使用远程配置')
           break
@@ -87,6 +96,8 @@ export default class ComponentDemo {
       }
       return
     } else await screateApiGroup.deploy()
+
+    return this.enrich(re)
   }
   public async remove(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props } = parseInput(inputs)
@@ -109,16 +120,36 @@ export default class ComponentDemo {
       AccessKeySecret,
       props
     )
+    const apis = props.apis.map(item => ({
+      apiName: item.apiName,
+      requestPath: item.requestConfig.requestPath,
+      servicePath: item.serviceConfig.servicePath
+    }))
+    const re = {
+      region: props.region,
+      apiGroup: props.groupName,
+      apis
+    }
     const res = await smodifyApiGroup.modifyApiGroupAndApis()
     if (!res.responseStatus) {
       Slogger.error(res.error, 'api组修改失败')
     } else {
       if (res.error) {
         Slogger.info(res.error)
+      } else {
+        return this.enrich(re)
       }
     }
   }
   private help(methodName: string) {
     showHelpDoc(methodName)
+  }
+  private enrich(re) {
+    re.domain = sStore.getDomain()
+    const domain= sStore.getDomain()
+    const custom_domain = sStore.getCustom()
+    custom_domain && (re.custom_domain = custom_domain)
+    domain && (re.domain = domain)
+    return re
   }
 }

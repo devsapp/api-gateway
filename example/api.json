@@ -1,0 +1,60 @@
+{
+  "responseStatus": true,
+  "allowSignatureMethod": "HmacSHA256",
+  "apiId": "88d618b79fa149a2a258919b15f296b6",
+  "apiName": "api1",
+  "appCodeAuthType": "",
+  "authType": "ANONYMOUS",
+  "backendEnable": false,
+  "constantParameters": { "constantParameter": [] },
+  "createdTime": "2022-08-06T08:50:32Z",
+  "customSystemParameters": { "customSystemParameter": [] },
+  "deployedInfos": {
+    "deployedInfo": [
+      { "deployedStatus": "NONDEPLOYED", "stageName": "RELEASE" },
+      { "deployedStatus": "NONDEPLOYED", "stageName": "PRE" },
+      { "deployedStatus": "NONDEPLOYED", "stageName": "TEST" }
+    ]
+  },
+  "disableInternet": false,
+  "errorCodeSamples": { "errorCodeSample": [] },
+  "failResultSample": "",
+  "forceNonceCheck": false,
+  "groupId": "9f5b2296f41a4512844f431f6efdea72",
+  "groupName": "agtest3",
+  "mock": "CLOSED",
+  "mockResult": "",
+  "modifiedTime": "2022-08-08T16:22:34Z",
+  "regionId": "cn-hangzhou",
+  "requestConfig": {
+    "bodyFormat": "",
+    "postBodyDescription": "",
+    "requestHttpMethod": "ANY",
+    "requestMode": "PASSTHROUGH",
+    "requestPath": "/api2",
+    "requestProtocol": "HTTP,HTTPS"
+  },
+  "requestId": "E3211147-3768-5E92-8061-3B480616BD4A",
+  "requestParameters": { "requestParameter": [] },
+  "resultDescriptions": { "resultDescription": [] },
+  "resultSample": "",
+  "resultType": "JSON",
+  "serviceConfig": {
+    "contentTypeCatagory": "CLIENT",
+    "contentTypeValue": "",
+    "mock": "FALSE",
+    "mockHeaders": { "mockHeader": [] },
+    "mockResult": "",
+    "serviceAddress": "http:",
+    "serviceHttpMethod": "ANY",
+    "servicePath": "/abcde.com/",
+    "serviceProtocol": "HTTP",
+    "serviceTimeout": 10000,
+    "serviceVpcEnable": "FALSE"
+  },
+  "serviceParameters": { "serviceParameter": [] },
+  "serviceParametersMap": { "serviceParameterMap": [] },
+  "systemParameters": { "systemParameter": [] },
+  "visibility": "PRIVATE",
+  "webSocketApiType": "COMMON"
+}

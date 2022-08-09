@@ -12,25 +12,32 @@ services:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
       groupName: agtest3 #组名
-      custom_domain: dejiang.api.test.shoushuai.top #自定义域名
+      custom_domain: #dejiang.api.test.shoushuai.top #自定义域名
       basePath: /test
       apis: 
         - apiName: api1
           requestConfig: 
-            requestPath: /api2
+            requestPath: /api1
           serviceConfig:
             servicePath: /
             serviceAddress: http:/abcde.com
+        - apiName: api3
+          requestConfig: 
+            requestPath: /api3
+          serviceConfig:
+            servicePath: /ee
+            serviceAddress: http:/abcdfe.com
         - apiName: api2
           regionId: cn-hongkong #不配置默认全局变量
           requestConfig:
-            requestPath: /web
+            requestPath: /api2
             requestProtocol: 'HTTP,HTTPS'
             # requestHttpMethod: GET
             requestMode: MAPPING
             bodyFormat: STREAM
           serviceConfig:
-            servicePath: /
+            servicePath: /1api2
+            serviceHttpMethod: GET
             serviceProtocol: HTTP
             serviceAddress: http://docusaurus.website-example.1582182718458392.cn-hangzhou.fc.devsapp.net
             contentTypeCatagory: DEFAULT

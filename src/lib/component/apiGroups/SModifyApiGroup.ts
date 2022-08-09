@@ -112,17 +112,19 @@ export class SModifyApiGroup {
     Slogger.info('修改api...')
     let newApis = []
     for(let i = 0; i < this.props.apis.length; i++) {
-      if(apis.some(item => item.apiName === this.props.apis[i].apiName)) {
-        const smodifyApiRs = await smodifyApi.modifyApi(apis[i].apiUid, this.props.apis[i])
+      const j = apis.findIndex(item => item.apiName === this.props.apis[i].apiName)
+      if(j !== -1) {
+        const smodifyApiRs = await smodifyApi.modifyApi(apis[j].apiUid, this.props.apis[i])
         if(!smodifyApiRs.responseStatus) return{
             responseStatus: false,
             error: smodifyApiRs.error
           }
         newApis = newApis.concat({
           groupId: this.groupId,
-          apiUid: apis[i].apiUid
+          apiUid: apis[j].apiUid
         })
       }else {
+        Slogger.info('创建新API')
         const screateApi = new SCreateApi({
           access: this.access,
           region: this.props.region,
@@ -152,7 +154,6 @@ export class SModifyApiGroup {
         Slogger.info('发布成功。');
         // Slogger.info('发布成功。', `使用 http://${this.subDomain+(this.props.basePath || '')} 拼接api请求path作为api网关访问地址`)
         sStore.setDomain(`http://${this.subDomain+(this.props.basePath || '')}`)
-        console.log('>>', sStore.getDomain())
     }
     return {
         responseStatus: true

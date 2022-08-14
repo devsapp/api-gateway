@@ -31,19 +31,20 @@ export class SModifyApiGroup {
         responseStatus: false,
         error: modifyApiGroupRes.error
     }
-    if(this.props.custom_domain) {
+    const custom_domain =  this.props.custom_domain?.trim()
+    if(custom_domain) {
       const sSetDomain = new SSetDomain({
           access: this.access,
           region: this.props.region,
           groupId: this.groupId,
-          DomainName: this.props.custom_domain
+          DomainName: custom_domain
       })
       const sSetDomainRes = await sSetDomain.setDomain()
       if(!sSetDomainRes.responseStatus) {
           Slogger.info('绑定域名失败:', sSetDomainRes.error)
           return
       }
-      sStore.setCustom(`http://${this.props.custom_domain}`)
+      sStore.setCustom(`http://${custom_domain}`)
     }
     //查询api组id
     Slogger.info('查询线上api组中...')

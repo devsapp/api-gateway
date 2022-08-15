@@ -6,32 +6,41 @@ vars: # [全局变量，提供给各个服务使用]
 
 Description: ''
 services:
-  ag:
+  api-gateway:
     component: ../dist #api-gateway
     props:
       region: ${vars.region}
       instanceId: api-shared-vpc-002 #实例
-      groupName: gtest2 #组名
-      # basePath: auto
+      groupName: agtest3 #组名
+      custom_domain: #dejiang.api.test.shoushuai.top #自定义域名
+      basePath: /test
       apis: 
         - apiName: api1
           requestConfig: 
-            requestPath: /subtract
+            requestPath: /api1
           serviceConfig:
-            servicePath: /api/subtract
-            serviceAddress: https://http-request-testapi-kqfxpwcsxl.cn-shenzhen.fcapp.run
+            servicePath: /
+            serviceAddress: http:/abcde.com
+        - apiName: api3
+          requestConfig: 
+            requestPath: /api3
+          serviceConfig:
+            servicePath: /ee
+            serviceAddress: http:/abcdfe.com
         - apiName: api2
           regionId: cn-hongkong #不配置默认全局变量
           requestConfig:
-            requestPath: /mul
+            requestPath: /api2
             requestProtocol: 'HTTP,HTTPS'
-            requestHttpMethod: POST
+            # requestHttpMethod: GET
             requestMode: MAPPING
             bodyFormat: STREAM
           serviceConfig:
-            servicePath: /newApi/mul
+            servicePath: /1api2
+            serviceHttpMethod: GET
             serviceProtocol: HTTP
-            serviceAddress: http://www.example.com
+            serviceAddress: http://docusaurus.website-example.1582182718458392.cn-hangzhou.fc.devsapp.net
             contentTypeCatagory: DEFAULT
             contentTypeValue: 'application/json; charset=UTF-8'
+
 

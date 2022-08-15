@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 21:20:17
+ * @LastEditTime: 2022-08-06 18:26:28
  */
 import { constant } from '../component/constant'
 //处理auto字段
@@ -192,4 +192,14 @@ export class Slogger {
   ) {
     this.logger.task('tast', tasks)
   }
+}
+
+
+/**
+ * @description 阻塞
+ */
+export const  blockProcess = async (time = 1000) =>{
+  return new Promise<void>((res) => {
+    setTimeout(() => {res()}, time)
+  })
 }

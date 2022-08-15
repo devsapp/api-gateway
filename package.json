@@ -1,6 +1,6 @@
 {
   "name": "api-gateway",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "This is a component demo for Serverless Devs Tool ",
   "autoInstall": false,
   "homepage": "https://www.serverless-devs.com",
@@ -31,7 +31,7 @@
     "@alicloud/openapi-client": "^0.4.1",
     "@alicloud/tea-util": "^1.4.3",
     "@serverless-devs/core": "latest",
-    "commander": "^9.3.0"
+    "inquirer": "^9.0.2"
   },
   "devDependencies": {
     "@types/node": "^14.0.23",

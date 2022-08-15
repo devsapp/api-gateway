@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-14 21:38:16
+ * @LastEditTime: 2022-08-15 21:35:28
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -53,7 +53,7 @@ export class SApiGroup {
                 },
                 region: this.props.region,
                 groupId: this.groupId,
-                DomainName: custom_domain
+                domainName: custom_domain
             })
             const sSetDomainRes = await sSetDomain.setDomain()
             if(!sSetDomainRes.responseStatus) {

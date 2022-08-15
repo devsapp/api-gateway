@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-09 23:06:53
+ * @LastEditTime: 2022-08-15 22:16:40
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -81,9 +81,17 @@ services:
 | --use-remote |  | 否 | 使用远程|
 
 ## remove
-使用`remove`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。
+使用`remove`指令，我们可以快速删除`s.yaml`文件中指定的api网关组。**请注意：** 若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
 
-**请注意：** 若线上本身就没有该apiGroup，也会成功返回，但是会提示`无该api组`
+## domain
+使用`domain`指令，我们可以快绑定域名，其使用方式为：
+```
+s api-gateway domain xxx.com
+```
+根据所传参数，组件将会尝试将自定义域名绑定在该网关组上。实际使用中，我们只需要将`xxx.com`换成您需要绑定的域名即可。
+**请注意：** 域名在绑定之前，需要我们将其备案并且正确解析，详细步骤可参考：[分组的域名绑定](https://help.aliyun.com/document_detail/159014.html)。
+
+
 
 # 详细配置
 

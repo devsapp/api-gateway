@@ -94,5 +94,5 @@ export interface SSetDomainConfig {
     access: SAccess
     region: string
     groupId: string
-    DomainName: string
+    domainName: string
 }

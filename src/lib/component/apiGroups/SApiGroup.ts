@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
  * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-22 01:44:17
+ * @LastEditTime: 2022-08-14 21:38:16
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -11,6 +11,8 @@ import { SApiGateway } from '../apiGateway/SApiGateway';
 import { SDeployApi } from '../apiGateway/SDeployApi';
 import { ApiStageName } from '../../declaration';
 import { Slogger } from '../../tools/tools';
+import sStore from '../store';
+import { SSetDomain } from './SSetDomain';
 export class SApiGroup {
     private AccessKeyID
     private AccessKeySecret
@@ -42,6 +44,24 @@ export class SApiGroup {
             subDomain,
             basePath: this.props.basePath || '/'
         })
+        const custom_domain = this.props.custom_domain?.trim()
+        if(custom_domain) {
+            const sSetDomain = new SSetDomain({
+                access: {
+                    AccessKeyID: this.AccessKeyID, 
+                    AccessKeySecret: this.AccessKeySecret  
+                },
+                region: this.props.region,
+                groupId: this.groupId,
+                DomainName: custom_domain
+            })
+            const sSetDomainRes = await sSetDomain.setDomain()
+            if(!sSetDomainRes.responseStatus) {
+                Slogger.info('绑定域名失败:', sSetDomainRes.error)
+                return
+            }
+            sStore.setCustom(`http://${custom_domain}`)
+        }
         const sApiGateway = new SApiGateway({
             access: {
                 AccessKeyID: this.AccessKeyID, 
@@ -74,7 +94,8 @@ export class SApiGroup {
                 region: this.props.region
             }).batchDeployApis()
             if(deployApisRes.responseStatus) {
-                Slogger.info('发布成功。', `使用 http://${this.subDomain+(this.props.basePath || '')} 拼接api请求path作为api网关访问地址`)
+                Slogger.info('发布成功。')
+                sStore.setDomain(`http://${this.subDomain+(this.props.basePath || '')}`)
             }
         }
     }

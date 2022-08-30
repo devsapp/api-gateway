@@ -21,14 +21,7 @@ services:
           serviceConfig:
             servicePath: /
             serviceAddress: http:/abcde.com
-        - apiName: api3
-          requestConfig: 
-            requestPath: /api3
-          serviceConfig:
-            servicePath: /ee
-            serviceAddress: http:/abcdfe.com
         - apiName: api2
-          regionId: cn-hongkong #不配置默认全局变量
           requestConfig:
             requestPath: /api2
             requestProtocol: 'HTTP,HTTPS'
@@ -42,5 +35,20 @@ services:
             serviceAddress: http://docusaurus.website-example.1582182718458392.cn-hangzhou.fc.devsapp.net
             contentTypeCatagory: DEFAULT
             contentTypeValue: 'application/json; charset=UTF-8'
-
+        - apiName: api3
+          requestConfig: 
+            requestPath: /api3
+          serviceConfig:
+            serviceProtocol: FunctionCompute
+            functionComputeConfig: 
+              fcType: FCEvent
+              fcRegionId: cn-hangzhou 
+              selectServiceName: eventTest1
+              functionName: test1 
+              selectFunctionName: test1
+              qualifier: LATEST
+              serviceName: eventTest1
+              roleArn: acs:ram::1582182718458392:role/aliyunserviceroleforapigateway
+            # Path: ""
+            # FcBaseUrl: ""
 

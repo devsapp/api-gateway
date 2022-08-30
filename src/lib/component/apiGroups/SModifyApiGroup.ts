@@ -80,8 +80,9 @@ export class SModifyApiGroup {
         responseStatus: false,
         error: apisDescrib.error
       }
+      const apiSummary =  apisDescrib.apiSummarys ? apisDescrib.apiSummarys.apiSummary : []
       apis = apis.concat(
-        apisDescrib.apiSummarys.apiSummary.map(item => ({
+        apiSummary.map(item => ({
           apiUid: item.apiId,
           apiName: item.apiName,
           groupId: item.groupId,

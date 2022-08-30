@@ -2,8 +2,8 @@
  * @Descripttion: 
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-15 22:16:40
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-08-30 22:33:10
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -186,13 +186,6 @@ gateway:
             "apiName": {
               "Description": "api名字",
               "Required": true,
-              "Example": "",
-              "Default": "",
-              "Type": "String"
-            },
-            "regionId": {
-              "Description": "api部署的地域，如果不填写，则保持跟顶部定义的regionId一致",
-              "Required": false,
               "Example": "",
               "Default": "",
               "Type": "String"

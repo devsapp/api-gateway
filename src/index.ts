@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-15 21:53:01
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-08-30 23:41:42
  */
 import { InputProps } from './lib/declaration/entity'
 import { SApiGroup } from './lib/component/apiGroups/SApiGroup'
@@ -49,7 +49,7 @@ export default class ComponentDemo {
     }
     if (argsObj.length) {
       const op = argsObj[0]
-      console.log(op)
+      // console.log(op)
       switch (op) {
         case '--help':
         case '-h':
@@ -144,7 +144,7 @@ export default class ComponentDemo {
   }
   public async domain(inputs: InputProps) {
     const { AccessKeyID, AccessKeySecret, props, argsObj } = parseInput(inputs)
-    console.log(argsObj)
+    // console.log(argsObj)
     const describeApiGroup = new SDescribeApiGroup({
       access: {
         AccessKeyID,

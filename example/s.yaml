@@ -43,9 +43,7 @@ services:
             functionComputeConfig: 
               fcType: FCEvent
               fcRegionId: cn-hangzhou 
-              selectServiceName: eventTest1
               functionName: test1 
-              selectFunctionName: test1
               qualifier: LATEST
               serviceName: eventTest1
               roleArn: acs:ram::1582182718458392:role/aliyunserviceroleforapigateway

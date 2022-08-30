@@ -37,7 +37,7 @@ export class SModifyApiGroup {
           access: this.access,
           region: this.props.region,
           groupId: this.groupId,
-          DomainName: custom_domain
+          domainName: custom_domain
       })
       const sSetDomainRes = await sSetDomain.setDomain()
       if(!sSetDomainRes.responseStatus) {

@@ -21,23 +21,23 @@ services:
           serviceConfig:
             servicePath: /
             serviceAddress: http:/abcde.com
-        - apiName: api2
-          requestConfig:
-            requestPath: /api2
-            requestProtocol: 'HTTP,HTTPS'
-            # requestHttpMethod: GET
-            requestMode: MAPPING
-            bodyFormat: STREAM
-          serviceConfig:
-            servicePath: /1api2
-            serviceHttpMethod: GET 
-            serviceProtocol: HTTP
-            serviceAddress: http://docusaurus.website-example.1582182718458392.cn-hangzhou.fc.devsapp.net
-            contentTypeCatagory: DEFAULT
-            contentTypeValue: 'application/json; charset=UTF-8'
+        # - apiName: api2
+        #   requestConfig:
+        #     requestPath: /api2
+        #     requestProtocol: 'HTTP,HTTPS'
+        #     # requestHttpMethod: GET
+        #     requestMode: MAPPING
+        #     bodyFormat: STREAM
+        #   serviceConfig:
+        #     servicePath: /1api2
+        #     serviceHttpMethod: GET 
+        #     serviceProtocol: HTTP
+        #     serviceAddress: http://docusaurus.website-example.1582182718458392.cn-hangzhou.fc.devsapp.net
+        #     contentTypeCatagory: DEFAULT
+        #     contentTypeValue: 'application/json; charset=UTF-8'
         - apiName: api3
           requestConfig: 
-            requestPath: /api4
+            requestPath: /api3
           serviceConfig:
             serviceProtocol: FunctionCompute
             functionComputeConfig: 

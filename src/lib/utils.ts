@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-06 22:01:52
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-09 23:36:45
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-09-01 01:33:26
  */
 import { InputProps } from './declaration/entity'
 import { deepClone, handleAutoFormat, merge } from './tools/tools'
@@ -87,7 +87,7 @@ export function parseApiConfig(c1, c2) {
   need(c1.serviceConfig.serviceTimeout, myParse(c2.serviceConfig).serviceTimeout) && (c.serviceTimeout = myParse(c2.serviceConfig).serviceTimeout)
   need(c1.serviceConfig.contentTypeValue, myParse(c2.serviceConfig).contentTypeValue) && (c.contentTypeValue = myParse(c2.serviceConfig).contentTypeValue)
   //特殊判断：
-  if(c1.serviceConfig.serviceHttpMethod, myParse(c2.serviceConfig).serviceHttpMethod) {
+  if(c1.serviceConfig.serviceHttpMethod !== myParse(c2.serviceConfig).serviceHttpMethod) {
     c.httpConfig = {}
     c.httpConfig.serviceHttpMethod = myParse(c2.serviceConfig).serviceHttpMethod
   }
@@ -96,7 +96,7 @@ export function parseApiConfig(c1, c2) {
     c.httpConfig.serviceAddress = myParse(c2.serviceConfig).serviceAddress
     c.httpConfig.servicePath =  myParse(c2.serviceConfig).servicePath
   }
-  c.httpConfig && (c.httpConfig = JSON.stringify(c.httpConfig))
+  c.httpConfig ? c.httpConfig = JSON.stringify(c.httpConfig) : c.httpConfig = JSON.stringify({})
   if(Object.keys(c).length === 0) return {needModify: 0}
   return merge({}, {
     apiId: c1.apiId,

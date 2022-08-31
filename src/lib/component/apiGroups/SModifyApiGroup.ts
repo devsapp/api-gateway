@@ -91,18 +91,18 @@ export class SModifyApiGroup {
       )
       pageIndex++
     }
-    //批量下线api
-    Slogger.info('批量下线api...')
-    const sabolishApi = new SAbolishApi({
-      access: this.access,
-      region: this.props.region,
-      apis,
-    })
-    const batchAbolishApisRes = await sabolishApi.batchAbolishApis()
-    if (!batchAbolishApisRes.responseStatus) return {
-        responseStatus: false,
-        error: batchAbolishApisRes.error
-    }
+    // //批量下线api
+    // Slogger.info('批量下线api...')
+    // const sabolishApi = new SAbolishApi({
+    //   access: this.access,
+    //   region: this.props.region,
+    //   apis,
+    // })
+    // const batchAbolishApisRes = await sabolishApi.batchAbolishApis()
+    // if (!batchAbolishApisRes.responseStatus) return {
+    //     responseStatus: false,
+    //     error: batchAbolishApisRes.error
+    // }
     //更新apis
     const smodifyApi = new SModifyApi({
       access: this.access,
@@ -116,7 +116,7 @@ export class SModifyApiGroup {
     for(let i = 0; i < this.props.apis.length; i++) {
       const j = apis.findIndex(item => item.apiName === this.props.apis[i].apiName)
       if(j !== -1) {
-        const smodifyApiRs = await smodifyApi.modifyApi(apis[j].apiUid, this.props.apis[i])
+        const smodifyApiRs = await smodifyApi.modifyApi(apis[j].apiUid, this.props.apis[i], apis[j].stages)
         if(!smodifyApiRs.responseStatus) return{
             responseStatus: false,
             error: smodifyApiRs.error

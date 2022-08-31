@@ -64,13 +64,6 @@ Properties:
             Default: ''
             Type:
               - String
-          regionId:
-            Description: api部署的地域，如果不填写，则保持跟顶部定义的regionId一致
-            Required: false
-            Example: ''
-            Default: ''
-            Type:
-              - String
           requestConfig:
             Description: 请求配置
             Required: true

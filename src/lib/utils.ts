@@ -7,29 +7,32 @@
  */
 import { InputProps } from './declaration/entity'
 import { deepClone, handleAutoFormat, merge } from './tools/tools'
-
-
-
-function getAccess(inputs: InputProps) {
-  const {
-    credentials: { AccessKeyID, AccessKeySecret },
-  } = inputs
-  return [AccessKeyID, AccessKeySecret]
-}
+import * as core from '@serverless-devs/core';
 
 /**
  * @description 解析yaml并且将必要的阿里云id和key拼装进来
  */
-export function parseInput(inputs: InputProps) {
+export async function parseInput(inputs: InputProps) {
   const theInputs = deepClone(inputs)
-  const argsObj:string[] = theInputs.argsObj
-  const [AccessKeyID, AccessKeySecret] = getAccess(theInputs)
+  
+  let credentials = theInputs.credentials;
+  if (core.lodash.isEmpty(credentials)) {
+    const credentialRes: any = await core.getCredential(theInputs?.project?.access);
+    credentials = {
+      AccountID: credentialRes?.AccountID,
+      AccessKeyID: credentialRes?.AccessKeyID,
+      AccessKeySecret: credentialRes?.AccessKeySecret,
+      SecurityToken: credentialRes?.SecurityToken,
+    };
+  }
+
   const props = handleAutoFormat(theInputs.props)
+  const comParse: any = core.commandParse(theInputs);
+
   return {
-    AccessKeyID,
-    AccessKeySecret,
+    credentials,
     props,
-    argsObj
+    argsObj: comParse?.data || [],
   }
 }
 

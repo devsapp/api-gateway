@@ -8,8 +8,8 @@ import { handleClientRequst } from '../../tools/tools'
  * @Descripttion:
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-20 00:13:05
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-23 20:40:47
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-09-01 01:02:18
  */
 export class SAbolishApi {
   config: AbolishApisConif
@@ -23,23 +23,25 @@ export class SAbolishApi {
       this.config.region
     )
     const api = this.config.apis.reduce((arr, item) => {
-      return arr.concat(
-        new $CloudAPI20160714.BatchAbolishApisRequestApi({
+      if(item.stages[0])
+      arr.push(new $CloudAPI20160714.BatchAbolishApisRequestApi({
           groupId: item.groupId,
           apiUid: item.apiUid,
           stageId: item.stages[0].stageId,
-        }),
-        new $CloudAPI20160714.BatchAbolishApisRequestApi({
-          groupId: item.groupId,
-          apiUid: item.apiUid,
-          stageId: item.stages[1].stageId,
-        }),
-        new $CloudAPI20160714.BatchAbolishApisRequestApi({
-          groupId: item.groupId,
-          apiUid: item.apiUid,
-          stageId: item.stages[2].stageId,
-        })
-    )
+        }))
+      if(item.stages[1])
+      arr.push(new $CloudAPI20160714.BatchAbolishApisRequestApi({
+        groupId: item.groupId,
+        apiUid: item.apiUid,
+        stageId: item.stages[1].stageId,
+      }))
+      if(item.stages[2])
+      arr.push(new $CloudAPI20160714.BatchAbolishApisRequestApi({
+        groupId: item.groupId,
+        apiUid: item.apiUid,
+        stageId: item.stages[2].stageId,
+      }))
+      return arr
     }, [])
     let batchAbolishApisRequest = new $CloudAPI20160714.BatchAbolishApisRequest(
       {

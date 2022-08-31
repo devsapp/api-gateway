@@ -130,7 +130,7 @@ export async function handleClientRequst(
  * @description  封装core包的打印方法，去除不必要参数，支持读入多个log以及对象log
  */
 export class Slogger {
-  static logger = new Logger('S-CORE')
+  static logger = new Logger('API-GATEWAY')
   static formatLog(logs: any[]) {
     logs.forEach((element,index) => {
       if(element instanceof Error) {

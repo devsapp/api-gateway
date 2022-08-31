@@ -19,8 +19,13 @@ import { SSetDomain } from './lib/component/apiGroups/SSetDomain'
 
 export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
-    const { AccessKeyID, AccessKeySecret, props, argsObj } = parseInput(inputs)
-    const screateApiGroup = new SApiGroup(AccessKeyID, AccessKeySecret, props)
+    const { credentials, props, argsObj } = await parseInput(inputs)
+    if (argsObj.help || argsObj.h) {
+      this.help('deploy');
+      return;
+    }
+
+    const screateApiGroup = new SApiGroup(credentials.AccessKeyID, credentials.AccessKeySecret, props)
     let hasRemote: boolean = false
     const apis = props.apis.map(item => ({
       apiName: item.apiName,
@@ -34,10 +39,7 @@ export default class ComponentDemo {
     }
     if (props.groupName !== 'auto') {
       const sDescribeApiGroup = new SDescribeApiGroup({
-        access: {
-          AccessKeyID,
-          AccessKeySecret,
-        },
+        access: credentials,
         region: props.region,
         groupName: props.groupName,
       })
@@ -47,31 +49,23 @@ export default class ComponentDemo {
       )
         hasRemote = true
     }
-    if (argsObj.length) {
-      const op = argsObj[0]
-      // console.log(op)
-      switch (op) {
-        case '--help':
-        case '-h':
-          this.help('deploy')
-          break
-        case '--use-local':
-          if (props.groupName === 'auto' || !hasRemote) {
-            await screateApiGroup.deploy()
-            return this.enrich(re)
-          } 
-          return await this.modify(inputs)
-        case '--use-remote':
-          if (props.groupName === 'auto' || !hasRemote)
-            await screateApiGroup.deploy()
-          else Slogger.info('已选择使用远程配置')
-          break
-        default:
-          Slogger.warn('There is no such command')
-      } 
-      return
-    }
+    
+
     if (hasRemote) {
+      if (argsObj['use-local']) {
+        if (props.groupName === 'auto' || !hasRemote) {
+          await screateApiGroup.deploy()
+          return this.enrich(re)
+        } 
+        return await this.modify(inputs)
+      } else if (argsObj['use-remote']) {
+        if (props.groupName === 'auto' || !hasRemote) {
+          await screateApiGroup.deploy()
+          return this.enrich(re)
+        } 
+        return await this.modify(inputs)
+      }
+
       Slogger.info('已存在远程API组，是否使用本地配置更新?')
       const ans: {
         option: string
@@ -81,8 +75,8 @@ export default class ComponentDemo {
             name: 'option',
             message: 'Choose whether to use a local configuration or a remote configuration',
             choices: [
-                {name:'use a local configuration'},
-                {name:'use a remote configuration'}
+              {name:'use a local configuration'},
+              {name:'use a remote configuration'}
             ]
         }
       ])
@@ -96,15 +90,16 @@ export default class ComponentDemo {
           break
       }
       return
-    } else await screateApiGroup.deploy()
-
+    }
+    
+    await screateApiGroup.deploy();
     return this.enrich(re)
   }
   public async remove(inputs: InputProps) {
-    const { AccessKeyID, AccessKeySecret, props } = parseInput(inputs)
+    const { credentials, props } = await parseInput(inputs)
     const sdeleteApiGroup = new SDeleteApiGroup(
-      AccessKeyID,
-      AccessKeySecret,
+      credentials.AccessKeyID,
+      credentials.AccessKeySecret,
       props
     )
     const res = await sdeleteApiGroup.deleteApiGroup()
@@ -115,10 +110,10 @@ export default class ComponentDemo {
     }
   }
   public async modify(inputs: InputProps) {
-    const { AccessKeyID, AccessKeySecret, props } = parseInput(inputs)
+    const { credentials, props } = await parseInput(inputs)
     const smodifyApiGroup = new SModifyApiGroup(
-      AccessKeyID,
-      AccessKeySecret,
+      credentials.AccessKeyID,
+      credentials.AccessKeySecret,
       props
     )
     const apis = props.apis.map(item => ({
@@ -143,13 +138,10 @@ export default class ComponentDemo {
     }
   }
   public async domain(inputs: InputProps) {
-    const { AccessKeyID, AccessKeySecret, props, argsObj } = parseInput(inputs)
+    const { credentials, props, argsObj } = await parseInput(inputs)
     // console.log(argsObj)
     const describeApiGroup = new SDescribeApiGroup({
-      access: {
-        AccessKeyID,
-        AccessKeySecret
-      },
+      access: credentials,
       region: props.region,
       groupName: props.groupName
     })
@@ -164,12 +156,9 @@ export default class ComponentDemo {
       }
     const groupId = describeApiGroupRes.apiGroupAttributes.apiGroupAttribute[0]?.groupId
     const setDomain = new SSetDomain({
-      access: {
-        AccessKeyID,
-        AccessKeySecret
-      },
+      access: credentials,
       region: props.region,
-      domainName: argsObj[0],
+      domainName: argsObj?.['domain-name'],
       groupId
     })
     const setDomainRes = await setDomain.setDomain()

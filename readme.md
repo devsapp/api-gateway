@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-08-30 22:33:10
+ * @LastEditTime: 2022-08-31 22:20:25
 -->
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
@@ -135,7 +135,6 @@ gateway:
   disableInternet: false #不限制调用
   backendEnable: false #不启用后端服务
   webSocketApiType: COMMON #双向通信API类型：COMMON：普通API
-  regionId: 根据你当前的s.ymal配置
   requestConfig: '{"requestProtocol":"HTTP,HTTPS","requestHttpMethod":"ANY","requestMode":"PASSTHROUGH"}' #普通请求，HTTP协议，请求模式为入参穿透，请求方式为any
   serviceConfig: '{"serviceProtocol":"HTTP","serviceHttpMethod":"ANY","serviceTimeout":"10000"}' #HTTP协议，请求方式为any，10000ms的延时
   ```
@@ -317,6 +316,27 @@ gateway:
                               "Required": true,
                               "Example": "HttpTrigger",
                               "Default": "HttpTrigger",
+                              "Type": "String"
+                            },
+                            "serviceName": {
+                              "Description": "服务名称",
+                              "Required": true,
+                              "Example": "",
+                              "Default": "",
+                              "Type": "String"
+                            },
+                            "functionName": {
+                              "Description": "函数名称",
+                              "Required": true,
+                              "Example": "",
+                              "Default": "",
+                              "Type": "String"
+                            },
+                            "roleArn": {
+                              "Description": "arn ",
+                              "Required": true,
+                              "Example": "acs:ram::{accountID}:role/{ramRoleName}",
+                              "Default": "",
                               "Type": "String"
                             },
                             "onlyBusinessPath": {

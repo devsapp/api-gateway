@@ -37,7 +37,7 @@ export class SModifyApiGroup {
           access: this.access,
           region: this.props.region,
           groupId: this.groupId,
-          DomainName: custom_domain
+          domainName: custom_domain
       })
       const sSetDomainRes = await sSetDomain.setDomain()
       if(!sSetDomainRes.responseStatus) {
@@ -80,8 +80,9 @@ export class SModifyApiGroup {
         responseStatus: false,
         error: apisDescrib.error
       }
+      const apiSummary =  apisDescrib.apiSummarys ? apisDescrib.apiSummarys.apiSummary : []
       apis = apis.concat(
-        apisDescrib.apiSummarys.apiSummary.map(item => ({
+        apiSummary.map(item => ({
           apiUid: item.apiId,
           apiName: item.apiName,
           groupId: item.groupId,

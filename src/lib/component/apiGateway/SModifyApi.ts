@@ -2,8 +2,8 @@
  * @Descripttion: 
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-24 13:39:22
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-09 23:32:27
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-08-30 23:44:23
  */
 import { SModifyApiConfig } from "../../declaration"
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
@@ -43,7 +43,7 @@ export class SModifyApi {
         if(currentApiConfig.needModify === 1) {
            return await this.modifyApiAll(apiId, apiConfig)
         }
-        console.log(currentApiConfig)
+        // console.log(currentApiConfig)
         let client = ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
         let modifyApiConfigurationRequest = new $CloudAPI20160714.ModifyApiConfigurationRequest(currentApiConfig);
         let runtime = new $Util.RuntimeOptions({});

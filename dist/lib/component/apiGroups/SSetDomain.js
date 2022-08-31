@@ -78,7 +78,7 @@ var SSetDomain = /** @class */ (function () {
                         client = ClientInit_1.ClientInit.createClient(this.config.access.AccessKeyID, this.config.access.AccessKeySecret, this.config.region);
                         setDomainRequest = new $CloudAPI20160714.SetDomainRequest({
                             groupId: this.config.groupId,
-                            domainName: this.config.DomainName,
+                            domainName: this.config.domainName,
                         });
                         runtime = new $Util.RuntimeOptions({});
                         return [4 /*yield*/, (0, tools_1.handleClientRequst)(client, 'setDomainWithOptions', setDomainRequest, runtime)];

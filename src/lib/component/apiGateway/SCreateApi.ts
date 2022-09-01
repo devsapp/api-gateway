@@ -2,13 +2,13 @@
  * @Descripttion: 
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 22:10:37
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-07-17 14:26:21
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-09-02 01:27:24
  */
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
 import * as $Util from '@alicloud/tea-util';
 import { ClientInit } from '../ClientInit';
-import { defaultApi } from '../../config/api';
+import { defaultApi } from '../../constant/api';
 import { formatRequest, handleClientRequst, merge } from '../../tools/tools';
 import { SClientResponseBody, SSingleApiConfig } from '../../declaration';
 export class SCreateApi {

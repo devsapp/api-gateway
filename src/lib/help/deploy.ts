@@ -25,7 +25,7 @@ export function main() {
             {
               name: 'use-local',
               type: Boolean,
-              description: 'Use a local configuration',
+              description: 'use local',
             },
             {
                 name: 'use-remote',

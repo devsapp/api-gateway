@@ -3,14 +3,14 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-24 13:39:22
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-01 01:13:42
+ * @LastEditTime: 2022-09-02 01:27:30
  */
 import { SModifyApiConfig } from "../../declaration"
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
 import * as $Util from '@alicloud/tea-util';
 import { blockProcess, formatRequest, handleClientRequst, merge, Slogger } from '../../tools/tools';
 import { ClientInit } from '../ClientInit';
-import { defaultApi } from "../../config/api";
+import { defaultApi } from "../../constant/api";
 import { SDescribeApis } from "./SDescribeApis";
 import { parseApiConfig } from "../../utils";
 import { SAbolishApi } from "./SAbolishApi";

@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-06 18:26:28
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-09-02 01:57:14
  */
 import { constant } from '../component/constant'
 //处理auto字段
@@ -104,7 +104,8 @@ export function formatRequest(target: object) {
 import CloudAPI20160714 from '@alicloud/cloudapi20160714'
 import * as $Util from '@alicloud/tea-util'
 import { SClientResponseBody } from '../declaration'
-import { Logger } from '@serverless-devs/core'
+import { Logger,  CatchableError} from '@serverless-devs/core'
+import { errorDictionary } from '../constant/error'
 export async function handleClientRequst(
   client: CloudAPI20160714,
   fnName: string,
@@ -125,6 +126,17 @@ export async function handleClientRequst(
   }
 }
 
+function parseError(message: string) {
+  const firstIndex = message.indexOf('request id')
+  if(firstIndex === -1)  return message
+  message = message.slice(0, firstIndex).replace(/code: [0-9]+, /g, '')
+  const transform = errorDictionary.get(message.split(':')[0])
+  if(transform.type === 1) {
+    throw new CatchableError(transform.text)
+  } 
+  message = transform.text
+  return message
+}
 
 /**
  * @description  封装core包的打印方法，去除不必要参数，支持读入多个log以及对象log
@@ -166,7 +178,13 @@ export class Slogger {
       this.logger.warn(log)
     })
   }
+  // 这里对error进行处理，解析存在错误栈的错误，最终只显示名称，名且对一些常用错误友好提示
   static error(...logs) {
+    for(let i = 0; i < logs.length; i++) {
+     if(Object.prototype.toString.call(logs[i])=== '[object Error]') {
+      logs[i] = parseError(logs[i].message)
+     }
+    }
     logs = this.formatLog(logs)
     logs.forEach(log => {
       this.logger.error(log)
@@ -198,8 +216,31 @@ export class Slogger {
 /**
  * @description 阻塞
  */
-export const  blockProcess = async (time = 1000) =>{
+export const blockProcess = async (time = 1000) =>{
   return new Promise<void>((res) => {
     setTimeout(() => {res()}, time)
   })
+}
+
+/**
+ * @description 检测必填项
+ */
+export const preCheck = (props) => {
+  const requires = []
+  if(!props.region) requires.push('region')
+  if(!props.groupName) requires.push('groupName')
+  if(!props.apis) requires.push('apis')
+  if(!Array.isArray(props.apis)) {
+    throw new CatchableError('apis参数应为数组结构')
+  }
+  props.apis.forEach(item => {
+    if(!item.apiName && !requires.includes('apiName')) requires.push('apiName')
+    if(!item.requestConfig && !requires.includes('requestConfig')) requires.push(item.apiName + '.requestConfig')
+    if(!item.serviceConfig && !requires.includes('serviceConfig')) requires.push(item.apiName + '.serviceConfig')
+
+  })
+  const error = requires.reduce((error, item) => {
+    return error + '\n' + item
+  }, '配置文件缺少字段: ')
+  throw new CatchableError(error)
 }

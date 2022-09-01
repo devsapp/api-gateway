@@ -3,14 +3,14 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-05 22:22:42
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-08-30 23:41:42
+ * @LastEditTime: 2022-09-02 01:57:20
  */
 import { InputProps } from './lib/declaration/entity'
 import { SApiGroup } from './lib/component/apiGroups/SApiGroup'
 import { SDeleteApiGroup } from './lib/component/apiGroups/SDeleteApiGroup'
 import { SDescribeApiGroup } from './lib/component/apiGroups/SDescribeApiGroup'
 import { showHelpDoc } from './lib/help'
-import { Slogger } from './lib/tools/tools'
+import { Slogger, preCheck } from './lib/tools/tools'
 import { parseInput } from './lib/utils'
 import { SModifyApiGroup } from './lib/component/apiGroups/SModifyApiGroup'
 import { inquirer } from '@serverless-devs/core'
@@ -20,6 +20,7 @@ import { SSetDomain } from './lib/component/apiGroups/SSetDomain'
 export default class ComponentDemo {
   public async deploy(inputs: InputProps) {
     const { credentials, props, argsObj } = await parseInput(inputs)
+    preCheck(props)
     if (argsObj.help || argsObj.h) {
       this.help('deploy');
       return;
@@ -73,17 +74,17 @@ export default class ComponentDemo {
         {
             type: 'list',
             name: 'option',
-            message: 'Choose whether to use a local configuration or a remote configuration',
+            message: 'Choose whether to use local or a remote configuration',
             choices: [
-              {name:'use a local configuration'},
-              {name:'use a remote configuration'}
+              {name:'use local'},
+              {name:'use remote'}
             ]
         }
       ])
       switch (ans.option) {
-        case 'use a local configuration':
+        case 'use local':
           return await this.modify(inputs)
-        case 'use a remote configuration':
+        case 'use remote':
           Slogger.info('已使用远程配置')
           break
         default:

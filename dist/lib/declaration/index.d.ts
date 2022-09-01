@@ -78,3 +78,7 @@ export interface SSetDomainConfig {
     groupId: string;
     domainName: string;
 }
+export interface SError {
+    type: number;
+    text: string;
+}

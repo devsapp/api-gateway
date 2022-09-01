@@ -11,7 +11,7 @@ services:
     props:
       region: ${vars.region}
       # instanceId: api-shared-vpc-002 #实例
-      groupName: agtest4 #组名
+      groupName: agtest6 #组名
       custom_domain: #dejiang.api.test.shoushuai.top #自定义域名
       basePath: /test
       apis: 

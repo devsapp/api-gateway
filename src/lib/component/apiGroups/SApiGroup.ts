@@ -32,7 +32,7 @@ export class SApiGroup {
         const sCreateApiGroup =  new SCreateApiGroup(this.AccessKeyID, this.AccessKeySecret, this.props)
         const res = await sCreateApiGroup.createApiGroup()
         if(!res.responseStatus) {
-            Slogger.info('创建api组失败:', res.error)
+            Slogger.error('创建api组失败:', res.error)
             return
         }
         const {groupId, subDomain} = res
@@ -57,7 +57,7 @@ export class SApiGroup {
             })
             const sSetDomainRes = await sSetDomain.setDomain()
             if(!sSetDomainRes.responseStatus) {
-                Slogger.info('绑定域名失败:', sSetDomainRes.error)
+                Slogger.error('绑定域名失败:', sSetDomainRes.error)
                 return
             }
             sStore.setCustom(`http://${custom_domain}`)

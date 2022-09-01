@@ -12,6 +12,8 @@ Tags: #标签详情
 Category: 基础云服务 # 基础云服务/Web框架/Web应用/人工智能/音视频处理/图文处理/监控告警/大数据/IoT/新手入门/其他
 Commands: # 指令，格式为指令：指令描述，例如：
   deploy: 部署api网关组
+  remove: 删除api网关组
+  domain: domain <域名> 绑定自定义域名
 Properties:
   region:
     Description: 网关分组部署的地域

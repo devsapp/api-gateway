@@ -3,10 +3,11 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-06 22:01:52
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-01 01:33:26
+ * @LastEditTime: 2022-09-04 23:19:42
  */
 import { InputProps } from './declaration/entity'
-import { deepClone, handleAutoFormat, merge } from './tools/tools'
+import { deepClone, handleAutoFormat, merge, Slogger } from './tools/tools'
+import sStore from './component/store/index'
 import * as core from '@serverless-devs/core';
 
 /**
@@ -35,9 +36,6 @@ export async function parseInput(inputs: InputProps) {
     argsObj: comParse?.data || [],
   }
 }
-
-
-
 
 /**
  * @param c1 全部配置（远程返回）
@@ -87,17 +85,20 @@ export function parseApiConfig(c1, c2) {
   need(c1.serviceConfig.serviceTimeout, myParse(c2.serviceConfig).serviceTimeout) && (c.serviceTimeout = myParse(c2.serviceConfig).serviceTimeout)
   need(c1.serviceConfig.contentTypeValue, myParse(c2.serviceConfig).contentTypeValue) && (c.contentTypeValue = myParse(c2.serviceConfig).contentTypeValue)
   //特殊判断：
-  if(c1.serviceConfig.serviceHttpMethod !== myParse(c2.serviceConfig).serviceHttpMethod) {
+  if(myParse(c2.serviceConfig).serviceHttpMethod && c1.serviceConfig.serviceHttpMethod !== myParse(c2.serviceConfig).serviceHttpMethod) {
+    Slogger.debug('serviceHttpMethod不同')
     c.httpConfig = {}
     c.httpConfig.serviceHttpMethod = myParse(c2.serviceConfig).serviceHttpMethod
   }
   if(`${c1.serviceConfig.serviceAddress}${c1.serviceConfig.servicePath}` !== `${myParse(c2.serviceConfig).serviceAddress}${myParse(c2.serviceConfig).servicePath}`) {
+    Slogger.debug('serviceAddress不同')
     if(!c.httpConfig) c.httpConfig = {}
     c.httpConfig.serviceAddress = myParse(c2.serviceConfig).serviceAddress
     c.httpConfig.servicePath =  myParse(c2.serviceConfig).servicePath
   }
-  c.httpConfig ? c.httpConfig = JSON.stringify(c.httpConfig) : c.httpConfig = JSON.stringify({})
+  c.httpConfig && (c.httpConfig = JSON.stringify(c.httpConfig))
   if(Object.keys(c).length === 0) return {needModify: 0}
+  Slogger.debug('解析api参数完成')
   return merge({}, {
     apiId: c1.apiId,
     apiName: c1.apiName,
@@ -105,5 +106,61 @@ export function parseApiConfig(c1, c2) {
     resultType: "JSON",
     serviceProtocol: "HTTP", //必须加上，否则后端修改不生效
     resultSample: ""
+
   }, c)
+}
+
+
+
+/**
+ * @description 检测必填项
+ */
+ export const preCheck = (props) => {
+  const requires = []
+  if(!props.region) requires.push('region')
+  if(!props.groupName) requires.push('groupName')
+  if(!props.apis) requires.push('apis')
+  if(!Array.isArray(props.apis)) {
+    throw new core.CatchableError('apis参数应为数组结构')
+  }
+  props.apis.forEach(item => {
+    if(!item.apiName && !requires.includes('apiName')) requires.push('apiName')
+    if(!item.requestConfig && !requires.includes('requestConfig')) requires.push(item.apiName + '.requestConfig')
+    if(!item.serviceConfig && !requires.includes('serviceConfig')) requires.push(item.apiName + '.serviceConfig')
+
+  })
+  if(requires.length === 0) return
+  const error = requires.reduce((error, item) => {
+    return error + '\n' + item
+  }, '配置文件缺少字段: ')
+  throw new core.CatchableError(error)
+}
+
+export const  inquirerRemote = async ()  => {
+  Slogger.info('已存在远程API组，是否使用本地配置更新?')
+  const ans: {
+    option: string
+  } = await core.inquirer.prompt([
+    {
+        type: 'list',
+        name: 'option',
+        message: 'Choose whether to use local or a remote configuration',
+        choices: [
+          {name:'use local'},
+          {name:'use remote'}
+        ]
+    }
+  ])
+  switch (ans.option) {
+    case 'use local':
+      sStore.useLocal()
+      return
+    case 'use remote':
+      Slogger.info('已使用远程配置')
+      break
+    default:
+      break
+  }
+  sStore.useRemote()
+  return
 }

@@ -1,10 +1,5 @@
-<!--
- * @Descripttion: 
- * @Author: Wang Dejiang(aei)
- * @Date: 2022-07-05 22:22:42
- * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-08-31 22:20:25
--->
+
+
 <h1 align="center">阿里云API网关组件</h1>
 <p align="center" class="flex justify-center">
   <a href="https://nodejs.org/en/" class="ml-1">
@@ -15,7 +10,6 @@
   </a>
   <a href="https://github.com/devsapp/api-gateway/issues" class="ml-1">
     <img src="https://img.shields.io/github/issues/devsapp/api-gateway" alt="issues">
-  </a>
   </a>
 </p>
 
@@ -44,10 +38,8 @@ vars: # [全局变量，提供给各个服务使用]
 services:
   api-gateway:
     component: api-gateway
-    
     props: 
       groupName: auto #组名，当为auto时，默认随机生成一个组名
-      instanceId: yourInstanceId
       region: ${vars.region} #使用全局的地区设置
       apis: 
         - apiName: api1
@@ -122,7 +114,9 @@ gateway:
 那么它的以下配置将是默认的：
 
 - api网关组
-
+  ```yaml
+  instance: api-shared-vpc-001
+  ```
 
 - api网关
 
@@ -141,341 +135,85 @@ gateway:
 
 以及其他未被列出的配置，有些是非必填项或是暂时不需要关注到的，这里也没有涉及。
 
-如果我们需要进一步对配置文件编辑，这里有一份配置清单：
-```json
-{
-    "region": {
-      "Description": "网关分组部署的地域",
-      "Required": true,
-      "Example": "cn-hangzhou",
-      "Default": "cn-hangzhou",
-      "Type": "String"
-    },
-    "defaultDomain": {
-      "Description": "用户默认域名,只可在api组修改时添加该属性",
-      "Required": false,
-      "Example": "",
-      "Default": "",
-      "Type": "String"
-    },
-    "groupName": {
-      "Description": "分组名，详细查看apigateway关于分组的介绍",
-      "Required": true,
-      "Default": "",
-      "Type": "String"
-    },
-    "instanceId": {
-      "Description": "api网关组实例",
-      "Required": false,
-      "Default": "api-shared-vpc-002",
-      "Example": "/test",
-      "Type": "String"
-    },
-    "basePath": {
-      "Description": "api网关组的公共path",
-      "Required": false,
-      "Type": "String"
-    },
-    "apis": {
-      "Description": "api 列表",
-      "Required": true,
-      "Type": [
-        {
-          "List<Struct>": {
-            "apiName": {
-              "Description": "api名字",
-              "Required": true,
-              "Example": "",
-              "Default": "",
-              "Type": "String"
-            },
-            "allowSignatureMethod": {
-              "Description": "当AuthType为APP认证时，需要传该值明确签名算法。",
-              "Required": false,
-              "Example": "",
-              "Default": "",
-              "Type": "HmacSHA256" | "HmacSHA1,HmacSHA256"
-            },
-            "appCodeAuthType": {
-              "Description": "当AuthType为APP认证时，可选值如下:DEFAULT: 不传默认是DEFAULT(随分组设置) DISABLE: 不允许 HEADER: 允许AppCode的Header认证 HEADER_QUERY: 允许AppCode的Header及Query认证",
-              "Required": false,
-              "Example": "",
-              "Default": "",
-              "Type": "DEFAULT" | "DISABLE" | "HEADER" | "HEADER_QUERY"
-            }
-            "authType": {
-              "Description": "API的认证方式从匿名变为APP认证",
-              "Required": false,
-              "Example": "",
-              "Default": "",
-              "Type": "boolean"
-          	}
-            "requestConfig": {
-              "Description": "请求配置",
-              "Required": true,
-              "Example": "",
-              "Default": "",
-              "Type": {
-                  "Struct": {
-                    "requestPath": {
-                      "Description": "api请求的路径",
-                      "Required": true,
-                      "Example": "/",
-                      "Default": "/",
-                      "Type": "String"
-                    },
-                    "requestHttpMethod": {
-                      "Description": "api请求的方法",
-                      "Required": false,
-                      "Example": "GET|POST|ANY",
-                      "Default": "ANY",
-                      "Type": "String"
-                    },
-                    "requestMode": {
-                      "Description": "入参请求模式",
-                      "Required": false,
-                      "Example": "PASSTHROUGH|MAPPING",
-                      "Default": "PASSTHROUGH",
-                      "Type":  "String"
-                    },
-                    "bodyModel": {
-                      "Description": "请求体",
-                      "Required": false,
-                      "Example": "",
-                      "Default": "",
-                      "Type": "String"
-                    },
-                    "bodyFormat": {
-                      "Description": "",
-                      "Required": true,
-                      "Example": "",
-                      "Default": "",
-                      "Type": "String"
-                    },
-                    "postBodyDescription": {
-                      "Description": "",
-                      "Required": true,
-                      "Example": "",
-                      "Default": "",
-                      "Type": "String"
-                    }
-                  }
-                }
-            },
-            "serviceConfig": {
-              "Description": "后端服务配置",
-              "Required": true,
-              "Example": "",
-              "Default": "",
-              "Type": {
-                  "Struct[函数计算配置模式]": {
-                    "serviceProtocol": {
-                      "Description": "后端服务类型",
-                      "Required": true,
-                      "Example": "HTTP|HTTPS|FunctionCompute|OSS",
-                      "Default": "FunctionCompute",
-                      "Type": "String"
-                    },
-                    "servicePath": {
-                      "Description": "后端服务路径",
-                      "Required": true,
-                      "Example": "",
-                      "Default": "/",
-                      "Type": "String"
-                    },
-                    "functionComputeConfig": {
-                      "Description": "函数计算配置项",
-                      "Required": true,
-                      "Example": "",
-                      "Default": "",
-                      "Type": {
-                          "Struct[http函数类型配置]": {
-                            "fcRegionId": {
-                              "Description": "函数计算的region",
-                              "Required": true,
-                              "Example": "cn-hongkong|cn-hangzhou",
-                              "Default": "cn-hongkong",
-                              "Type": "String"
-                            },
-                            "fcBaseUrl": {
-                              "Description": "fc 触发器基础地址",
-                              "Required": true,
-                              "Example": "",
-                              "Default": "",
-                              "Type": "String"
-                            },
-                            "path": {
-                              "Description": "函数计算访问路径",
-                              "Required": true,
-                              "Example": "",
-                              "Default": "",
-                              "Type": "String"
-                            },
-                            "fcType": {
-                              "Description": "函数计算类型",
-                              "Required": true,
-                              "Example": "HttpTrigger",
-                              "Default": "HttpTrigger",
-                              "Type": "String"
-                            },
-                            "serviceName": {
-                              "Description": "服务名称",
-                              "Required": true,
-                              "Example": "",
-                              "Default": "",
-                              "Type": "String"
-                            },
-                            "functionName": {
-                              "Description": "函数名称",
-                              "Required": true,
-                              "Example": "",
-                              "Default": "",
-                              "Type": "String"
-                            },
-                            "roleArn": {
-                              "Description": "arn ",
-                              "Required": true,
-                              "Example": "acs:ram::{accountID}:role/{ramRoleName}",
-                              "Default": "",
-                              "Type": "String"
-                            },
-                            "onlyBusinessPath": {
-                              "Description": "是否只传递路径",
-                              "Required": false,
-                              "Example": "",
-                              "Default": "true",
-                              "Type": "Boolean"
-                            },
-                            "contentTypeCategory": {
-                              "Description": "ContentType是否透传",
-                              "Required": false,
-                              "Example": "CLIENT",
-                              "Default": "CLIENT",
-                              "Type": "String"
-                            }
-                          }
-                        }
-                    },
-                    "resultType": {
-                      "Description": "返回类型",
-                      "Required": false,
-                      "Example": "JSON",
-                      "Default": "JSON",
-                      "Type": "String"
-                    }
-                  }
-                },
-                {
-                  "Struct[普通HTTP(s)模式]": {
-                    "serviceAddress": {
-                      "Description": "后端服务地址",
-                      "Required": true,
-                      "Example": "",
-                      "Default": "",
-                      "Type": "String"
-                    },
-                    "aoneAppName": {
-                      "Description": "后端应用命名",
-                      "Required": true,
-                      "Example": "cloudapi-openapi",
-                      "Default": "cloudapi-openapi",
-                      "Type": "String"
-                    },
-                    "servicePath": {
-                      "Description": "后端服务路径",
-                      "Required": true,
-                      "Example": "/index.html",
-                      "Default": "/",
-                      "Type": "String"
-                    },
-                    "serviceHttpMethod": {
-                      "Description": "后端服务的方法",
-                      "Required": true,
-                      "Example": "GET",
-                      "Default": "GET",
-                      "Type": "String"
-                    },
-                    "serviceProtocol": {
-                      "Description": "后端服务协议",
-                      "Required": true,
-                      "Example": "HTTP",
-                      "Default": "HTTP",
-                      "Type": "String"
-                    },
-                    "resultType": {
-                      "Description": "返回类型",
-                      "Required": true,
-                      "Example": "JSON",
-                      "Default": "JSON",
-                      "Type": "String"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-		 "requestParameters": {
-             "Description": "Consumer向网关发送API请求的参数描述。",
-             "Required": false,
-             "Example": '[{"ParameterType":"Number","Required":"OPTIONAL","isHide":false,"ApiParameterName":"age","DefaultValue":"20","DemoValue":"20","Description":"年龄","MinValue":18,"MaxValue":100,"Location":"Head"},{"ParameterType":"String","Required":"OPTIONAL","isHide":false,"ApiParameterName":"sex","DefaultValue":"boy","DemoValue":"boy","Description":"性别","EnumValue":"boy,girl","Location":"Query"},{"ParameterType":"Number","Required":"REQUIRED","isHide":false,"ApiParameterName":"userId","MaxLength":10,"MinValue":10000000,"MaxValue":100000000,"Location":"Path"},{"ApiParameterName":"CaClientIp","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head","ParameterType":"String","Required":"REQUIRED","Description":"客户端IP"},{"ApiParameterName":"constance","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head","ParameterType":"String","Required":"REQUIRED","DefaultValue":"constance","Description":"constance"}]',
-             "Default": "",
-             "Type": "String"
-         },
-		 "serviceParameters": {
-             "Description": "网关向后端服务发送API请求的参数描述。",
-             "Required": false,
-             "Example": '[{"ServiceParameterName":"age","Location":"Head","Type":"Number","ParameterCatalog":"REQUEST"},{"ServiceParameterName":"sex","Location":"Query","Type":"String","ParameterCatalog":"REQUEST"},{"ServiceParameterName":"userId","Location":"Path","Type":"Number","ParameterCatalog":"REQUEST"},{"ServiceParameterName":"clientIp","Location":"Head","Type":"String","ParameterCatalog":"SYSTEM"},{"ServiceParameterName":"constance","Location":"Head","Type":"String","ParameterCatalog":"CONSTANT"}]',
-             "Default": "",
-             "Type": "String"
-         },
-		 "serviceParametersMap": {
-             "Description": "Consumer向网关发送请求的参数和网关向后端服务发送的请求的参数的映射关系。",
-             "Required": false,
-             "Example": '[{"ServiceParameterName":"age","RequestParameterName":"age"},{"ServiceParameterName":"sex","RequestParameterName":"sex"},{"ServiceParameterName":"userId","RequestParameterName":"userId"},{"ServiceParameterName":"clientIp","RequestParameterName":"CaClientIp"},{"ServiceParameterName":"constance","RequestParameterName":"constance"}]',
-             "Default": "",
-             "Type": "String"
-         },
-		 "systemParameters": {
-             "Description": "api的公共参数，json格式",
-             "Required": false,
-             "Example": "",
-             "Default": "",
-             "Type": "String"
-         },
-		"disableInternet": {
-            "Description": "是否仅支持内网调用API。",
-             "Required": false,
-             "Example": "",
-             "Default": "",
-             "Type": "Boolean"
-         },
-		"errorCodeSamples": {
-            "Description": "后端服务返回的错误码示例",
-             "Required": false,
-             "Example": '[{"Code":"400","Message":"Missing the userId","Description":"参数错误"}]',
-             "Default": "",
-             "Type": "String"
-         },
-		"failResultSample": {
-            "Description": "后端服务失败返回应答的示例 该值仅用于生成文档使用。不对返回结果产生影响。",
-             "Required": false,
-             "Example": '{"errorCode":"fail","errorMessage":"param invalid"}',
-             "Default": "",
-             "Type": "String"
-         }
-        }
-      ]
-    }
-  }
+如果我们需要进一步对配置文件编辑，这里有一份参数配置清单：
 
-```
+###  props:
 
-其中支持`auto`的字段为:
+| 名称          | 类型            | 必选 | 示例               | 说明          |
+| ------------- | --------------- | ---- | ------------------ | ------------- |
+| groupName     | String          | 是   | apiGroup1          | 网关组名称    |
+| description   | String          | 否   | 这是一段描述       | 分组描述      |
+| region        | String          | 是   | cn-hangzhou        | 分组所在区域  |
+| basePath      | String          | 是   | /api               | 基准路径      |
+| instanceId    | String          | 否   | api-shared-vpc-002 | 实例ID        |
+| custom_domain | String          | 否   | demo.com           | 自定义域名    |
+| apis          | **ApiConfig[]** | 是   |                    | api配配置数组 |
+
+### ApiConfig:
+
+| 名称                 | 类型          | 必选 | 示例                                                         | 说明                                                         |
+| -------------------- | ------------- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| apiName              | String        | 是   | api1                                                         | api名称                                                      |
+| description          | String        | 否   | 这是一段描述                                                 | api描述                                                      |
+| Visibility           | String        | 否   | PUBLIC                                                       | **PUBLIC**：公开，如选择此类型，该API的线上环境，会在所有用户的控制台“发现API”页面展示 **PRIVATE**：不公开，如选择此类型，当该组API在云市场上架时，私有类型的API不会上架 |
+| requestConfig        | RequestConfig | 是   |                                                              | Consumer向网关发送API请求的相关配置项                        |
+| serviceConfig        | ServiceConfig | 是   |                                                              | 网关向后端服务发送API请求的相关配置项                        |
+| requestParameters    | Array         |      | [{"ParameterType":"Number","Required":"OPTIONAL","isHide":false,   "ApiParameterName":"age","DefaultValue":"20","DemoValue":"20", "Description":"年龄","MinValue":18,"MaxValue":100,"Location":"Head"},  {"ParameterType":"String","Required":"OPTIONAL","isHide":false,    "ApiParameterName":"sex","DefaultValue":"boy","DemoValue":"boy",    "Description":"性别",  "EnumValue":"boy,girl","Location":"Query"},{"ParameterType":"Number","Required":"REQUIRED","isHide":false,  "ApiParameterName":"userId","MaxLength":10,"MinValue":10000000,  "MaxValue":100000000,"Location":"Path"},{"ApiParameterName":"CaClientIp","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head","ParameterType":"String",  "Required":"REQUIRED","Description":"客户端IP"},{"ApiParameterName":"constance","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head","ParameterType":"String",  "Required":"REQUIRED","DefaultValue":"constance","Description":"constance"}] | Consumer向网关发送API请求的参数描述                          |
+| serviceParameters    | Array         | 否   | [{"ParameterType":"Number","Required":"OPTIONAL","isHide":false, "ApiParameterName":"age",  "DefaultValue":"20","DemoValue":"20","Description":"年龄","MinValue":18,"MaxValue":100,"Location":"Head"},{"ParameterType":"String",  "Required":"OPTIONAL","isHide":false,"ApiParameterName":"sex",  "DefaultValue":"boy","DemoValue":"boy","Description":"性别",   "EnumValue":"boy,girl","Location":"Query"},{"ParameterType":"Number","Required":"REQUIRED","isHide":false,  "ApiParameterName":"userId","MaxLength":10, "MinValue":10000000,"MaxValue":100000000, "Location":"Path"},{"ApiParameterName":"CaClientIp","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head","ParameterType":"String",  "Required":"REQUIRED","Description":"客户端IP"},  {"ApiParameterName":"constance","ParameterLocation":{"name":"Head","orderNumber":0},"Location":"Head",  "ParameterType":"String","Required":"REQUIRED", "DefaultValue":"constance","Description":"constance"}] | 网关向后端服务发送API请求的参数描述                          |
+| systemParameters     | Array         | 否   | [{\"ParameterName\": \"CaAppId\", \"Location\": \"HEAD\", \"ServiceParameterName\": \"x-ca-appid\"}] |                                                              |
+| serviceParametersMap | Array         | 否   | [{"ServiceParameterName":"age",    "RequestParameterName":"age"},    {"ServiceParameterName":"sex",   "RequestParameterName":"sex"},    {"ServiceParameterName":"userId",    "RequestParameterName":"userId"},    {"ServiceParameterName":"clientIp",     "RequestParameterName":"CaClientIp"},    {"ServiceParameterName":"constance",  "RequestParameterName":"constance"}] | Consumer向网关发送请求的参数和网关向后端服务发送的请求的参数的映射关系(如果选择请求模式为映射) |
+| resultType           | String        | 否   | JSON                                                         | 后端服务返回应答的格式                                       |
+| resultSample         | String        | 否   | 200                                                          | 后端服务返回应答的示例                                       |
+| webSocketApiType     | String        | 否   | **COMMON**                                                   | 双向通信API类型：  **COMMON**:普通API **REGISTER**:注册API **UNREGISTER**:注销API **NOTIFY**:下行通知 |
+| disableInternet      | Boolean       | 否   | false                                                        | 设置DisableInternet为**true**, 仅支持内网调用API。 设置DisableInternet为**false**, 则不限制调用。 |
+| backendEnable        | Boolean       | 否   | false                                                        | 是否启用后端服务                                             |
+| backendId            | String        | 否   | 0d105f80a8f340408bd34954d4e4ff22                             | 后端服务ID                                                   |
+| allowSignatureMethod | String        | 否   | HmacSHA256                                                   | API的客户端请求签名方法，可选值：  HmacSHA256 HmacSHA1,HmacSHA256 |
+| openIdConnectConfig  | Object        | 否   | {\"OpenIdApiType\":\"IDTOKEN\", \"PublicKey\":\"lzlj1573\",   \"IdTokenParamName\":\"\", \"PublicKeyId\":\"lzljorders\"} | 第三方账号认证OpenID Connect相关配置项                       |
+| errorCodeSamples     | Array         |      | [{"Code":"400","Message":"Missing the userId","Description":"参数错误"}] | 后端服务返回的错误码示例                                     |
+| failResultSample     | Object        |      | {"errorCode":"fail","errorMessage":"param invalid"}          | 后端服务失败返回应答的示例 该值仅用于生成文档使用。不对返回结果产生影响。 |
+
+
+
+### RequestConfig:
+
+| 名称                | 类型   | 必选 | 示例        | 说明                                                         |
+| ------------------- | ------ | ---- | ----------- | ------------------------------------------------------------ |
+| requestPath         | String | 是   | /api1       | API path                                                     |
+| requestProtocol     | String | 否   | HTTP,HTTPS  | API 支持的协议类型，可以多选，多选情况下以英文逗号隔开，如："HTTP,HTTPS"，取值为：HTTP、HTTPS |
+| requestHttpMethod   | String | 否   | GET         | HTTP Method，取值为：GET、POST、DELETE、PUT、HEADER、TRACE、PATCH、CONNECT、OPTIONS（默认ANY） |
+| requestMode         | String | 否   | PASSTHROUGH | 请求的模式，取值为：MAPPING、PASSTHROUGH，分别表示入参映射、入参透传(默认) |
+| BodyFormat          | String | 否   | FORM        | POST/PUT请求时，表示数据以何种方式传递给服务器，取值为：FORM、STREAM，分别表示表单形式(k-v对应)、字节流形式。当RequestMode值为MAPPING时有效。 |
+| PostBodyDescription | String | 否   |             | Body描述                                                     |
+
+### ServiceConfig:
+
+| 名称                  | 类型                  | 必选 | 示例            | 说明                                                         |
+| --------------------- | --------------------- | ---- | --------------- | ------------------------------------------------------------ |
+| servicePath           | String                | 是   | /               |                                                              |
+| serviceAddress        | String                | 否   | http://demo.com | 后端服务地址，普通HTTP(s)模式时必填                          |
+| serviceProtocol       | String                |      | FunctionCompute | 后端服务协议类型，目前只支持HTTP/FunctionCompute 即普通HTTP和函数计算模式 |
+| functionComputeConfig | FunctionComputeConfig | 否   |                 | 当后端是函数计算时，即ServiceProtocol=FunctionCompute，需要配置函数计算相关参数 |
+| serviceHttpMethod     | String                | 否   | POST            | 调用后端服务HTTP协议时的Method，取值为：GET、POST、DELETE、PUT、HEADER、TRACE、PATCH、CONNECT、OPTIONS （默认ANY） |
+| serviceTimeout        | String                | 否   | 6000            | 后端服务超时时间，单位：毫秒 （默认10000ms）                 |
+| ContentTypeCatagory   | String                | 否   | CLIENT          | 调用后端服务HTTP服务时，ContentType头的取值策略： DEFAULT：使用API网关默认的值 CUSTOM：自定义 CLIENT：使用客户端上行的ContentType的头 |
+
+### FunctionComputeConfig:
+
+| 名称         | 类型   | 必选 | 示例                    | 说明                                       |
+| ------------ | ------ | ---- | ----------------------- | ------------------------------------------ |
+| fcType       | String | 是   | FCEvent                 | FCEvent或HttpTrigger表示事件触发或函数触发 |
+| fcRegionId   | String | 是   | cn-shenzhen             | 函数计算所在Region                         |
+| functionName | String | 是   | func1                   | 函数计算定义的FunctionName                 |
+| serviceName  | String | 是   | service1                | 函数计算定义的ServiceName                  |
+| roleArn      | String | 是   | `acs:ram::xxx:role/xxx` | Ram授权给API网关访问函数计算的arn          |
+
+
+
+其中支持使用`auto`的字段为:
 
 - `groupName` api组名称 (不建议)
 - `basePath` api组基础路由
-
-一些复杂字段，如`requestParameters`,除了传递字符串，也可以直接传递对象，组件内会自动处理这些对象为字符串
 
 # 开源许可
 

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-24 13:39:22
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-02 01:27:30
+ * @LastEditTime: 2022-09-04 23:20:05
  */
 import { SModifyApiConfig } from "../../declaration"
 import * as $CloudAPI20160714 from '@alicloud/cloudapi20160714';
@@ -12,8 +12,9 @@ import { blockProcess, formatRequest, handleClientRequst, merge, Slogger } from 
 import { ClientInit } from '../ClientInit';
 import { defaultApi } from "../../constant/api";
 import { SDescribeApis } from "./SDescribeApis";
-import { parseApiConfig } from "../../utils";
+import { inquirerRemote, parseApiConfig } from "../../utils";
 import { SAbolishApi } from "./SAbolishApi";
+import sStore from '../store/index'
 
 export class SModifyApi {
     config: SModifyApiConfig
@@ -35,9 +36,15 @@ export class SModifyApi {
             // Slogger.info(`${apiConfig.apiName} 远程无需更新`)
             return {
                 responseStatus: true,
-                error: 'no updates are needed here'
+                remote: true
             }
         }
+        if(!sStore.isLocal()) await inquirerRemote()
+        if(sStore.isRomote()) return {
+          responseStatus: true,
+          remote: true
+        }
+        Slogger.info('修改api...')
         if(stages.length > 0) {
             const sabolishApi = new SAbolishApi({
             access: this.config.access,

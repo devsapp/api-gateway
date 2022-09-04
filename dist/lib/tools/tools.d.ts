@@ -32,7 +32,3 @@ export declare class Slogger {
  * @description 阻塞
  */
 export declare const blockProcess: (time?: number) => Promise<void>;
-/**
- * @description 检测必填项
- */
-export declare const preCheck: (props: any) => never;

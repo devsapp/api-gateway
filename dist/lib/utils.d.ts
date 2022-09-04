@@ -13,3 +13,8 @@ export declare function parseInput(inputs: InputProps): Promise<{
  * @description 比对本地配置和远程配置，并返回合适结构的需更新api配置
  */
 export declare function parseApiConfig(c1: any, c2: any): any;
+/**
+ * @description 检测必填项
+ */
+export declare const preCheck: (props: any) => void;
+export declare const inquirerRemote: () => Promise<void>;

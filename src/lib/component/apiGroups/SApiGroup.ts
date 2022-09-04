@@ -2,8 +2,8 @@
  * @Descripttion: 
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-13 21:53:33
- * @LastEditors: Wang Dejiang(aei)
- * @LastEditTime: 2022-08-15 21:35:28
+ * @LastEditors: aei imaei@foxmail.com
+ * @LastEditTime: 2022-09-04 21:15:44
  */
 import {CreateApiGroupResponseBody} from '@alicloud/cloudapi20160714';
 import SCreateApiGroup from "./SCreateApiGroup";
@@ -12,7 +12,7 @@ import { SDeployApi } from '../apiGateway/SDeployApi';
 import { ApiStageName } from '../../declaration';
 import { Slogger } from '../../tools/tools';
 import sStore from '../store';
-import { SSetDomain } from './SSetDomain';
+import { SSetDomain } from '../domain/SSetDomain';
 export class SApiGroup {
     private AccessKeyID
     private AccessKeySecret
@@ -28,7 +28,6 @@ export class SApiGroup {
      * @description 一键部署
     */
     async deploy(args?: string[]): Promise<void | CreateApiGroupResponseBody> {
-        // TODO 根据是否有远程的apiGroup来决定是否创建
         const sCreateApiGroup =  new SCreateApiGroup(this.AccessKeyID, this.AccessKeySecret, this.props)
         const res = await sCreateApiGroup.createApiGroup()
         if(!res.responseStatus) {
@@ -40,6 +39,7 @@ export class SApiGroup {
         this.subDomain = subDomain
         Slogger.info('创建api组成功: ', {
             groupName: this.props.groupName,
+            description: this.props.description,
             groupId,
             subDomain,
             basePath: this.props.basePath || '/'

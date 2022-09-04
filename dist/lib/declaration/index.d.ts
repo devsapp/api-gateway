@@ -34,6 +34,7 @@ export interface SClientResponseBody {
     responseStatus: boolean;
     [prop: string]: any;
     error?: any;
+    remote?: boolean;
 }
 export interface SApiGroupDescription {
     access: SAccess;
@@ -73,6 +74,12 @@ export interface SModifyApiConfig {
     groupId: string;
 }
 export interface SSetDomainConfig {
+    access: SAccess;
+    region: string;
+    groupId: string;
+    domainName: string;
+}
+export interface SDescribeDomainConfig {
     access: SAccess;
     region: string;
     groupId: string;

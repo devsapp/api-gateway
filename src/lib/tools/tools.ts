@@ -3,9 +3,9 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-02 01:57:14
+ * @LastEditTime: 2022-09-04 21:56:53
  */
-import { constant } from '../component/constant'
+import { constant } from '../constant/autoMap'
 //处理auto字段
 export function handleAutoFormat(o: any) {
   const map = new Map()
@@ -104,7 +104,7 @@ export function formatRequest(target: object) {
 import CloudAPI20160714 from '@alicloud/cloudapi20160714'
 import * as $Util from '@alicloud/tea-util'
 import { SClientResponseBody } from '../declaration'
-import { Logger,  CatchableError} from '@serverless-devs/core'
+import { Logger, CatchableError } from '@serverless-devs/core'
 import { errorDictionary } from '../constant/error'
 export async function handleClientRequst(
   client: CloudAPI20160714,
@@ -127,14 +127,17 @@ export async function handleClientRequst(
 }
 
 function parseError(message: string) {
+  Logger.debug('解析Error', '开始')
   const firstIndex = message.indexOf('request id')
   if(firstIndex === -1)  return message
   message = message.slice(0, firstIndex).replace(/code: [0-9]+, /g, '')
   const transform = errorDictionary.get(message.split(':')[0])
-  if(transform.type === 1) {
+  if(transform) {
+    if(transform.type)
     throw new CatchableError(transform.text)
+    message = transform.text
   } 
-  message = transform.text
+  Logger.debug('解析Error', '完成')
   return message
 }
 
@@ -220,27 +223,4 @@ export const blockProcess = async (time = 1000) =>{
   return new Promise<void>((res) => {
     setTimeout(() => {res()}, time)
   })
-}
-
-/**
- * @description 检测必填项
- */
-export const preCheck = (props) => {
-  const requires = []
-  if(!props.region) requires.push('region')
-  if(!props.groupName) requires.push('groupName')
-  if(!props.apis) requires.push('apis')
-  if(!Array.isArray(props.apis)) {
-    throw new CatchableError('apis参数应为数组结构')
-  }
-  props.apis.forEach(item => {
-    if(!item.apiName && !requires.includes('apiName')) requires.push('apiName')
-    if(!item.requestConfig && !requires.includes('requestConfig')) requires.push(item.apiName + '.requestConfig')
-    if(!item.serviceConfig && !requires.includes('serviceConfig')) requires.push(item.apiName + '.serviceConfig')
-
-  })
-  const error = requires.reduce((error, item) => {
-    return error + '\n' + item
-  }, '配置文件缺少字段: ')
-  throw new CatchableError(error)
 }

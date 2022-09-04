@@ -188,15 +188,16 @@ gateway:
 
 ### ServiceConfig:
 
-| 名称                  | 类型                  | 必选 | 示例            | 说明                                                         |
-| --------------------- | --------------------- | ---- | --------------- | ------------------------------------------------------------ |
-| servicePath           | String                | 是   | /               |                                                              |
-| serviceAddress        | String                | 否   | http://demo.com | 后端服务地址，普通HTTP(s)模式时必填                          |
-| serviceProtocol       | String                |      | FunctionCompute | 后端服务协议类型，目前只支持HTTP/FunctionCompute 即普通HTTP和函数计算模式 |
-| functionComputeConfig | FunctionComputeConfig | 否   |                 | 当后端是函数计算时，即ServiceProtocol=FunctionCompute，需要配置函数计算相关参数 |
-| serviceHttpMethod     | String                | 否   | POST            | 调用后端服务HTTP协议时的Method，取值为：GET、POST、DELETE、PUT、HEADER、TRACE、PATCH、CONNECT、OPTIONS （默认ANY） |
-| serviceTimeout        | String                | 否   | 6000            | 后端服务超时时间，单位：毫秒 （默认10000ms）                 |
-| ContentTypeCatagory   | String                | 否   | CLIENT          | 调用后端服务HTTP服务时，ContentType头的取值策略： DEFAULT：使用API网关默认的值 CUSTOM：自定义 CLIENT：使用客户端上行的ContentType的头 |
+| 名称                  | 类型                  | 必选 | 示例                                             | 说明                                                         |
+| --------------------- | --------------------- | ---- | ------------------------------------------------ | ------------------------------------------------------------ |
+| servicePath           | String                | 是   | /                                                |                                                              |
+| serviceAddress        | String                | 否   | http://demo.com                                  | 后端服务地址，普通HTTP(s)模式时必填                          |
+| serviceProtocol       | String                |      | FunctionCompute                                  | 后端服务协议类型，目前只支持HTTP/FunctionCompute 即普通HTTP和函数计算模式 |
+| functionComputeConfig | FunctionComputeConfig | 否   |                                                  | 当后端是函数计算时，即ServiceProtocol=FunctionCompute，需要配置函数计算相关参数 |
+| serviceHttpMethod     | String                | 否   | POST                                             | 调用后端服务HTTP协议时的Method，取值为：GET、POST、DELETE、PUT、HEADER、TRACE、PATCH、CONNECT、OPTIONS （默认ANY） |
+| serviceTimeout        | String                | 否   | 6000                                             | 后端服务超时时间，单位：毫秒 （默认10000ms）                 |
+| contentTypeCategory   | String                | 否   | CLIENT                                           | 调用后端服务HTTP服务时，ContentType头的取值策略：DEFAULT：API网关默认   CUSTOM：自定义     CLIENT：使用客户端上行的ContentType的头 |
+| contentTypeValue      | String                | 否   | application/x-www-form-urlencoded; charset=UTF-8 | 调用后端服务HTTP服务，ContentTypeCatagory的值为DEFAULT或者CUSTOM时，ContentType头的取值。 |
 
 ### FunctionComputeConfig:
 

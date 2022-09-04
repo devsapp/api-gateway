@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-02 00:52:25
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-02 01:38:48
+ * @LastEditTime: 2022-09-05 00:03:32
  * @FilePath: \api-gateway\src\lib\constant\error.ts
  * @description: 
  */
@@ -15,6 +15,10 @@ errorDictionary.set('ExceedLimitGroupWithoutFormalDomain', {
     text: '超出api网关组最大限度'
 })
 
+errorDictionary.set('RepeatedPath', {
+    type: 1,
+    text: '当前api存在在线api方法路径重复，请删除或修改后继续部署'
+})
 
 export {
     errorDictionary

@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-06 22:01:52
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-04 23:19:42
+ * @LastEditTime: 2022-09-05 00:35:19
  */
 import { InputProps } from './declaration/entity'
 import { deepClone, handleAutoFormat, merge, Slogger } from './tools/tools'
@@ -82,7 +82,11 @@ export function parseApiConfig(c1, c2) {
   need(c1.requestConfig.requestMode, myParse(c2.requestConfig).requestMode) && (c.requestMode = myParse(c2.requestConfig).requestMode)
   need(c1.requestConfig.requestProtocol, myParse(c2.requestConfig).requestProtocol) && (c.requestProtocol = myParse(c2.requestConfig).requestProtocol)
   need(c1.serviceConfig.serviceProtocol, myParse(c2.serviceConfig).serviceProtocol) && (c.serviceProtocol = myParse(c2.serviceConfig).serviceProtocol)
-  need(c1.serviceConfig.serviceTimeout, myParse(c2.serviceConfig).serviceTimeout) && (c.serviceTimeout = myParse(c2.serviceConfig).serviceTimeout)
+  need(c1.serviceConfig.serviceTimeout?.toString(), myParse(c2.serviceConfig).serviceTimeout?.toString()) && (c.serviceTimeout = myParse(c2.serviceConfig).serviceTimeout)
+  need(c1.serviceConfig.contentTypeCatagory, myParse(c2.serviceConfig).contentTypeCategory) && (
+      c.contentTypeCategory = myParse(c2.serviceConfig).contentTypeCategory, 
+      c.contentTypeCatagory = myParse(c2.serviceConfig).contentTypeCategory
+    )
   need(c1.serviceConfig.contentTypeValue, myParse(c2.serviceConfig).contentTypeValue) && (c.contentTypeValue = myParse(c2.serviceConfig).contentTypeValue)
   //特殊判断：
   if(myParse(c2.serviceConfig).serviceHttpMethod && c1.serviceConfig.serviceHttpMethod !== myParse(c2.serviceConfig).serviceHttpMethod) {
@@ -91,22 +95,22 @@ export function parseApiConfig(c1, c2) {
     c.httpConfig.serviceHttpMethod = myParse(c2.serviceConfig).serviceHttpMethod
   }
   if(`${c1.serviceConfig.serviceAddress}${c1.serviceConfig.servicePath}` !== `${myParse(c2.serviceConfig).serviceAddress}${myParse(c2.serviceConfig).servicePath}`) {
-    Slogger.debug('serviceAddress不同')
+    Slogger.debug('serviceAddress，serviceAddress不同')
     if(!c.httpConfig) c.httpConfig = {}
     c.httpConfig.serviceAddress = myParse(c2.serviceConfig).serviceAddress
     c.httpConfig.servicePath =  myParse(c2.serviceConfig).servicePath
   }
   c.httpConfig && (c.httpConfig = JSON.stringify(c.httpConfig))
+  Slogger.debug('解析api参数完成', c)
   if(Object.keys(c).length === 0) return {needModify: 0}
-  Slogger.debug('解析api参数完成')
   return merge({}, {
     apiId: c1.apiId,
     apiName: c1.apiName,
     visibility: "PRIVATE",
     resultType: "JSON",
     serviceProtocol: "HTTP", //必须加上，否则后端修改不生效
-    resultSample: ""
-
+    resultSample: "",
+    httpConfig: "{}" //必须加上，否则报错
   }, c)
 }
 

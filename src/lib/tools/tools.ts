@@ -3,7 +3,7 @@
  * @Author: Wang Dejiang(aei)
  * @Date: 2022-07-11 22:30:43
  * @LastEditors: aei imaei@foxmail.com
- * @LastEditTime: 2022-09-05 00:22:10
+ * @LastEditTime: 2022-09-05 00:41:05
  */
 import { constant } from '../constant/autoMap'
 //处理auto字段
@@ -99,8 +99,6 @@ export function formatRequest(target: object) {
   for (const key in obj) {
     if (typeof obj[key] === 'object') obj[key] = JSON.stringify(obj[key])
     //特殊处理阿里云的错误，单词ContentTypeCategory拼错
-    if(key === 'ContentTypeCatagory')
-    obj.ContentTypeCategory = obj[key]
   }
   return obj
 }
